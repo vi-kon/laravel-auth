@@ -30,9 +30,9 @@ Route::filter('auth.role', function ()
 
 Route::filter('auth.home', function ()
     {
-        if (Auth::check() && Auth::user()->home !== null)
+        if (Auth::check() && Auth::getUser()->home !== null)
         {
-            return Redirect::route(Auth::user()->home);
+            return Redirect::route(Auth::getUser()->home);
         }
 
         return null;
