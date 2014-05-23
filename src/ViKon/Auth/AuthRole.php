@@ -13,15 +13,15 @@ class AuthRole
         if (\Auth::check())
         {
             $user   = \Auth::getUser();
-            $roles  = $user->roles();
-            $groups = $user->groups();
+            $roles  = $user->roles;
+            $groups = $user->groups;
 
-            foreach ($roles->get() as $role)
+            foreach ($roles as $role)
             {
                 $this->roles[] = $role->name;
             }
 
-            foreach ($groups->get() as $group)
+            foreach ($groups as $group)
             {
                 $roles = $group->roles();
                 foreach ($roles->get() as $role)
@@ -42,7 +42,7 @@ class AuthRole
      */
     public function hasRole($role)
     {
-        return in_array($role, $this->roles());
+        return in_array($role, $this->roles);
     }
 
     /**
@@ -56,7 +56,7 @@ class AuthRole
     {
         if (!is_array($roles))
         {
-            $roles = get_func_get_args();
+            $roles = func_get_args();
         }
 
         $reaming = count($roles);
