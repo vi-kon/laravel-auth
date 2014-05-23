@@ -1,4 +1,4 @@
-# Laravel rola authenticator
+# Laravel role based authenticator
 
 This is **Laravel 4** package for role base authenticating.
 
@@ -9,9 +9,14 @@ This is **Laravel 4** package for role base authenticating.
 ## TODO
 
 * Fix incomming bugs
+* Finish documentation
+* Auto copy migration file
 
 ## Features
-* filter routes by roles
+
+* Role based access
+* Grouping roles
+* Filter routes by individual roles
 
 ## Installation
 
@@ -178,6 +183,61 @@ Relations for Laravel Query Builder.
 | Type      | Name     | Description                     | Database                                      |
 | --------- | -------- | ------------------------------- | --------------------------------------------- |
 | BelongsTo | `user()` | User relation for query builder | many to many relation with `user_roles` table |
+
+## AuthRole class
+
+AuthRole class allow to check if current user has role or multiple roles.
+
+### Methods
+
+* hasRole
+* hasRoles
+
+TODO
+
+## Auth filters
+
+Auth filter allow to filter individual routes or redirect user to their home route.
+
+* auth.role
+* auth.home
+
+### auth.role filter
+
+Check if user have certain roles. To add role(s) to route only need add one of `role` or `roles` key to route options with right role.
+
+#### Usage
+
+```php
+$options = array(
+    'before' => 'auth.role',
+    // check if user have admin role
+    'role'   => 'admin',
+);
+Route::get('URL', $options);
+
+$options = array(
+    'before' => 'auth.role',
+     // check if user have admin and superadmin roles
+    'roles'  => array('admin','superadmin'),
+);
+Route::get('URL', $options);
+
+
+```
+
+### auth.home
+
+Redirect user to "home" route if in User model home is not null and user is logged in.
+
+#### Usage
+
+```php
+$options = array(
+    'before' => 'auth.home',
+);
+Route::get('URL', $options);
+```
 
 ## License
 
