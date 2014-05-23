@@ -2,6 +2,16 @@
 
 namespace ViKon\Auth\models;
 
+/**
+ * ViKon\Auth\models\Role
+ *
+ * @property integer                                                                  $id
+ * @property string                                                                   $name
+ * @property-read \Illuminate\Database\Eloquent\Collection|\ViKon\Auth\models\User[]  $users
+ * @property-read \Illuminate\Database\Eloquent\Collection|\ViKon\Auth\models\Group[] $groups
+ * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\models\Role whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\models\Role whereName($value)
+ */
 class Role extends \Eloquent
 {
 

@@ -2,6 +2,22 @@
 
 namespace ViKon\Auth\models;
 
+/**
+ * ViKon\Auth\models\Group
+ *
+ * @property integer                                                                 $id
+ * @property string                                                                  $name
+ * @property string                                                                  $token
+ * @property boolean                                                                 $static
+ * @property boolean                                                                 $hidden
+ * @property-read \Illuminate\Database\Eloquent\Collection|\ViKon\Auth\models\User[] $users
+ * @property-read \Illuminate\Database\Eloquent\Collection|\ViKon\Auth\models\Role[] $roles
+ * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\models\Group whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\models\Group whereName($value)
+ * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\models\Group whereToken($value)
+ * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\models\Group whereStatic($value)
+ * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\models\Group whereHidden($value)
+ */
 class Group extends \Eloquent
 {
 

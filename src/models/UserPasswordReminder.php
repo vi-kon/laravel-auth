@@ -2,6 +2,19 @@
 
 namespace ViKon\Auth\models;
 
+/**
+ * ViKon\Auth\models\UserPasswordReminder
+ *
+ * @property integer                      $id
+ * @property integer                      $user_id
+ * @property string                       $token
+ * @property \Carbon\Carbon               $created_at
+ * @property-read \ViKon\Auth\models\User $user
+ * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\models\UserPasswordReminder whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\models\UserPasswordReminder whereUserId($value)
+ * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\models\UserPasswordReminder whereToken($value)
+ * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\models\UserPasswordReminder whereCreatedAt($value)
+ */
 class UserPasswordReminder extends \Eloquent
 {
 
