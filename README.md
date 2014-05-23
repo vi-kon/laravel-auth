@@ -178,3 +178,7 @@ Relations for Laravel Query Builder.
 | Type      | Name     | Description                     | Database                                      |
 | --------- | -------- | ------------------------------- | --------------------------------------------- |
 | BelongsTo | `user()` | User relation for query builder | many to many relation with `user_roles` table |
+
+## License
+
+This package is licensed under the MIT License
