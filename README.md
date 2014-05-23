@@ -8,7 +8,7 @@ This is **Laravel 4** package for role base authenticating.
 
 ## TODO
 
-* Fix incomming bugs
+* Fix incoming bugs
 * Finish documentation
 * Auto copy migration file
 
@@ -115,7 +115,7 @@ Relations for Laravel Query Builder.
 
 ### User
 
-User representating model, implements `UserInterface`.
+User representing model, implements `UserInterface`.
 
 **Namespace**: `ViKon\Auth\models`
 

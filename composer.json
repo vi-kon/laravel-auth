@@ -1,9 +1,9 @@
 {
     "name"             : "vi-kon/laravel-auth",
     "description"      : "Role based authentication for Laravel 4",
-	"keywords"         : ["laravel", "authentication"],
-	"license"          : "MIT",
-	"homepage"         : "https://github.com/vi-kon/laravel-auth",
+    "keywords"         : ["laravel", "authentication"],
+    "license"          : "MIT",
+    "homepage"         : "https://github.com/vi-kon/laravel-auth",
     "authors"          : [
         {
             "name" : "Kovács Vince",
@@ -15,7 +15,10 @@
         "illuminate/support": "4.1.*"
     },
     "autoload"         : {
-        "psr-0"   : {
+        "psr-0": {
+            "ViKon\\Auth\\": "src/"
+        },
+        "psr-4": {
             "ViKon\\Auth\\": "src/"
         }
     },
