@@ -23,12 +23,6 @@ This is **Laravel 4** package for role base authenticating.
 To your `composer.json` file add following lines:
 
 ```javascript
-// to your "repositories" array
-{
-    "type": "vcs",
-    "url" : "git@github.com:vi-kon/laravel-auth.git"
-}
-
 // to your "require" object
 "vi-kon/laravel-auth": "1.*"
 ```
