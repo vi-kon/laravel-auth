@@ -24,11 +24,18 @@ class Role extends \Eloquent
     public $timestamps = false;
 
     /**
-     * The database table used by the model.
+     * The database table used by the model (mysql).
      *
      * @var string
      */
     protected $table = 'user_roles';
+
+    /**
+     * The database table used by the model (mongodb).
+     *
+     * @var string
+     */
+    protected $collection = 'user_roles';
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany

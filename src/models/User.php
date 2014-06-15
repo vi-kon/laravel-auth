@@ -42,11 +42,18 @@ class User extends \Eloquent implements UserInterface
     public $timestamps = false;
 
     /**
-     * The database table used by the model.
+     * The database table used by the model (mysql).
      *
      * @var string
      */
     protected $table = 'users';
+
+    /**
+     * The database table used by the model (mongodb).
+     *
+     * @var string
+     */
+    protected $collection = 'users';
 
     /**
      * The attributes excluded from the model's JSON form.

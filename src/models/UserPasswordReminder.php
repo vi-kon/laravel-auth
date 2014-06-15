@@ -27,11 +27,18 @@ class UserPasswordReminder extends \Eloquent
     public $timestamps = false;
 
     /**
-     * The database table used by the model.
+     * The database table used by the model (mysql).
      *
      * @var string
      */
     protected $table = 'user_password_reminders';
+
+    /**
+     * The database table used by the model (mongodb).
+     *
+     * @var string
+     */
+    protected $collection = 'user_password_reminders';
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

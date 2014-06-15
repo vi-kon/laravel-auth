@@ -30,11 +30,18 @@ class Group extends \Eloquent
     public $timestamps = false;
 
     /**
-     * The database table used by the model.
+     * The database table used by the model (mysql).
      *
      * @var string
      */
     protected $table = 'user_groups';
+
+    /**
+     * The database table used by the model (mongodb).
+     *
+     * @var string
+     */
+    protected $collection = 'user_groups';
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
