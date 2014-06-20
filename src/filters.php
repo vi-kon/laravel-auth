@@ -4,7 +4,7 @@ Route::filter('auth.role', function ()
     {
         if (!Auth::check() && !Auth::viaRemember())
         {
-            return Redirect::route(Config::get('auth::login.route'), array('redirect' => Request::path()));
+            return Redirect::guest(\URL::action(Config::get('auth::login.route')));
         }
         $action = Route::getCurrentRoute()
                        ->getAction();
