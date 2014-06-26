@@ -6,6 +6,8 @@ use Illuminate\Support\ServiceProvider;
 /**
  * Class AuthServiceProvider
  *
+ * @author  Kovács Vince <vincekovacs@hotmail.com>
+ *
  * @package ViKon\Auth
  */
 class AuthServiceProvider extends ServiceProvider
@@ -27,16 +29,23 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->package('vi-kon/auth');
 
-        $this->app['auth-role'] = $this->app->share(function ($app)
+        $this->app['auth-user'] = $this->app->share(function ()
             {
-                return new AuthRole();
+                return new AuthUser();
+            }
+        );
+
+        $this->app['auth-route'] = $this->app->share(function ()
+            {
+                return new AuthRoute();
             }
         );
 
         $this->app->booting(function ()
             {
                 $loader = AliasLoader::getInstance();
-                $loader->alias('AuthRole', '\ViKon\Auth\Facades\AuthRole');
+                $loader->alias('AuthUser', '\ViKon\Auth\Facades\AuthUser');
+                $loader->alias('AuthRoute', '\ViKon\Auth\Facades\AuthRoute');
             }
         );
 
