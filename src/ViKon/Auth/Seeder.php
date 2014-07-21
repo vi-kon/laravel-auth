@@ -9,9 +9,10 @@ use ViKon\Auth\models\User;
 /**
  * Class Seeder
  *
+ * @author  Kovács Vince <vincekovacs@hotmail.com>
+ *
  * @package ViKon\Auth
  *
- * @author  Kovács Vince
  */
 class Seeder extends \Seeder
 {

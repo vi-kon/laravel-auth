@@ -11,14 +11,14 @@ Route::filter('auth.role', function ()
 
         if (isset($action['role']) &&
             is_string($action['role']) &&
-            !AuthRole::hasRole($action['role'])
+            !AuthUser::hasRole($action['role'])
         )
         {
             return Redirect::route(Config::get('auth::error.403.route'));
         }
         if (isset($action['roles']) &&
             is_array($action['roles']) &&
-            !AuthRole::hasRoles($action['roles'])
+            !AuthUser::hasRoles($action['roles'])
         )
         {
             return Redirect::route(Config::get('auth::error.403.route'));
@@ -30,9 +30,9 @@ Route::filter('auth.role', function ()
 
 Route::filter('auth.home', function ()
     {
-        if (Auth::check() && Auth::getUser()->home !== null)
+        if (Auth::getUser() !== null && AuthUser::getUser()->home !== null)
         {
-            return Redirect::route(Auth::getUser()->home);
+            return Redirect::route(AuthUser::getUser()->home);
         }
 
         return null;

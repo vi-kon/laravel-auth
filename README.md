@@ -178,14 +178,28 @@ Relations for Laravel Query Builder.
 | --------- | -------- | ------------------------------- | --------------------------------------------- |
 | BelongsTo | `user()` | User relation for query builder | many to many relation with `user_roles` table |
 
-## AuthRole class
+## AuthUser class
 
-AuthRole class allow to check if current user has role or multiple roles.
+The `AuthUser` class allow to check if current user has role or multiple roles.
 
 ### Methods
 
+* getUser
 * hasRole
 * hasRoles
+* isBlocked
+
+TODO
+
+## AuthRoute class
+
+The `AuthRoute` class allow to get authentication information from route.
+
+### Methods
+
+* getRoles
+* hasCurrentUserAccess
+* isPublic
 
 TODO
 
