@@ -2,6 +2,23 @@
 
 This is **Laravel 4** package for role base authenticating.
 
+## Table of content
+
+* [Known issues](#known-issues)
+* [TODO](#todo)
+* [Features](#features)
+* [Installation](#installation)
+* [Models](#models)
+    * [Group](#group)
+    * [Role](#role)
+    * [User](#user)
+    * [UserPasswordReminder](#userpasswordreminder)
+* [Auth classes](#auth-classes)
+    * [AuthUser class](#authuser-class)
+    * [AuthRoute class](#authroute-class)
+* [Auth filters](#auth-filters)
+    * [Auth filters](#auth-filters)
+
 ## Known issues
 
 * none
@@ -24,7 +41,7 @@ To your `composer.json` file add following lines:
 
 ```javascript
 // to your "require" object
-"vi-kon/laravel-auth": "1.*"
+"vi-kon/laravel-auth": "1.1.*"
 ```
 In your Laravel 4 project add following lines to `app.php`:
 ```php
@@ -178,7 +195,9 @@ Relations for Laravel Query Builder.
 | --------- | -------- | ------------------------------- | --------------------------------------------- |
 | BelongsTo | `user()` | User relation for query builder | many to many relation with `user_roles` table |
 
-## AuthUser class
+## Auth classes
+
+### AuthUser class
 
 The `AuthUser` class allow to check if current user has role or multiple roles.
 
@@ -191,7 +210,7 @@ The `AuthUser` class allow to check if current user has role or multiple roles.
 
 TODO
 
-## AuthRoute class
+### AuthRoute class
 
 The `AuthRoute` class allow to get authentication information from route.
 
@@ -236,7 +255,7 @@ Route::get('URL', $options);
 
 ### auth.home
 
-Redirect user to "home" route if in User model home is not null and user is logged in.
+Redirect user to named "home" route if in User model home is not null and user is logged in.
 
 #### Usage
 
