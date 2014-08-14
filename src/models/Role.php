@@ -7,10 +7,12 @@ namespace ViKon\Auth\models;
  *
  * @property integer                                                                  $id
  * @property string                                                                   $name
+ * @property string                                                                   $description
  * @property-read \Illuminate\Database\Eloquent\Collection|\ViKon\Auth\models\User[]  $users
  * @property-read \Illuminate\Database\Eloquent\Collection|\ViKon\Auth\models\Group[] $groups
  * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\models\Role whereId($value)
  * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\models\Role whereName($value)
+ * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\models\Role whereDescription($value)
  */
 class Role extends \Eloquent
 {

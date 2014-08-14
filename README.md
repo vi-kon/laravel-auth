@@ -68,13 +68,14 @@ Group is for managing user roles as collection.
 
 #### Read/Write Properties
 
-| Type    | Name     | Description               | Default | Database                |
-| ------- | -------- | ------------------------- |:-------:| ----------------------- |
-| integer | `id`     | Unique group identifier   | -       | primary key, increments |
-| string  | `name`   | Human readable group name | -       |                         |
-| string  | `token`  | Unique group name (token) | null    | unique, nullable        |
-| boolean | `static` | Disallow deleting on GUI  | false   |                         |
-| boolean | `hidden` | Disallow showing on GUI   | false   |                         |
+| Type    | Name          | Description               | Default | Database                |
+| ------- | ------------- | ------------------------- |:-------:| ----------------------- |
+| integer | `id`          | Unique group identifier   | -       | primary key, increments |
+| string  | `name`        | Human readable group name | -       | length 255              |
+| string  | `description` | Short description         | -       | length 1000             |
+| string  | `token`       | Unique group name (token) | null    | unique, nullable        |
+| boolean | `static`      | Disallow deleting on GUI  | false   |                         |
+| boolean | `hidden`      | Disallow showing on GUI   | false   |                         |
 
 #### Read properties (relations)
 
@@ -103,10 +104,11 @@ Role is for allowing users to access routes or certain actions.
 
 #### Read/Write Properties
 
-| Type    | Name   | Description            | Default | Database                |
-| ------- | ------ | ---------------------- |:-------:| ----------------------- |
-| integer | `id`   | Unique role identifier | -       | primary key, increments |
-| string  | `name` | Unique role name       | -       | unique                  |
+| Type    | Name          | Description            | Default | Database                |
+| ------- | ------------- | ---------------------- |:-------:| ----------------------- |
+| integer | `id`          | Unique role identifier | -       | primary key, increments |
+| string  | `name`        | Unique role name       | -       | unique                  |
+| string  | `description` | Short description      | -       | length 1000             |
 
 #### Read properties (relations)
 
@@ -138,8 +140,8 @@ User representing model, implements `UserInterface`.
 | ------- | ---------------- | -------------------------------- |:-------:| ----------------------- |
 | integer | `id`             | Unique user identifier           | -       | primary key, increments |
 | string  | `username`       | Username                         | -       | unique                  |
-| string  | `password`       | User password                    | -       |                         |
-| string  | `email`          | User e-mail address              | -       |                         |
+| string  | `password`       | User password                    | -       | length 255              |
+| string  | `email`          | User e-mail address              | -       | length 255              |
 | string  | `remember_token` | Remember token for "Remember me" | null    | nullable                |
 | string  | `home`           | User home route name             | null    | nullable                |
 | boolean | `blocked`        | Check if user is blocked         | false   |                         |
@@ -177,7 +179,7 @@ Stores password reminder tokens with store time.
 | Type    | Name         | Description                      | Default | Database                |
 | ------- | ------------ | -------------------------------- |:-------:| ----------------------- |
 | integer | `id`         | Unique reminder identifier       | -       | primary key, increments |
-| string  | `user_id`    | User id                          | -       |                         |
+| integer | `user_id`    | User id                          | -       | index                   |
 | string  | `token`      | Password token                   | -       |                         |
 | Carbon  | `created_at` | Created at time                  | -       |                         |
 
