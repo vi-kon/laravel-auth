@@ -7,14 +7,14 @@ use ViKon\Auth\models\Role;
 use ViKon\Auth\models\User;
 
 /**
- * Class Seeder
+ * Trait Seeder
  *
  * @author  Kovács Vince <vincekovacs@hotmail.com>
  *
  * @package ViKon\Auth
  *
  */
-class Seeder extends \Seeder
+trait Seeder
 {
     /**
      * @param string      $username User username
@@ -73,4 +73,4 @@ class Seeder extends \Seeder
 
         return $role;
     }
-} 
+}
