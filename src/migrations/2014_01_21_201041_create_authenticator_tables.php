@@ -41,6 +41,7 @@ class CreateAuthenticatorTables extends Migration
                 $table->engine = 'InnoDB';
                 $table->increments('id');
                 $table->string('name');
+                $table->string('description', 1000);
             }
         );
 
@@ -53,6 +54,7 @@ class CreateAuthenticatorTables extends Migration
                       ->nullable(true)
                       ->default(null)
                       ->unique();
+                $table->string('description', 1000);
                 $table->boolean('static')
                       ->default(false);
                 $table->boolean('hidden')

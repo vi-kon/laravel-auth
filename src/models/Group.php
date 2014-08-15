@@ -8,6 +8,7 @@ namespace ViKon\Auth\models;
  * @property integer                                                                 $id
  * @property string                                                                  $name
  * @property string                                                                  $token
+ * @property string                                                                  $description
  * @property boolean                                                                 $static
  * @property boolean                                                                 $hidden
  * @property-read \Illuminate\Database\Eloquent\Collection|\ViKon\Auth\models\User[] $users
@@ -15,6 +16,7 @@ namespace ViKon\Auth\models;
  * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\models\Group whereId($value)
  * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\models\Group whereName($value)
  * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\models\Group whereToken($value)
+ * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\models\Group whereDescription($value)
  * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\models\Group whereStatic($value)
  * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\models\Group whereHidden($value)
  */

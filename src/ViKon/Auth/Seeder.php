@@ -7,14 +7,14 @@ use ViKon\Auth\models\Role;
 use ViKon\Auth\models\User;
 
 /**
- * Class Seeder
+ * Trait Seeder
  *
  * @author  Kovács Vince <vincekovacs@hotmail.com>
  *
  * @package ViKon\Auth
  *
  */
-class Seeder extends \Seeder
+trait Seeder
 {
     /**
      * @param string      $username User username
@@ -41,36 +41,40 @@ class Seeder extends \Seeder
     }
 
     /**
-     * @param string $name   Group human readable name
-     * @param string $token  Group token
-     * @param bool   $static Group is static or not (Disable deleting on GUI)
-     * @param bool   $hidden Group is hidden or not (Disable showing on GUI)
+     * @param string $name        Group human readable name
+     * @param string $token       Group token
+     * @param string $description Group short description
+     * @param bool   $static      Group is static or not (Disable deleting on GUI)
+     * @param bool   $hidden      Group is hidden or not (Disable showing on GUI)
      *
      * @return \ViKon\Auth\models\Group|static
      */
-    protected function createGroup($name, $token, $static = false, $hidden = false)
+    protected function createGroup($name, $token, $description = '', $static = false, $hidden = false)
     {
         $group = Group::create(array(
-                                   'name'   => $name,
-                                   'token'  => $token,
-                                   'static' => $static,
-                                   'hidden' => $hidden,
+                                   'name'        => $name,
+                                   'token'       => $token,
+                                   'description' => $description,
+                                   'static'      => $static,
+                                   'hidden'      => $hidden,
                                ));
 
         return $group;
     }
 
     /**
-     * @param $name Role unique name
+     * @param string $name        Role unique name
+     * @param string $description Role short description
      *
      * @return \ViKon\Auth\models\Role|static
      */
-    protected function createRole($name)
+    protected function createRole($name, $description = '')
     {
         $role = Role::create(array(
-                                 'name' => $name,
+                                 'name'        => $name,
+                                 'description' => $description,
                              ));
 
         return $role;
     }
-} 
+}
