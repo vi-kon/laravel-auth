@@ -312,6 +312,9 @@ $options = array(
 Route::get('URL', $options);
 ```
 
+---
+[Back to top](#laravel-4-role-based-authentication)
+
 ## Smarty plugins
 
 For using this plugins need [vi-kon/laravel-smarty-view](https://github.com/vi-kon/laravel-smarty-view) package. Installation instruction found on package documentation.
