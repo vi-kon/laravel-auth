@@ -49,6 +49,13 @@ class AuthServiceProvider extends ServiceProvider
             }
         );
 
+        \Event::listen('smarty-view.init', function ($config)
+        {
+            $config->set('smarty-view::plugins_path', array_merge(
+                $config->get('smarty-view::plugins_path'),
+                array(__DIR__ . DIRECTORY_SEPARATOR . 'smarty' . DIRECTORY_SEPARATOR . 'plugins')));
+        });
+
         include_once __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'filters.php';
     }
 
