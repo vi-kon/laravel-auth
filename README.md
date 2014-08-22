@@ -19,6 +19,8 @@ This is **Laravel 4** package for role based authenticating.
 * [Auth filters](#auth-filters)
 	* [auth.role](#authrole-filter)
 	* [auth.home](#authhome-filter)
+* [Smarty plguins](#smarty-plugins)
+	* [has-role](#has-role-plugin)
 
 ## Known issues
 
@@ -308,6 +310,39 @@ $options = array(
     'before' => 'auth.home',
 );
 Route::get('URL', $options);
+```
+
+## Smarty plugins
+
+For using this plugins need [vi-kon/laravel-smarty-view](https://github.com/vi-kon/laravel-smarty-view) package. Installation instruction found on package documentation.
+
+* [has-role](#has-role-plugin)
+
+---
+[Back to top](#laravel-4-role-based-authentication)
+
+### has-role plugin
+
+The **has-role** tag is alias for:
+
+```php
+return \AuthUser::hasRole($roleName);
+```
+
+Return value is type of `boolean`. Can throw `\SmartyException` exception.
+
+#### Attributes
+
+| Type   | Name      | Description    | Required | Default |
+| ------ | --------- | -------------- |:--------:| ------- |
+| string | `role`    | Role token name | x        | -       |
+
+#### Usage
+
+```smarty
+{if {has_role role="admin.index"}}
+  ...
+{/if}
 ```
 
 ---
