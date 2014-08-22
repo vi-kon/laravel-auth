@@ -1,6 +1,6 @@
-# Laravel role based authenticator
+# Laravel 4 role based authentication
 
-This is **Laravel 4** package for role base authenticating.
+This is **Laravel 4** package for role based authenticating.
 
 ## Table of content
 
@@ -17,11 +17,15 @@ This is **Laravel 4** package for role base authenticating.
     * [AuthUser class](#authuser-class)
     * [AuthRoute class](#authroute-class)
 * [Auth filters](#auth-filters)
-    * [Auth filters](#auth-filters)
+	* [auth.role](#authrole-filter)
+	* [auth.home](#authhome-filter)
 
 ## Known issues
 
 * none
+
+---
+[Back to top](#laravel-4-role-based-authentication)
 
 ## TODO
 
@@ -29,11 +33,17 @@ This is **Laravel 4** package for role base authenticating.
 * Finish documentation
 * Auto copy migration file
 
+---
+[Back to top](#laravel-4-role-based-authentication)
+
 ## Features
 
 * Role based access
 * Grouping roles
 * Filter routes by individual roles
+
+---
+[Back to top](#laravel-4-role-based-authentication)
 
 ## Installation
 
@@ -49,6 +59,9 @@ In your Laravel 4 project add following lines to `app.php`:
 'ViKon\Auth\AuthServiceProvider',
 ```
 
+---
+[Back to top](#laravel-4-role-based-authentication)
+
 ## Models
 
 * Group
@@ -57,6 +70,10 @@ In your Laravel 4 project add following lines to `app.php`:
 * UserPasswordReminder
 
 Models are using pivot tables for many to many relations: `rel_role_group`, `rel_user_role`, `rel_user_group`.
+
+
+---
+[Back to top](#laravel-4-role-based-authentication)
 
 ### Group
 
@@ -94,6 +111,9 @@ Relations for Laravel Query Builder.
 | BelongsToMany | `roles()` | Roles relation for query builder | many to many relation with `user_roles` table  |
 
 
+---
+[Back to top](#laravel-4-role-based-authentication)
+
 ### Role
 
 Role is for allowing users to access routes or certain actions.
@@ -125,6 +145,10 @@ Relations for Laravel Query Builder.
 | ------------- | ---------- | --------------------------------- | ---------------------------------------------- |
 | BelongsToMany | `users()`  | Users relation for query builder  | many to many relation with `users` table       |
 | BelongsToMany | `groups()` | Groups relation for query builder | many to many relation with `user_group` table  |
+
+
+---
+[Back to top](#laravel-4-role-based-authentication)
 
 ### User
 
@@ -166,6 +190,10 @@ Relations for Laravel Query Builder.
 | BelongsToMany | `groups()`    | Groups relation for query builder    | many to many relation with `user_group` table               |
 | BelongsToMany | `reminders()` | Reminders relation for query builder | many to many relation with `user_password_reminders` table  |
 
+
+---
+[Back to top](#laravel-4-role-based-authentication)
+
 ### UserPasswordReminder
 
 Stores password reminder tokens with store time.
@@ -197,6 +225,10 @@ Relations for Laravel Query Builder.
 | --------- | -------- | ------------------------------- | --------------------------------------------- |
 | BelongsTo | `user()` | User relation for query builder | many to many relation with `user_roles` table |
 
+
+---
+[Back to top](#laravel-4-role-based-authentication)
+
 ## Auth classes
 
 ### AuthUser class
@@ -212,6 +244,9 @@ The `AuthUser` class allow to check if current user has role or multiple roles.
 
 TODO
 
+---
+[Back to top](#laravel-4-role-based-authentication)
+
 ### AuthRoute class
 
 The `AuthRoute` class allow to get authentication information from route.
@@ -224,12 +259,18 @@ The `AuthRoute` class allow to get authentication information from route.
 
 TODO
 
+---
+[Back to top](#laravel-4-role-based-authentication)
+
 ## Auth filters
 
 Auth filter allow to filter individual routes or redirect user to their home route.
 
-* auth.role
-* auth.home
+* [auth.role](#authrole-filter)
+* [auth.home](#authhome-filter)
+
+---
+[Back to top](#laravel-4-role-based-authentication)
 
 ### auth.role filter
 
@@ -251,11 +292,12 @@ $options = array(
     'roles'  => array('admin','superadmin'),
 );
 Route::get('URL', $options);
-
-
 ```
 
-### auth.home
+---
+[Back to top](#laravel-4-role-based-authentication)
+
+### auth.home filter
 
 Redirect user to named "home" route if in User model home is not null and user is logged in.
 
@@ -268,6 +310,12 @@ $options = array(
 Route::get('URL', $options);
 ```
 
+---
+[Back to top](#laravel-4-role-based-authentication)
+
 ## License
 
 This package is licensed under the MIT License
+
+---
+[Back to top](#laravel-4-role-based-authentication)
