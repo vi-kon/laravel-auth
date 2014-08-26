@@ -13,7 +13,7 @@ namespace ViKon\Auth;
 class AuthRoute
 {
     /**
-     * Get roles for a route
+     * Get roles for a named route
      *
      * @param string $name route name
      *
@@ -31,14 +31,16 @@ class AuthRoute
         $roles  = array();
         $action = $route->getAction();
 
-        if (array_key_exists('role', $action))
-        {
-            $roles[] = (string) $action['role'];
-        }
-
         if (array_key_exists('roles', $action))
         {
-            $roles = array_merge($roles, (array) $action['roles']);
+            if (is_array($action['roles']))
+            {
+                $roles = $action['roles'];
+            }
+            else
+            {
+                $roles[] = $action['roles'];
+            }
         }
 
         return array_unique($roles);

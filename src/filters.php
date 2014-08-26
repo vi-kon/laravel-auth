@@ -9,17 +9,7 @@ Route::filter('auth.role', function ()
         $action = Route::getCurrentRoute()
                        ->getAction();
 
-        if (isset($action['role']) &&
-            is_string($action['role']) &&
-            !AuthUser::hasRole($action['role'])
-        )
-        {
-            return Redirect::route(Config::get('auth::error.403.route'));
-        }
-        if (isset($action['roles']) &&
-            is_array($action['roles']) &&
-            !AuthUser::hasRoles($action['roles'])
-        )
+        if (isset($action['roles']) && !AuthUser::hasRoles($action['roles']))
         {
             return Redirect::route(Config::get('auth::error.403.route'));
         }
