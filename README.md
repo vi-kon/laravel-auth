@@ -26,7 +26,7 @@ This is **Laravel 4** package for role based authenticating.
 * [Filters](#filters)
 	* [auth.role](#authrole-filter)
 	* [auth.home](#authhome-filter)
-* [Smarty plguins](#smarty-plugins)
+* [Smarty plugins](#smarty-plugins)
 	* [has-role](#has-role-plugin)
 
 ## Known issues
@@ -276,7 +276,7 @@ bool AuthUser::hasRole(string $role)
 ```
 | Type                | Name     | Description                                |
 | ------------------- | -------- | ------------------------------------------ |
-| `string`             | `$role`  | name of spacific role                      |
+| `string`            | `$role`  | name of specific role                      |
 
 Return `boolean` value. `TRUE` if current user has specific role, `FALSE` otherwise.
 
@@ -292,13 +292,13 @@ Check if current user has all roles passed as parameter.
 bool AuthUser::hasRoles(mixed $role1 [, string $role2 [, string $role3 [, ... ] ] ])
 ```
 
-| Type                  | Name     | Description                                |
-| --------------------- | -------- | ------------------------------------------ |
-| `string` or `string[]`  | `$role1` | name of first role or array of all roles   |
+| Type                   | Name     | Description                                |
+| ---------------------- | -------- | ------------------------------------------ |
+| `string` or `string[]` | `$role1` | name of first role or array of all roles   |
 | `string`               | `$role2` | name of second role                        |
 | `string`               | `$role3` | name of third role                         |
 
-If more then one parameter passad to method, then all parameters are used as single role and converted to string.
+If more then one parameter passed to method, then all parameters are used as single role and converted to string.
 
 
 ---
@@ -359,7 +359,7 @@ Route::get('URL', $options);
 $options = array(
     'before' => 'auth.role',
      // check if user have admin and superadmin roles
-    'roles'  => array('admin','superadmin'),
+    'roles'  => array('admin', 'superadmin'),
 );
 Route::get('URL', $options);
 ```
@@ -401,9 +401,9 @@ Return value is type of `boolean`. Can throw `\SmartyException` exception.
 
 #### Attributes
 
-| Type   | Name      | Description    | Required | Default |
-| ------ | --------- | -------------- |:--------:| ------- |
-| string | `role`    | Role token name | x        | -       |
+| Type     | Name      | Description     | Required | Default |
+| -------- | --------- | --------------- |:--------:| ------- |
+| `string` | `role`    | Role token name | x        | -       |
 
 #### Usage
 
