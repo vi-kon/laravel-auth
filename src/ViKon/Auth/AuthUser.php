@@ -57,7 +57,7 @@ class AuthUser
     }
 
     /**
-     * Check if current user has role
+     * Check if current user has single role
      *
      * @param string $role role name
      *
@@ -65,46 +65,38 @@ class AuthUser
      */
     public function hasRole($role)
     {
-        return in_array($role, $this->roles);
+        return in_array((string) $role, $this->roles);
     }
 
     /**
-     * Check if current user has roles
+     * Check if current user has all roles passed as parameter
      *
-     * @param array|string $roles roles array
+     * @param array|string $roles roles name array
      *
      * @return bool
      */
     public function hasRoles($roles)
     {
-        if (!is_array($roles))
+        if (func_num_args() > 1)
         {
             $roles = func_get_args();
         }
 
-        $reaming = count($roles);
-        if ($reaming == 0)
+        if (!is_array($roles))
         {
-            return true;
+            return $this->hasRole($roles);
         }
 
-        foreach ($roles as $role)
+        if (count(array_intersect($roles, $this->roles)) === count($roles)) // I count roles because user need to have all roles passed as parameter
         {
-            if (in_array($role, $this->roles))
-            {
-                $reaming--;
-                if ($reaming == 0)
-                {
-                    return true;
-                }
-            }
+            return true;
         }
 
         return false;
     }
 
     /**
-     * Return current user instance
+     * Get current user instance
      *
      * @return null|\ViKon\Auth\models\User
      */
