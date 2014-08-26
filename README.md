@@ -9,14 +9,21 @@ This is **Laravel 4** package for role based authenticating.
 * [Features](#features)
 * [Installation](#installation)
 * [Models](#models)
-    * [Group](#group)
-    * [Role](#role)
-    * [User](#user)
+    * [Group](#group-model)
+    * [Role](#role-model)
+    * [User](#user-model)
     * [UserPasswordReminder](#userpasswordreminder)
-* [Auth classes](#auth-classes)
+* [Helper classes](#helper-classes)
     * [AuthUser class](#authuser-class)
+	    * [getUser](#authusergetuser)
+		* [hasRole](#authuserhasrole)
+		* [hasRoles](#authuserhasroles)
+		* [isBlocked](#authuserisblocked)
     * [AuthRoute class](#authroute-class)
-* [Auth filters](#auth-filters)
+		* [getRoles](#authroutegetroles)
+		* [hasCurrentUserAccess](#authroutehascurrentuseraccess)
+		* [isPublic](#authrouteispublic)
+* [Filters](#filters)
 	* [auth.role](#authrole-filter)
 	* [auth.home](#authhome-filter)
 * [Smarty plguins](#smarty-plugins)
@@ -66,10 +73,10 @@ In your Laravel 4 project add following lines to `app.php`:
 
 ## Models
 
-* Group
-* Role
-* User
-* UserPasswordReminder
+* [Group](#group-model)
+* [Role](#role-model)
+* [User](#user-model)
+* [UserPasswordReminder](#userpasswordreminder-model)
 
 Models are using pivot tables for many to many relations: `rel_role_group`, `rel_user_role`, `rel_user_group`.
 
@@ -77,7 +84,7 @@ Models are using pivot tables for many to many relations: `rel_role_group`, `rel
 ---
 [Back to top](#laravel-4-role-based-authentication)
 
-### Group
+### Group model
 
 Group is for managing user roles as collection.
 
@@ -116,7 +123,7 @@ Relations for Laravel Query Builder.
 ---
 [Back to top](#laravel-4-role-based-authentication)
 
-### Role
+### Role model
 
 Role is for allowing users to access routes or certain actions.
 
@@ -152,7 +159,7 @@ Relations for Laravel Query Builder.
 ---
 [Back to top](#laravel-4-role-based-authentication)
 
-### User
+### User model
 
 User representing model, implements `UserInterface`.
 
@@ -196,7 +203,7 @@ Relations for Laravel Query Builder.
 ---
 [Back to top](#laravel-4-role-based-authentication)
 
-### UserPasswordReminder
+### UserPasswordReminder model
 
 Stores password reminder tokens with store time.
 
@@ -231,7 +238,7 @@ Relations for Laravel Query Builder.
 ---
 [Back to top](#laravel-4-role-based-authentication)
 
-## Auth classes
+## Helper classes
 
 ### AuthUser class
 
@@ -239,12 +246,73 @@ The `AuthUser` class allow to check if current user has role or multiple roles.
 
 ### Methods
 
-* getUser
-* hasRole
-* hasRoles
-* isBlocked
+* [getUser](#authusergetuser) - get current user
+* [hasRole](#authuserhasrole) - check if current user has specific role
+* [hasRoles](#authuserhasroles) - check if current user has all roles
+* [isBlocked](#authuserisblocked) - check if current user is blocked or not
 
-TODO
+---
+[Back to top](#laravel-4-role-based-authentication)
+
+#### AuthUser::getUser
+
+Get current user.
+
+```php
+mixed AuthUser::getUser()
+```
+
+Return `NULL` if user is not logged in, otherwise instance of `\ViKon\Auth\models\User`.
+
+---
+[Back to top](#laravel-4-role-based-authentication)
+
+#### AuthUser::hasRole
+
+Check if current user has specific role.
+
+```php
+bool AuthUser::hasRole(string $role)
+```
+| Type                | Name     | Description                                |
+| ------------------- | -------- | ------------------------------------------ |
+| `string`             | `$role`  | name of spacific role                      |
+
+Return `boolean` value. `TRUE` if current user has specific role, `FALSE` otherwise.
+
+
+---
+[Back to top](#laravel-4-role-based-authentication)
+
+#### AuthUser::hasRoles
+
+Check if current user has all roles passed as parameter.
+
+```php
+bool AuthUser::hasRoles(mixed $role1 [, string $role2 [, string $role3 [, ... ] ] ])
+```
+
+| Type                  | Name     | Description                                |
+| --------------------- | -------- | ------------------------------------------ |
+| `string` or `string[]`  | `$role1` | name of first role or array of all roles   |
+| `string`               | `$role2` | name of second role                        |
+| `string`               | `$role3` | name of third role                         |
+
+If more then one parameter passad to method, then all parameters are used as single role and converted to string.
+
+
+---
+[Back to top](#laravel-4-role-based-authentication)
+
+#### AuthUser::isBlocked
+
+Check if current user is blocked or not.
+
+```php
+bool AuthUser::isBlocked()
+```
+
+Return `TRUE` if user is logged in and is blocked, otherwise `FALSE`.
 
 ---
 [Back to top](#laravel-4-role-based-authentication)
@@ -255,21 +323,21 @@ The `AuthRoute` class allow to get authentication information from route.
 
 ### Methods
 
-* getRoles
-* hasCurrentUserAccess
-* isPublic
+* [getRoles](#authroutegetroles) - get roles for a named route
+* [hasCurrentUserAccess](#authroutehascurrentuseraccess) - check if current user has access to named route
+* [isPublic](#authrouteispublic) - check if route is public (route has no roles)
 
 TODO
 
 ---
 [Back to top](#laravel-4-role-based-authentication)
 
-## Auth filters
+## Filters
 
 Auth filter allow to filter individual routes or redirect user to their home route.
 
-* [auth.role](#authrole-filter)
-* [auth.home](#authhome-filter)
+* [auth.role](#authrole-filter) - check if current user have certain roles
+* [auth.home](#authhome-filter) - redirect user to "home" route
 
 ---
 [Back to top](#laravel-4-role-based-authentication)
@@ -284,7 +352,7 @@ Check if user have certain roles. To add role(s) to route only need add one of `
 $options = array(
     'before' => 'auth.role',
     // check if user have admin role
-    'role'   => 'admin',
+    'roles'  => 'admin',
 );
 Route::get('URL', $options);
 
@@ -311,9 +379,6 @@ $options = array(
 );
 Route::get('URL', $options);
 ```
-
----
-[Back to top](#laravel-4-role-based-authentication)
 
 ## Smarty plugins
 
