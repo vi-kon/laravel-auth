@@ -18,6 +18,9 @@
         "jenssegers/laravel-mongodb": "A MongoDB based Eloquent model and Query builder for Laravel 4"
     },
     "autoload":          {
+        "classmap": [
+            "src/migrations"
+        ],
         "psr-0": {
             "ViKon\\Auth\\": "src/"
         },
