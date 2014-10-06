@@ -1,7 +1,11 @@
 {
     "name":              "vi-kon/laravel-auth",
     "description":       "Role based authenticator for Laravel 4",
-    "keywords":          ["laravel", "authentication", "route"],
+    "keywords":          [
+        "laravel",
+        "authentication",
+        "route"
+    ],
     "license":           "MIT",
     "homepage":          "https://github.com/vi-kon/laravel-auth",
     "authors":           [
@@ -21,10 +25,10 @@
         "classmap": [
             "src/migrations"
         ],
-        "psr-0": {
+        "psr-0":    {
             "ViKon\\Auth\\": "src/"
         },
-        "psr-4": {
+        "psr-4":    {
             "ViKon\\Auth\\": "src/"
         }
     },
