@@ -106,6 +106,18 @@ class AuthUser
     }
 
     /**
+     * Get current user id
+     *
+     * @return int|null
+     */
+    public function getUserId()
+    {
+        return $this->user !== null
+            ? $this->user->id
+            : null;
+    }
+
+    /**
      * Return if current user is blocked
      *
      * @return bool

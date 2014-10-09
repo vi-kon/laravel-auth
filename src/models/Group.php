@@ -58,6 +58,6 @@ class Group extends \Eloquent
      */
     public function roles()
     {
-        return $this->belongsToMany('ViKon\Auth\models\Role', 'rel_role_group', 'group_id', 'role_id');
+        return $this->belongsToMany('ViKon\Auth\models\Role', 'rel_group_role', 'group_id', 'role_id');
     }
 }

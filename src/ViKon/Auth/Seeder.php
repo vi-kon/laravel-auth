@@ -37,6 +37,8 @@ trait Seeder
                                  'hidden'   => $hidden,
                              ));
 
+        $this->addAuthEntry();
+
         return $user;
     }
 
@@ -59,6 +61,8 @@ trait Seeder
                                    'hidden'      => $hidden,
                                ));
 
+        $this->addAuthEntry();
+
         return $group;
     }
 
@@ -75,6 +79,16 @@ trait Seeder
                                  'description' => $description,
                              ));
 
+        $this->addAuthEntry();
+
         return $role;
+    }
+
+    private function addAuthEntry()
+    {
+        if (class_exists('\ViKon\Utilities\Seeder') && $this instanceof \ViKon\Utilities\Seeder)
+        {
+            $this->addEntry();
+        }
     }
 }
