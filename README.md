@@ -247,6 +247,7 @@ The `AuthUser` class allow to check if current user has role or multiple roles.
 ### Methods
 
 * [getUser](#authusergetuser) - get current user
+* [getUserId](#authusergetuserid) - get current user's id
 * [hasRole](#authuserhasrole) - check if current user has specific role
 * [hasRoles](#authuserhasroles) - check if current user has all roles
 * [isBlocked](#authuserisblocked) - check if current user is blocked or not
@@ -263,6 +264,19 @@ mixed AuthUser::getUser()
 ```
 
 Return `NULL` if user is not logged in, otherwise instance of `\ViKon\Auth\models\User`.
+
+---
+[Back to top](#laravel-4-role-based-authentication)
+
+#### AuthUser::getUserId
+
+Get current user's id.
+
+```php
+mixed AuthUser::getUserId()
+```
+
+Return `NULL` if user is not logged in, otherwise user's id.
 
 ---
 [Back to top](#laravel-4-role-based-authentication)
