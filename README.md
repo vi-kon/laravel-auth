@@ -16,6 +16,7 @@ This is **Laravel 4** package for role based authenticating.
 * [Helper classes](#helper-classes)
     * [AuthUser class](#authuser-class)
 	    * [getUser](#authusergetuser)
+        * [getUserId](#authusergetuserid)
 		* [hasRole](#authuserhasrole)
 		* [hasRoles](#authuserhasroles)
 		* [isBlocked](#authuserisblocked)
