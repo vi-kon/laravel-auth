@@ -1,6 +1,6 @@
-# Laravel 4 role based authentication
+# Laravel 5 role based authentication
 
-This is **Laravel 4** package for role based authenticating.
+This is **Laravel 5** package for role based authenticating.
 
 ## Table of content
 
@@ -35,7 +35,7 @@ This is **Laravel 4** package for role based authenticating.
 * none
 
 ---
-[Back to top](#laravel-4-role-based-authentication)
+[Back to top](#laravel-5-role-based-authentication)
 
 ## TODO
 
@@ -44,7 +44,7 @@ This is **Laravel 4** package for role based authenticating.
 * Auto copy migration file
 
 ---
-[Back to top](#laravel-4-role-based-authentication)
+[Back to top](#laravel-5-role-based-authentication)
 
 ## Features
 
@@ -53,7 +53,7 @@ This is **Laravel 4** package for role based authenticating.
 * Filter routes by individual roles
 
 ---
-[Back to top](#laravel-4-role-based-authentication)
+[Back to top](#laravel-5-role-based-authentication)
 
 ## Installation
 
@@ -61,16 +61,16 @@ To your `composer.json` file add following lines:
 
 ```javascript
 // to your "require" object
-"vi-kon/laravel-auth": "1.1.*"
+"vi-kon/laravel-auth": "2.*"
 ```
-In your Laravel 4 project add following lines to `app.php`:
+In your Laravel 5 project add following lines to `app.php`:
 ```php
 // to your providers array
 'ViKon\Auth\AuthServiceProvider',
 ```
 
 ---
-[Back to top](#laravel-4-role-based-authentication)
+[Back to top](#laravel-5-role-based-authentication)
 
 ## Models
 
@@ -83,7 +83,7 @@ Models are using pivot tables for many to many relations: `rel_role_group`, `rel
 
 
 ---
-[Back to top](#laravel-4-role-based-authentication)
+[Back to top](#laravel-5-role-based-authentication)
 
 ### Group model
 
@@ -122,7 +122,7 @@ Relations for Laravel Query Builder.
 
 
 ---
-[Back to top](#laravel-4-role-based-authentication)
+[Back to top](#laravel-5-role-based-authentication)
 
 ### Role model
 
@@ -158,7 +158,7 @@ Relations for Laravel Query Builder.
 
 
 ---
-[Back to top](#laravel-4-role-based-authentication)
+[Back to top](#laravel-5-role-based-authentication)
 
 ### User model
 
@@ -202,7 +202,7 @@ Relations for Laravel Query Builder.
 
 
 ---
-[Back to top](#laravel-4-role-based-authentication)
+[Back to top](#laravel-5-role-based-authentication)
 
 ### UserPasswordReminder model
 
@@ -237,7 +237,7 @@ Relations for Laravel Query Builder.
 
 
 ---
-[Back to top](#laravel-4-role-based-authentication)
+[Back to top](#laravel-5-role-based-authentication)
 
 ## Helper classes
 
@@ -254,7 +254,7 @@ The `AuthUser` class allow to check if current user has role or multiple roles.
 * [isBlocked](#authuserisblocked) - check if current user is blocked or not
 
 ---
-[Back to top](#laravel-4-role-based-authentication)
+[Back to top](#laravel-5-role-based-authentication)
 
 #### AuthUser::getUser
 
@@ -267,7 +267,7 @@ mixed AuthUser::getUser()
 Return `NULL` if user is not logged in, otherwise instance of `\ViKon\Auth\models\User`.
 
 ---
-[Back to top](#laravel-4-role-based-authentication)
+[Back to top](#laravel-5-role-based-authentication)
 
 #### AuthUser::getUserId
 
@@ -280,7 +280,7 @@ mixed AuthUser::getUserId()
 Return `NULL` if user is not logged in, otherwise user's id.
 
 ---
-[Back to top](#laravel-4-role-based-authentication)
+[Back to top](#laravel-5-role-based-authentication)
 
 #### AuthUser::hasRole
 
@@ -297,7 +297,7 @@ Return `boolean` value. `TRUE` if current user has specific role, `FALSE` otherw
 
 
 ---
-[Back to top](#laravel-4-role-based-authentication)
+[Back to top](#laravel-5-role-based-authentication)
 
 #### AuthUser::hasRoles
 
@@ -317,7 +317,7 @@ If more then one parameter passed to method, then all parameters are used as sin
 
 
 ---
-[Back to top](#laravel-4-role-based-authentication)
+[Back to top](#laravel-5-role-based-authentication)
 
 #### AuthUser::isBlocked
 
@@ -330,7 +330,7 @@ bool AuthUser::isBlocked()
 Return `TRUE` if user is logged in and is blocked, otherwise `FALSE`.
 
 ---
-[Back to top](#laravel-4-role-based-authentication)
+[Back to top](#laravel-5-role-based-authentication)
 
 ### AuthRoute class
 
@@ -345,7 +345,7 @@ The `AuthRoute` class allow to get authentication information from route.
 TODO
 
 ---
-[Back to top](#laravel-4-role-based-authentication)
+[Back to top](#laravel-5-role-based-authentication)
 
 ## Filters
 
@@ -355,7 +355,7 @@ Auth filter allow to filter individual routes or redirect user to their home rou
 * [auth.home](#authhome-filter) - redirect user to "home" route
 
 ---
-[Back to top](#laravel-4-role-based-authentication)
+[Back to top](#laravel-5-role-based-authentication)
 
 ### auth.role filter
 
@@ -380,7 +380,7 @@ Route::get('URL', $options);
 ```
 
 ---
-[Back to top](#laravel-4-role-based-authentication)
+[Back to top](#laravel-5-role-based-authentication)
 
 ### auth.home filter
 
@@ -402,7 +402,7 @@ For using this plugins need [vi-kon/laravel-smarty-view](https://github.com/vi-k
 * [has-role](#has-role-plugin)
 
 ---
-[Back to top](#laravel-4-role-based-authentication)
+[Back to top](#laravel-5-role-based-authentication)
 
 ### has-role plugin
 
@@ -429,11 +429,11 @@ Return value is type of `boolean`. Can throw `\SmartyException` exception.
 ```
 
 ---
-[Back to top](#laravel-4-role-based-authentication)
+[Back to top](#laravel-5-role-based-authentication)
 
 ## License
 
 This package is licensed under the MIT License
 
 ---
-[Back to top](#laravel-4-role-based-authentication)
+[Back to top](#laravel-5-role-based-authentication)
