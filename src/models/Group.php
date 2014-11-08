@@ -2,6 +2,8 @@
 
 namespace ViKon\Auth\models;
 
+use Illuminate\Database\Eloquent\Model;
+
 /**
  * ViKon\Auth\models\Group
  *
@@ -20,9 +22,8 @@ namespace ViKon\Auth\models;
  * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\models\Group whereStatic($value)
  * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\models\Group whereHidden($value)
  */
-class Group extends \Eloquent
+class Group extends Model
 {
-
     /**
      *
      * Disable updated_at and created_at columns

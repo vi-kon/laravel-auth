@@ -2,6 +2,8 @@
 
 namespace ViKon\Auth\models;
 
+use Illuminate\Database\Eloquent\Model;
+
 /**
  * ViKon\Auth\models\UserPasswordReminder
  *
@@ -15,7 +17,7 @@ namespace ViKon\Auth\models;
  * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\models\UserPasswordReminder whereToken($value)
  * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\models\UserPasswordReminder whereCreatedAt($value)
  */
-class UserPasswordReminder extends \Eloquent
+class UserPasswordReminder extends Model
 {
 
     /**

@@ -2,7 +2,11 @@
 
 namespace ViKon\Auth\models;
 
-use Illuminate\Auth\UserInterface;
+use Illuminate\Auth\Authenticatable;
+use Illuminate\Auth\Passwords\CanResetPassword;
+use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
+use Illuminate\Contracts\Auth\User as UserContract;
+use Illuminate\Database\Eloquent\Model;
 
 /**
  * ViKon\Auth\models\User
@@ -30,8 +34,9 @@ use Illuminate\Auth\UserInterface;
  * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\models\User whereStatic($value)
  * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\models\User whereHidden($value)
  */
-class User extends \Eloquent implements UserInterface
+class User extends Model implements UserContract, CanResetPasswordContract
 {
+    use Authenticatable, CanResetPassword;
 
     /**
      *
@@ -60,7 +65,7 @@ class User extends \Eloquent implements UserInterface
      *
      * @var array
      */
-    protected $hidden = array('password');
+    protected $hidden = ['password', 'remember_token'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
@@ -91,63 +96,11 @@ class User extends \Eloquent implements UserInterface
      */
     public function profile()
     {
-        if (class_exists('UserProfile'))
+        if (class_exists('App\UserProfile'))
         {
-            return $this->hasOne('UserProfile', 'user_id', 'id');
+            return $this->hasOne('App\UserProfile', 'user_id', 'id');
         }
 
         return null;
-    }
-
-    /**
-     * Get the unique identifier for the user.
-     *
-     * @return mixed
-     */
-    public function getAuthIdentifier()
-    {
-        return $this->getKey();
-    }
-
-    /**
-     * Get the password for the user.
-     *
-     * @return string
-     */
-    public function getAuthPassword()
-    {
-        return $this->password;
-    }
-
-    /**
-     * Get the token value for the "remember me" session.
-     *
-     * @return string
-     */
-    public function getRememberToken()
-    {
-        return $this->remember_token;
-    }
-
-    /**
-     * Set the token value for the "remember me" session.
-     *
-     * @param  string $value
-     *
-     * @return void
-     */
-    public function setRememberToken($value)
-    {
-        $this->remember_token = $value;
-    }
-
-    /**
-     * Get the column name for the "remember me" token.
-     *
-     * @return string
-     */
-    public function getRememberTokenName()
-    {
-        return 'remember_token';
     }
 }

@@ -2,6 +2,8 @@
 
 namespace ViKon\Auth\models;
 
+use Illuminate\Database\Eloquent\Model;
+
 /**
  * ViKon\Auth\models\Role
  *
@@ -14,7 +16,7 @@ namespace ViKon\Auth\models;
  * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\models\Role whereName($value)
  * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\models\Role whereDescription($value)
  */
-class Role extends \Eloquent
+class Role extends Model
 {
 
     /**
