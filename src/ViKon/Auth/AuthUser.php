@@ -3,6 +3,7 @@
 
 namespace ViKon\Auth;
 
+use Illuminate\Auth\Guard;
 use ViKon\Auth\models\User;
 
 /**
@@ -22,17 +23,21 @@ class AuthUser
     /**
      * @var array
      */
-    private $roles = array();
+    private $roles = [];
 
-    public function __construct()
+    /**
+     * Create AuthUser instance
+     * @param \Illuminate\Auth\Guard $guard
+     */
+    public function __construct(Guard $guard)
     {
-        if (\Auth::check())
+        if ($guard->check())
         {
-            $this->user = \Auth::getUser();
+            $this->user = $guard->getUser();
             if (!$this->user instanceof User)
             {
                 $this->user = null;
-                \Log::debug('User is not instance of "ViKon\Auth\models\User"');
+                logger('User is not instance of "ViKon\Auth\models\User"');
 
                 return;
             }
@@ -57,18 +62,6 @@ class AuthUser
     }
 
     /**
-     * Check if current user has single role
-     *
-     * @param string $role role name
-     *
-     * @return bool
-     */
-    public function hasRole($role)
-    {
-        return in_array((string) $role, $this->roles);
-    }
-
-    /**
      * Check if current user has all roles passed as parameter
      *
      * @param array|string $roles roles name array
@@ -87,12 +80,20 @@ class AuthUser
             return $this->hasRole($roles);
         }
 
-        if (count(array_intersect($roles, $this->roles)) === count($roles)) // I count roles because user need to have all roles passed as parameter
-        {
-            return true;
-        }
+        // Count roles because user need to have all roles passed as parameter
+        return count(array_intersect($roles, $this->roles)) === count($roles);
+    }
 
-        return false;
+    /**
+     * Check if current user has single role
+     *
+     * @param string $role role name
+     *
+     * @return bool
+     */
+    public function hasRole($role)
+    {
+        return in_array((string) $role, $this->roles);
     }
 
     /**
@@ -112,9 +113,7 @@ class AuthUser
      */
     public function getUserId()
     {
-        return $this->user !== null
-            ? $this->user->id
-            : null;
+        return $this->user === null ? null : $this->user->id;
     }
 
     /**
