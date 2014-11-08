@@ -6,6 +6,7 @@ This is **Laravel 5** package for role based authenticating.
 
 * [Known issues](#known-issues)
 * [TODO](#todo)
+* [Changes](#changes)
 * [Features](#features)
 * [Installation](#installation)
 * [Models](#models)
@@ -24,9 +25,8 @@ This is **Laravel 5** package for role based authenticating.
 		* [getRoles](#authroutegetroles)
 		* [hasCurrentUserAccess](#authroutehascurrentuseraccess)
 		* [isPublic](#authrouteispublic)
-* [Filters](#filters)
-	* [auth.role](#authrole-filter)
-	* [auth.home](#authhome-filter)
+* [Middleware](#middleware)
+	* [hasAccess](#hasaccessmiddleware)
 * [Smarty plugins](#smarty-plugins)
 	* [has-role](#has-role-plugin)
 
@@ -42,6 +42,21 @@ This is **Laravel 5** package for role based authenticating.
 * Fix incoming bugs
 * Finish documentation
 * Auto copy migration file
+
+---
+[Back to top](#laravel-5-role-based-authentication)
+
+## Changes
+
+Version 2.0
+
+- **Laravel 5** support (requirement)
+- Removed **AuthUser** and **AuthRoute** aliases
+- Added **ViKon\Auth\AuthUser** and **ViKon\Auth\AuthRoute** singletons
+- Package filters changed to **middleware** classes
+- Removed **auth.home** filter (middleware)
+- Code optimalization with Laravel 5 new features and conventions
+- Service provider is now deferred
 
 ---
 [Back to top](#laravel-5-role-based-authentication)
@@ -67,6 +82,17 @@ In your Laravel 5 project add following lines to `app.php`:
 ```php
 // to your providers array
 'ViKon\Auth\AuthServiceProvider',
+```
+Optionally you can add aliases back to `app.php`:
+```php
+// to your aliases array
+'AuthUser'  => 'ViKon\Auth\Facades\AuthUser',
+'AuthRoute' => 'ViKon\Auth\Facades\AuthRoute',
+```
+To use middleware classes need to add aliases to `RouteServiceProvider`'s class `middleware` array:
+```php
+// to your middleware array
+'auth.role' => 'ViKon\Auth\Middleware\HasAccess',
 ```
 
 ---
@@ -347,19 +373,20 @@ TODO
 ---
 [Back to top](#laravel-5-role-based-authentication)
 
-## Filters
+## Middleware
 
-Auth filter allow to filter individual routes or redirect user to their home route.
+Auth middleware classes allow to filter individual routes by their custom roles.
 
-* [auth.role](#authrole-filter) - check if current user have certain roles
-* [auth.home](#authhome-filter) - redirect user to "home" route
+* [HasAccess](#hasaccessmiddleware) - check if current user have roles to current route
 
 ---
 [Back to top](#laravel-5-role-based-authentication)
 
-### auth.role filter
+### HasAccess  middleware
 
-Check if user have certain roles. To add role(s) to route only need add one of `role` or `roles` key to route options with right role.
+Check if user have all roles to current route. To add role(s) to route only need add `roles` key to route options with right roles.
+
+**Note**: If current route's `roles` key is empty or not exists, then `HasAccess` do nothing.
 
 #### Usage
 
@@ -381,19 +408,6 @@ Route::get('URL', $options);
 
 ---
 [Back to top](#laravel-5-role-based-authentication)
-
-### auth.home filter
-
-Redirect user to named "home" route if in User model home is not null and user is logged in.
-
-#### Usage
-
-```php
-$options = array(
-    'before' => 'auth.home',
-);
-Route::get('URL', $options);
-```
 
 ## Smarty plugins
 
@@ -437,3 +451,4 @@ This package is licensed under the MIT License
 
 ---
 [Back to top](#laravel-5-role-based-authentication)
+        
