@@ -72,6 +72,8 @@ Version 2.0
 
 ## Installation
 
+### Basic
+
 To your `composer.json` file add following lines:
 
 ```javascript
@@ -83,17 +85,32 @@ In your Laravel 5 project add following lines to `app.php`:
 // to your providers array
 'ViKon\Auth\AuthServiceProvider',
 ```
+
+---
+[Back to top](#laravel-5-role-based-authentication)
+
+### Aliases
+
 Optionally you can add aliases back to `app.php`:
 ```php
 // to your aliases array
 'AuthUser'  => 'ViKon\Auth\Facades\AuthUser',
 'AuthRoute' => 'ViKon\Auth\Facades\AuthRoute',
 ```
-To use middleware classes need to add aliases to `RouteServiceProvider`'s class `middleware` array:
+
+---
+[Back to top](#laravel-5-role-based-authentication)
+
+### Middleware
+
+To use middleware class assigned to rout need to assign short-hand key to `middleware` property of your `app/Providers/RouteServiceProvider` class:
 ```php
 // to your middleware array
 'auth.role' => 'ViKon\Auth\Middleware\HasAccess',
 ```
+To use middleware globaly (run on every HTTP request) enough to add to your `middleware` property of your `app/Http/Kernel.php` class.
+
+More information about [Middleware usage](http://laravel.com/docs/master/middleware).
 
 ---
 [Back to top](#laravel-5-role-based-authentication)
@@ -106,7 +123,6 @@ To use middleware classes need to add aliases to `RouteServiceProvider`'s class 
 * [UserPasswordReminder](#userpasswordreminder-model)
 
 Models are using pivot tables for many to many relations: `rel_role_group`, `rel_user_role`, `rel_user_group`.
-
 
 ---
 [Back to top](#laravel-5-role-based-authentication)
