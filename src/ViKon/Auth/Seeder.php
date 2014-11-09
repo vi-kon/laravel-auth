@@ -28,14 +28,14 @@ trait Seeder
      */
     protected function createUser($username, $password, $email, $home = null, $static = false, $hidden = false)
     {
-        $user = User::create(array(
+        $user = User::create([
                                  'username' => $username,
-                                 'password' => \Hash::make($password),
+                                 'password' => bcrypt($password),
                                  'email'    => $email,
                                  'home'     => $home,
                                  'static'   => $static,
                                  'hidden'   => $hidden,
-                             ));
+                             ]);
 
         $this->addAuthEntry();
 
@@ -53,13 +53,13 @@ trait Seeder
      */
     protected function createGroup($name, $token, $description = '', $static = false, $hidden = false)
     {
-        $group = Group::create(array(
+        $group = Group::create([
                                    'name'        => $name,
                                    'token'       => $token,
                                    'description' => $description,
                                    'static'      => $static,
                                    'hidden'      => $hidden,
-                               ));
+                               ]);
 
         $this->addAuthEntry();
 
@@ -74,16 +74,19 @@ trait Seeder
      */
     protected function createRole($name, $description = '')
     {
-        $role = Role::create(array(
+        $role = Role::create([
                                  'name'        => $name,
                                  'description' => $description,
-                             ));
+                             ]);
 
         $this->addAuthEntry();
 
         return $role;
     }
 
+    /**
+     * Add auth entry if ViKon/Utilities is imported
+     */
     private function addAuthEntry()
     {
         if (class_exists('\ViKon\Utilities\Seeder') && $this instanceof \ViKon\Utilities\Seeder)

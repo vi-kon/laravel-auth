@@ -1,23 +1,23 @@
 <?php
 
-return array(
-    'login'  => array(
+return [
+    'login'  => [
         'route'    => 'login',
         'redirect' => 'home',
-    ),
-    'logout' => array(
+    ],
+    'logout' => [
         'route'    => 'logout',
         'redirect' => 'home',
-    ),
-    'error'  => array(
-        '403' => array(
+    ],
+    'error'  => [
+        '403' => [
             'route' => 'error.403',
-        ),
-        '404' => array(
+        ],
+        '404' => [
             'route' => 'error.404',
-        ),
-        '500' => array(
+        ],
+        '500' => [
             'route' => 'error.500',
-        ),
-    ),
-);
+        ],
+    ],
+];
