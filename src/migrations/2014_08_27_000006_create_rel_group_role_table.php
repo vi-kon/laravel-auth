@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateRelUserRoleTable extends Migration
+class CreateRelGroupRoleTable extends Migration
 {
 
     /**
@@ -13,23 +13,21 @@ class CreateRelUserRoleTable extends Migration
      */
     public function up()
     {
-        Schema::create('rel_user_role', function (Blueprint $table)
+        Schema::create('rel_group_role', function (Blueprint $table)
         {
             $table->engine = 'InnoDB';
 
-            $table->integer('user_id')
-                  ->unsigned();
+            $table->unsignedInteger('user_id');
             $table->foreign('user_id')
                   ->references('id')
                   ->on('users')
                   ->onUpdate('cascade')
                   ->onDelete('cascade');
 
-            $table->integer('role_id')
-                  ->unsigned();
-            $table->foreign('role_id')
+            $table->unsignedInteger('group_id');
+            $table->foreign('group_id')
                   ->references('id')
-                  ->on('user_roles')
+                  ->on('user_groups')
                   ->onUpdate('cascade')
                   ->onDelete('cascade');
         });
@@ -42,6 +40,6 @@ class CreateRelUserRoleTable extends Migration
      */
     public function down()
     {
-        Schema::drop('rel_user_role');
+        Schema::drop('rel_group_role');
     }
 }

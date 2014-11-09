@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateUserPasswordRemindersTable extends Migration
+class CreateRelUserRoleTable extends Migration
 {
 
     /**
@@ -13,20 +13,23 @@ class CreateUserPasswordRemindersTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_password_reminders', function (Blueprint $table)
+        Schema::create('rel_user_role', function (Blueprint $table)
         {
             $table->engine = 'InnoDB';
 
-            $table->increments('id');
-            $table->integer('user_id')
-                  ->unsigned();
+            $table->unsignedInteger('user_id');
             $table->foreign('user_id')
                   ->references('id')
                   ->on('users')
                   ->onUpdate('cascade')
                   ->onDelete('cascade');
-            $table->string('token');
-            $table->timestamps();
+
+            $table->unsignedInteger('role_id');
+            $table->foreign('role_id')
+                  ->references('id')
+                  ->on('user_roles')
+                  ->onUpdate('cascade')
+                  ->onDelete('cascade');
         });
     }
 
@@ -37,6 +40,6 @@ class CreateUserPasswordRemindersTable extends Migration
      */
     public function down()
     {
-        Schema::drop('user_password_reminders');
+        Schema::drop('rel_user_role');
     }
 }
