@@ -5,7 +5,7 @@ This is **Laravel 5** package for role based authenticating.
 ## Table of content
 
 * [Known issues](#known-issues)
-* [TODO](#todo)
+* [Todo](#todo)
 * [Changes](#changes)
 * [Features](#features)
 * [Installation](#installation)
@@ -37,7 +37,7 @@ This is **Laravel 5** package for role based authenticating.
 ---
 [Back to top](#laravel-5-role-based-authentication)
 
-## TODO
+## Todo
 
 * Fix incoming bugs
 * Finish documentation
@@ -108,9 +108,6 @@ To use middleware class assigned to rout need to assign short-hand key to `middl
 // to your middleware array
 'auth.role' => 'ViKon\Auth\Middleware\HasAccess',
 ```
-To use middleware globaly (run on every HTTP request) enough to add to your `middleware` property of your `app/Http/Kernel.php` class.
-
-More information about [Middleware usage](http://laravel.com/docs/master/middleware).
 
 ---
 [Back to top](#laravel-5-role-based-authentication)
