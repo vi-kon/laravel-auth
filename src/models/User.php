@@ -5,7 +5,7 @@ namespace ViKon\Auth\models;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
-use Illuminate\Contracts\Auth\User as UserContract;
+use Illuminate\Contracts\Auth\Authenticatable  as AuthenticatableContract;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -34,7 +34,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\models\User whereStatic($value)
  * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\models\User whereHidden($value)
  */
-class User extends Model implements UserContract, CanResetPasswordContract
+class User extends Model implements AuthenticatableContract, CanResetPasswordContract
 {
     use Authenticatable, CanResetPassword;
 
