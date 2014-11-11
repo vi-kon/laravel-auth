@@ -3,6 +3,7 @@
 namespace ViKon\Auth\Middleware;
 
 use Closure;
+use Illuminate\Auth\Guard;
 use Illuminate\Contracts\Routing\Middleware;
 use Illuminate\Routing\Router;
 use ViKon\Auth\AuthUser;
@@ -12,12 +13,16 @@ class HasAccess implements Middleware
     /** @var \Illuminate\Routing\Router */
     protected $router;
 
+    /** @var \Illuminate\Auth\Guard */
+    protected $guard;
+
     /** @var \ViKon\Auth\AuthUser */
     protected $authUser;
 
-    public function __construct(Router $router, AuthUser $authUser)
+    public function __construct(Router $router, Guard $guard, AuthUser $authUser)
     {
         $this->router   = $router;
+        $this->guard    = $guard;
         $this->authUser = $authUser;
     }
 
@@ -25,16 +30,25 @@ class HasAccess implements Middleware
      * Handle an incoming request.
      *
      * @param  \Illuminate\Http\Request $request
-     * @param  \Closure $next
+     * @param  \Closure                 $next
+     *
      * @return mixed
      */
     public function handle($request, Closure $next)
     {
-        $action = $this->router->getCurrentRoute()->getAction();
+        $action = $this->router->current()
+                               ->getAction();
 
-        if (isset($action['roles']) && !$this->authUser->hasRoles($action['roles']))
+        if (isset($action['roles']))
         {
-            return redirect()->route(config('auth::error.403.route'));
+            if (!$this->guard->check())
+            {
+                return redirect()->guest(route(config('auth::login.route')));
+            }
+            elseif (!$this->authUser->hasRoles($action['roles']))
+            {
+                return redirect()->route(config('auth::error.403.route'));
+            }
         }
 
         return $next($request);
