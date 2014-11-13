@@ -26,27 +26,6 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->package('vi-kon/auth');
-
-        $this->app->singleton('ViKon\Auth\AuthUser', 'ViKon\Auth\AuthUser');
-        $this->app->singleton('ViKon\Auth\AuthRoute', 'ViKon\Auth\AuthRoute');
-
-        \Event::listen('smarty-view.init',
-            function ($config)
-            {
-                $config->set('smarty-view::plugins_path',
-                             array_merge($config->get('smarty-view::plugins_path'),
-                                         [implode(DIRECTORY_SEPARATOR, [__DIR__, 'smarty', 'plugins'])]));
-            });
-    }
-
-    /**
-     * Get the services provided by the provider.
-     *
-     * @return array
-     */
-    public function provides()
-    {
-        return ['ViKon\Auth\AuthUser', 'ViKon\Auth\AuthRoute'];
     }
 
     /**
@@ -56,5 +35,27 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->app->singleton('ViKon\Auth\AuthUser', 'ViKon\Auth\AuthUser');
+        $this->app->singleton('ViKon\Auth\AuthRoute', 'ViKon\Auth\AuthRoute');
+
+        $this->app->alias('ViKon\Auth\AuthUser', 'AuthUser');
+        $this->app->alias('ViKon\Auth\AuthRoute', 'AuthRoute');
+
+        \Event::listen('smarty-view.init', function ($config)
+        {
+            $config->set('smarty-view::plugins_path', array_merge($config->get('smarty-view::plugins_path'), [
+                implode(DIRECTORY_SEPARATOR, [__DIR__, 'smarty', 'plugins'])
+            ]));
+        });
+    }
+
+    /**
+     * Get the services provided by the provider.
+     *
+     * @return array
+     */
+    public function provides()
+    {
+        return ['ViKon\Auth\AuthUser', 'ViKon\Auth\AuthRoute', 'AuthUser', 'AuthRoute'];
     }
 }
