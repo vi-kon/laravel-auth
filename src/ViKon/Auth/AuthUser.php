@@ -15,7 +15,6 @@ use ViKon\Auth\models\User;
  */
 class AuthUser
 {
-
     /**
      * @var null|\ViKon\Auth\models\User
      */
@@ -27,6 +26,7 @@ class AuthUser
 
     /**
      * Create AuthUser instance
+     *
      * @param \Illuminate\Auth\Guard $guard
      */
     public function __construct(Guard $guard)
