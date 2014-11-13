@@ -418,6 +418,8 @@ In **config.php** file has multiple options. The following options are avalaible
 
 If user is not logged in and route need role permission(s), then HasAccess redirect user to `login.route` config value. If user is logged and hasn't got enough permission to access route, then HasAccess redirect to `error-403.route` config value. Otherwise HasAccess allow access to route.
 
+**Note:** The `login.route` and `error-403.route` store the route name.
+
 #### Usage
 
 ```php
