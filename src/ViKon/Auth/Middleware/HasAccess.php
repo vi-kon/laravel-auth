@@ -47,7 +47,7 @@ class HasAccess implements Middleware
             }
             elseif (!$this->authUser->hasRoles($action['roles']))
             {
-                return redirect()->route(config('auth::error.403.route'));
+                return redirect()->route(config('auth::error-403.route'));
             }
         }
 
