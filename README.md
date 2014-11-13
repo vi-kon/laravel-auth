@@ -26,7 +26,7 @@ This is **Laravel 5** package for role based authenticating.
 		* [hasCurrentUserAccess](#authroutehascurrentuseraccess)
 		* [isPublic](#authrouteispublic)
 * [Middleware](#middleware)
-	* [hasAccess](#hasaccessmiddleware)
+	* [hasAccess](#hasaccess-middleware)
 * [Smarty plugins](#smarty-plugins)
 	* [has-role](#has-role-plugin)
 
@@ -390,7 +390,7 @@ TODO
 
 Auth middleware classes allow to filter individual routes by their custom roles.
 
-* [HasAccess](#hasaccessmiddleware) - check if current user have roles to current route
+* [HasAccess](#hasaccess-middleware) - check if current user have roles to current route
 
 ---
 [Back to top](#laravel-5-role-based-authentication)
@@ -400,6 +400,23 @@ Auth middleware classes allow to filter individual routes by their custom roles.
 Check if user have all roles to current route. To add role(s) to route only need add `roles` key to route options with right roles.
 
 **Note**: If current route's `roles` key is empty or not exists, then `HasAccess` do nothing.
+
+#### Configuration
+
+In **config.php** file has multiple options. The following options are avalaible:
+
+```php
+[
+    'login'     => [
+        'route'    => 'login',
+    ],
+    'error-403' => [
+        'route' => 'error-403'
+    ],
+]
+```
+
+If user is not logged in and route need role permission(s), then HasAccess redirect user to `login.route` config value. If user is logged and hasn't got enough permission to access route, then HasAccess redirect to `error-403.route` config value. Otherwise HasAccess allow access to route.
 
 #### Usage
 
@@ -464,4 +481,3 @@ This package is licensed under the MIT License
 
 ---
 [Back to top](#laravel-5-role-based-authentication)
-        
