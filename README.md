@@ -103,7 +103,7 @@ Optionally you can add aliases back to `app.php`:
 
 ### Middleware
 
-To use middleware class assigned to rout need to assign short-hand key to `middleware` property of your `app/Providers/RouteServiceProvider` class:
+To use middleware class assigned to route need to assign short-hand key to `middleware` property of your `app/Providers/RouteServiceProvider` class:
 ```php
 // to your middleware array
 'auth.role' => 'ViKon\Auth\Middleware\HasAccess',
@@ -420,21 +420,26 @@ If user is not logged in and route need role permission(s), then HasAccess redir
 
 **Note:** The `login.route` and `error-403.route` store the route name.
 
+On 403 error the following parameters are flashed to session during redirect:
+
+* **route-request-uri** - with full URL
+* **route-roles** - array with list of roles needed by route
+
 #### Usage
 
 ```php
-$options = array(
-    'before' => 'auth.role',
-    // check if user have admin role
-    'roles'  => 'admin',
-);
+// check if user have "admin" role
+$options = [
+    'middleware' => 'auth.role',
+    'roles'      => 'admin',
+];
 Route::get('URL', $options);
 
-$options = array(
-    'before' => 'auth.role',
-     // check if user have admin and superadmin roles
-    'roles'  => array('admin', 'superadmin'),
-);
+// check if user have "admin" and "superadmin" roles
+$options = [
+    'middleware' => 'auth.role',
+    'roles'      => ['admin', 'superadmin'],
+];
 Route::get('URL', $options);
 ```
 
