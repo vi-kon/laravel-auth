@@ -38,8 +38,8 @@ class AuthServiceProvider extends ServiceProvider
         $this->app->singleton('ViKon\Auth\AuthUser', 'ViKon\Auth\AuthUser');
         $this->app->singleton('ViKon\Auth\AuthRoute', 'ViKon\Auth\AuthRoute');
 
-        $this->app->alias('ViKon\Auth\AuthUser', 'AuthUser');
-        $this->app->alias('ViKon\Auth\AuthRoute', 'AuthRoute');
+        $this->app->alias('ViKon\Auth\AuthUser', 'auth-user');
+        $this->app->alias('ViKon\Auth\AuthRoute', 'auth-route');
 
         \Event::listen('smarty-view.init', function ($config)
         {
