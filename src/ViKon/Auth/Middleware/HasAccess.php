@@ -19,6 +19,11 @@ class HasAccess implements Middleware
     /** @var \ViKon\Auth\AuthUser */
     protected $authUser;
 
+    /**
+     * @param \Illuminate\Routing\Router $router
+     * @param \Illuminate\Auth\Guard     $guard
+     * @param \ViKon\Auth\AuthUser       $authUser
+     */
     public function __construct(Router $router, Guard $guard, AuthUser $authUser)
     {
         $this->router   = $router;
@@ -32,7 +37,7 @@ class HasAccess implements Middleware
      * @param  \Illuminate\Http\Request $request
      * @param  \Closure                 $next
      *
-     * @return mixed
+     * @return \Illuminate\Http\RedirectResponse|mixed
      */
     public function handle($request, Closure $next)
     {
@@ -47,7 +52,10 @@ class HasAccess implements Middleware
             }
             elseif (!$this->authUser->hasRoles($action['roles']))
             {
-                return redirect()->route(config('auth::error-403.route'));
+                return redirect()
+                    ->route(config('auth::error-403.route'))
+                    ->with('route-request-uri', $request->getRequestUri())
+                    ->with('route-roles', $action['roles']);
             }
         }
 
