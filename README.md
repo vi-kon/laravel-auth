@@ -303,7 +303,7 @@ Get current user.
 mixed AuthUser::getUser()
 ```
 
-Return `NULL` if user is not logged in, otherwise instance of `\ViKon\Auth\models\User`.
+Return `NULL` if user is not authenticated, otherwise instance of `\ViKon\Auth\models\User`.
 
 ---
 [Back to top](#laravel-5-role-based-authentication)
@@ -316,7 +316,7 @@ Get current user's id.
 mixed AuthUser::getUserId()
 ```
 
-Return `NULL` if user is not logged in, otherwise user's id.
+Return `NULL` if user is not authenticated, otherwise user's id.
 
 ---
 [Back to top](#laravel-5-role-based-authentication)
@@ -366,7 +366,7 @@ Check if current user is blocked or not.
 bool AuthUser::isBlocked()
 ```
 
-Return `TRUE` if user is logged in and is blocked, otherwise `FALSE`.
+Return `TRUE` if user is authenticated and is blocked, otherwise `FALSE`.
 
 ---
 [Back to top](#laravel-5-role-based-authentication)
@@ -416,7 +416,7 @@ In **config.php** file has multiple options. The following options are avalaible
 ]
 ```
 
-If user is not logged in and route need role permission(s), then HasAccess redirect user to `login.route` config value. If user is logged and hasn't got enough permission to access route, then HasAccess redirect to `error-403.route` config value. Otherwise HasAccess allow access to route.
+If user is not authenticated and route need role permission(s), then HasAccess redirect user to `login.route` config value. If user is authenticated and hasn't got enough permission to access route, then HasAccess redirect to `error-403.route` config value. Otherwise HasAccess allow access to route.
 
 **Note:** The `login.route` and `error-403.route` store the route name.
 
