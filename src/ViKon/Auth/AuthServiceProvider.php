@@ -16,17 +16,7 @@ class AuthServiceProvider extends ServiceProvider
      *
      * @var bool
      */
-    protected $defer = true;
-
-    /**
-     * Bootstrap the application events.
-     *
-     * @return void
-     */
-    public function boot()
-    {
-        $this->package('vi-kon/auth');
-    }
+    protected $defer = false;
 
     /**
      * Register the service provider.
