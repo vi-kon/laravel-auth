@@ -14,28 +14,26 @@ use ViKon\Auth\models\User;
  * @package ViKon\Auth
  *
  */
-trait Seeder
-{
+trait Seeder {
     /**
-     * @param string      $username User username
-     * @param string      $password User password
-     * @param string      $email    User e-mail address
-     * @param string|null $home     Home route name (After successful login redirect here)
-     * @param bool        $static   User is static or not (Disable deleting on GUI)
-     * @param bool        $hidden   User is hidden or not (Disable showing on GUI)
+     * @param string $username User username
+     * @param string $password User password
+     * @param string $email User e-mail address
+     * @param string|null $home Home route name (After successful login redirect here)
+     * @param bool $static User is static or not (Disable deleting on GUI)
+     * @param bool $hidden User is hidden or not (Disable showing on GUI)
      *
      * @return \ViKon\Auth\models\User|static
      */
-    protected function createUser($username, $password, $email, $home = null, $static = false, $hidden = false)
-    {
+    protected function createUser($username, $password, $email, $home = null, $static = false, $hidden = false) {
         $user = User::create([
-                                 'username' => $username,
-                                 'password' => bcrypt($password),
-                                 'email'    => $email,
-                                 'home'     => $home,
-                                 'static'   => $static,
-                                 'hidden'   => $hidden,
-                             ]);
+            'username' => $username,
+            'password' => bcrypt($password),
+            'email' => $email,
+            'home' => $home,
+            'static' => $static,
+            'hidden' => $hidden,
+        ]);
 
         $this->addAuthEntry();
 
@@ -43,23 +41,22 @@ trait Seeder
     }
 
     /**
-     * @param string $name        Group human readable name
-     * @param string $token       Group token
+     * @param string $name Group human readable name
+     * @param string $token Group token
      * @param string $description Group short description
-     * @param bool   $static      Group is static or not (Disable deleting on GUI)
-     * @param bool   $hidden      Group is hidden or not (Disable showing on GUI)
+     * @param bool $static Group is static or not (Disable deleting on GUI)
+     * @param bool $hidden Group is hidden or not (Disable showing on GUI)
      *
      * @return \ViKon\Auth\models\Group|static
      */
-    protected function createGroup($name, $token, $description = '', $static = false, $hidden = false)
-    {
+    protected function createGroup($name, $token, $description = '', $static = false, $hidden = false) {
         $group = Group::create([
-                                   'name'        => $name,
-                                   'token'       => $token,
-                                   'description' => $description,
-                                   'static'      => $static,
-                                   'hidden'      => $hidden,
-                               ]);
+            'name' => $name,
+            'token' => $token,
+            'description' => $description,
+            'static' => $static,
+            'hidden' => $hidden,
+        ]);
 
         $this->addAuthEntry();
 
@@ -67,17 +64,16 @@ trait Seeder
     }
 
     /**
-     * @param string $name        Role unique name
+     * @param string $name Role unique name
      * @param string $description Role short description
      *
      * @return \ViKon\Auth\models\Role|static
      */
-    protected function createRole($name, $description = '')
-    {
+    protected function createRole($name, $description = '') {
         $role = Role::create([
-                                 'name'        => $name,
-                                 'description' => $description,
-                             ]);
+            'name' => $name,
+            'description' => $description,
+        ]);
 
         $this->addAuthEntry();
 
@@ -87,10 +83,8 @@ trait Seeder
     /**
      * Add auth entry if ViKon/Utilities is imported
      */
-    private function addAuthEntry()
-    {
-        if (class_exists('\ViKon\Utilities\Seeder') && $this instanceof \ViKon\Utilities\Seeder)
-        {
+    private function addAuthEntry() {
+        if (class_exists('\ViKon\Utilities\Seeder') && $this instanceof \ViKon\Utilities\Seeder) {
             $this->addEntry();
         }
     }

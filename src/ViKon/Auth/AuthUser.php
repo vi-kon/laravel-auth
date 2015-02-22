@@ -13,8 +13,7 @@ use ViKon\Auth\models\User;
  *
  * @package ViKon\Auth
  */
-class AuthUser
-{
+class AuthUser {
     /**
      * @var null|\ViKon\Auth\models\User
      */
@@ -29,31 +28,25 @@ class AuthUser
      *
      * @param \Illuminate\Auth\Guard $guard
      */
-    public function __construct(Guard $guard)
-    {
-        if ($guard->check())
-        {
+    public function __construct(Guard $guard) {
+        if ($guard->check()) {
             $this->user = $guard->getUser();
-            if (!$this->user instanceof User)
-            {
+            if (!$this->user instanceof User) {
                 $this->user = null;
                 logger('User is not instance of "ViKon\Auth\models\User"');
 
                 return;
             }
-            $roles  = $this->user->roles;
+            $roles = $this->user->roles;
             $groups = $this->user->groups;
 
-            foreach ($roles as $role)
-            {
+            foreach ($roles as $role) {
                 $this->roles[] = $role->name;
             }
 
-            foreach ($groups as $group)
-            {
+            foreach ($groups as $group) {
                 $roles = $group->roles();
-                foreach ($roles->get() as $role)
-                {
+                foreach ($roles->get() as $role) {
                     $this->roles[] = $role->name;
                 }
             }
@@ -68,15 +61,12 @@ class AuthUser
      *
      * @return bool
      */
-    public function hasRoles($roles)
-    {
-        if (func_num_args() > 1)
-        {
+    public function hasRoles($roles) {
+        if (func_num_args() > 1) {
             $roles = func_get_args();
         }
 
-        if (!is_array($roles))
-        {
+        if (!is_array($roles)) {
             return $this->hasRole($roles);
         }
 
@@ -91,9 +81,8 @@ class AuthUser
      *
      * @return bool
      */
-    public function hasRole($role)
-    {
-        return in_array((string) $role, $this->roles);
+    public function hasRole($role) {
+        return in_array((string)$role, $this->roles);
     }
 
     /**
@@ -101,8 +90,7 @@ class AuthUser
      *
      * @return null|\ViKon\Auth\models\User
      */
-    public function getUser()
-    {
+    public function getUser() {
         return $this->user;
     }
 
@@ -111,8 +99,7 @@ class AuthUser
      *
      * @return int|null
      */
-    public function getUserId()
-    {
+    public function getUserId() {
         return $this->user === null ? null : $this->user->id;
     }
 
@@ -121,8 +108,7 @@ class AuthUser
      *
      * @return bool
      */
-    public function isBlocked()
-    {
+    public function isBlocked() {
         return $this->user !== null && $this->user->blocked;
     }
 }

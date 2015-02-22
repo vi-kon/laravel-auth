@@ -9,8 +9,7 @@ use Illuminate\Support\ServiceProvider;
  *
  * @package ViKon\Auth
  */
-class AuthServiceProvider extends ServiceProvider
-{
+class AuthServiceProvider extends ServiceProvider {
     /**
      * Indicates if loading of the provider is deferred.
      *
@@ -23,16 +22,14 @@ class AuthServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function register()
-    {
+    public function register() {
         $this->app->singleton('ViKon\Auth\AuthUser', 'ViKon\Auth\AuthUser');
         $this->app->singleton('ViKon\Auth\AuthRoute', 'ViKon\Auth\AuthRoute');
 
         $this->app->alias('ViKon\Auth\AuthUser', 'auth-user');
         $this->app->alias('ViKon\Auth\AuthRoute', 'auth-route');
 
-        \Event::listen('smarty-view.init', function ($config)
-        {
+        \Event::listen('smarty-view.init', function ($config) {
             $config->set('smarty-view::plugins_path', array_merge($config->get('smarty-view::plugins_path'), [
                 implode(DIRECTORY_SEPARATOR, [__DIR__, 'smarty', 'plugins'])
             ]));
@@ -44,8 +41,7 @@ class AuthServiceProvider extends ServiceProvider
      *
      * @return array
      */
-    public function provides()
-    {
+    public function provides() {
         return ['ViKon\Auth\AuthUser', 'ViKon\Auth\AuthRoute', 'AuthUser', 'AuthRoute'];
     }
 }

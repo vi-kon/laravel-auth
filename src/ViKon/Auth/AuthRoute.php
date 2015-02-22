@@ -11,8 +11,7 @@ use Illuminate\Routing\Router;
  *
  * @package ViKon\Auth
  */
-class AuthRoute
-{
+class AuthRoute {
     /** @var \Illuminate\Routing\Router */
     protected $router;
 
@@ -25,9 +24,8 @@ class AuthRoute
      * @param \Illuminate\Routing\Router $router
      * @param \ViKon\Auth\AuthUser $authUser
      */
-    public function __construct(Router $router, AuthUser $authUser)
-    {
-        $this->router   = $router;
+    public function __construct(Router $router, AuthUser $authUser) {
+        $this->router = $router;
         $this->authUser = $authUser;
     }
 
@@ -38,11 +36,9 @@ class AuthRoute
      *
      * @return bool|null return null if route not found, otherwise true or false
      */
-    public function hasCurrentUserAccess($name)
-    {
+    public function hasCurrentUserAccess($name) {
         $roles = $this->getRoles($name);
-        if ($roles === null)
-        {
+        if ($roles === null) {
             return null;
         }
 
@@ -56,24 +52,19 @@ class AuthRoute
      *
      * @return array|null return null if route not found, otherwise array of roles
      */
-    public function getRoles($name)
-    {
+    public function getRoles($name) {
         $route = $this->router->getRoutes()->getByName($name);
-        if ($route === null)
-        {
+        if ($route === null) {
             return null;
         }
 
-        $roles  = [];
+        $roles = [];
         $action = $route->getAction();
 
-        if (array_key_exists('roles', $action))
-        {
-            if (is_array($action['roles']))
-            {
+        if (array_key_exists('roles', $action)) {
+            if (is_array($action['roles'])) {
                 $roles = $action['roles'];
-            } else
-            {
+            } else {
                 $roles[] = $action['roles'];
             }
         }
@@ -88,11 +79,9 @@ class AuthRoute
      *
      * @return bool|null return null if route not found, otherwise true or false
      */
-    public function isPublic($name)
-    {
+    public function isPublic($name) {
         $roles = $this->getRoles($name);
-        if ($roles === null)
-        {
+        if ($roles === null) {
             return null;
         }
 

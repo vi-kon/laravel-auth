@@ -8,8 +8,7 @@ use Illuminate\Contracts\Routing\Middleware;
 use Illuminate\Routing\Router;
 use ViKon\Auth\AuthUser;
 
-class HasAccess implements Middleware
-{
+class HasAccess implements Middleware {
     /** @var \Illuminate\Routing\Router */
     protected $router;
 
@@ -21,13 +20,12 @@ class HasAccess implements Middleware
 
     /**
      * @param \Illuminate\Routing\Router $router
-     * @param \Illuminate\Auth\Guard     $guard
-     * @param \ViKon\Auth\AuthUser       $authUser
+     * @param \Illuminate\Auth\Guard $guard
+     * @param \ViKon\Auth\AuthUser $authUser
      */
-    public function __construct(Router $router, Guard $guard, AuthUser $authUser)
-    {
-        $this->router   = $router;
-        $this->guard    = $guard;
+    public function __construct(Router $router, Guard $guard, AuthUser $authUser) {
+        $this->router = $router;
+        $this->guard = $guard;
         $this->authUser = $authUser;
     }
 
@@ -35,23 +33,18 @@ class HasAccess implements Middleware
      * Handle an incoming request.
      *
      * @param  \Illuminate\Http\Request $request
-     * @param  \Closure                 $next
+     * @param  \Closure $next
      *
      * @return \Illuminate\Http\RedirectResponse|mixed
      */
-    public function handle($request, Closure $next)
-    {
+    public function handle($request, Closure $next) {
         $action = $this->router->current()
-                               ->getAction();
+            ->getAction();
 
-        if (isset($action['roles']))
-        {
-            if (!$this->guard->check())
-            {
+        if (isset($action['roles'])) {
+            if (!$this->guard->check()) {
                 return redirect()->guest(route(config('auth::login.route')));
-            }
-            elseif (!$this->authUser->hasRoles($action['roles']))
-            {
+            } elseif (!$this->authUser->hasRoles($action['roles'])) {
                 return redirect()
                     ->route(config('auth::error-403.route'))
                     ->with('route-request-uri', $request->getRequestUri())

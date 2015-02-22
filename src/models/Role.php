@@ -16,8 +16,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\models\Role whereName($value)
  * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\models\Role whereDescription($value)
  */
-class Role extends Model
-{
+class Role extends Model {
 
     /**
      *
@@ -44,16 +43,14 @@ class Role extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function users()
-    {
+    public function users() {
         return $this->belongsToMany('ViKon\Auth\models\User', 'rel_user_role', 'role_id', 'user_id');
     }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function groups()
-    {
+    public function groups() {
         return $this->belongsToMany('ViKon\Auth\models\Group', 'rel_group_role', 'role_id', 'group_id');
     }
 }

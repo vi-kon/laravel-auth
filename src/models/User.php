@@ -5,7 +5,7 @@ namespace ViKon\Auth\models;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
-use Illuminate\Contracts\Auth\Authenticatable  as AuthenticatableContract;
+use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -34,8 +34,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\models\User whereStatic($value)
  * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\models\User whereHidden($value)
  */
-class User extends Model implements AuthenticatableContract, CanResetPasswordContract
-{
+class User extends Model implements AuthenticatableContract, CanResetPasswordContract {
     use Authenticatable, CanResetPassword;
 
     /**
@@ -70,34 +69,29 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function roles()
-    {
+    public function roles() {
         return $this->belongsToMany('ViKon\Auth\models\Role', 'rel_user_role', 'user_id', 'role_id');
     }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function groups()
-    {
+    public function groups() {
         return $this->belongsToMany('ViKon\Auth\models\Group', 'rel_user_group', 'user_id', 'group_id');
     }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function reminders()
-    {
+    public function reminders() {
         return $this->hasMany('ViKon\Auth\models\UserPasswordReminder', 'user_id', 'id');
     }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne|null
      */
-    public function profile()
-    {
-        if (class_exists('App\UserProfile'))
-        {
+    public function profile() {
+        if (class_exists('App\UserProfile')) {
             return $this->hasOne('App\UserProfile', 'user_id', 'id');
         }
 
