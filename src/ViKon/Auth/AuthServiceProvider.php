@@ -50,6 +50,6 @@ class AuthServiceProvider extends ServiceProvider {
      * @return array
      */
     public function provides() {
-        return ['ViKon\Auth\AuthUser', 'ViKon\Auth\AuthRoute', 'AuthUser', 'AuthRoute'];
+        return ['ViKon\Auth\AuthUser', 'ViKon\Auth\AuthRoute', 'auth-user', 'auth-route'];
     }
 }
