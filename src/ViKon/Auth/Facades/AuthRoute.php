@@ -17,6 +17,6 @@ class AuthRoute extends Facade {
      * @return string
      */
     protected static function getFacadeAccessor() {
-        return 'ViKon\Auth\AuthRoute';
+        return 'auth.role.route';
     }
 } 

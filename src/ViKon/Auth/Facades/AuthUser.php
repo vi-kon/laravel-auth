@@ -17,6 +17,6 @@ class AuthUser extends Facade {
      * @return string
      */
     protected static function getFacadeAccessor() {
-        return 'ViKon\Auth\AuthUser';
+        return 'auth.role.user';
     }
 } 

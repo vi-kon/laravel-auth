@@ -17,6 +17,11 @@ class AuthServiceProvider extends ServiceProvider {
      */
     protected $defer = false;
 
+    /**
+     * Bootstrap the application events.
+     *
+     * @return void
+     */
     public function boot() {
         $this->publishes([
             __DIR__ . '/../../config/config.php' => config_path('auth_role.php'),
@@ -33,11 +38,8 @@ class AuthServiceProvider extends ServiceProvider {
      * @return void
      */
     public function register() {
-        $this->app->singleton('ViKon\Auth\AuthUser', 'ViKon\Auth\AuthUser');
-        $this->app->singleton('ViKon\Auth\AuthRoute', 'ViKon\Auth\AuthRoute');
-
-        $this->app->alias('ViKon\Auth\AuthUser', 'auth-user');
-        $this->app->alias('ViKon\Auth\AuthRoute', 'auth-route');
+        $this->app->singleton('auth.role.user', 'ViKon\Auth\AuthUser');
+        $this->app->singleton('auth.role.route', 'ViKon\Auth\AuthRoute');
 
         \Event::listen('smarty-view.init', function ($config) {
             $config->set('smarty-view::plugins_path', array_merge($config->get('smarty-view::plugins_path'), [
@@ -52,6 +54,6 @@ class AuthServiceProvider extends ServiceProvider {
      * @return array
      */
     public function provides() {
-        return ['ViKon\Auth\AuthUser', 'ViKon\Auth\AuthRoute', 'auth-user', 'auth-route'];
+        return ['ViKon\Auth\AuthUser', 'ViKon\Auth\AuthRoute', 'auth.role.user', 'auth.role.route'];
     }
 }
