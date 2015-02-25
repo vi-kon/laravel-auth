@@ -1,6 +1,6 @@
 <?php
 
-namespace ViKon\Auth\models;
+namespace ViKon\Auth\Models;
 
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Auth\Passwords\CanResetPassword;
@@ -9,7 +9,7 @@ use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * ViKon\Auth\models\User
+ * ViKon\Auth\Models\User
  *
  * @property integer                                                                                 $id
  * @property string                                                                                  $username
@@ -20,19 +20,19 @@ use Illuminate\Database\Eloquent\Model;
  * @property boolean                                                                                 $blocked
  * @property boolean                                                                                 $static
  * @property boolean                                                                                 $hidden
- * @property-read \Illuminate\Database\Eloquent\Collection|\ViKon\Auth\models\Role[]                 $roles
- * @property-read \Illuminate\Database\Eloquent\Collection|\ViKon\Auth\models\Group[]                $groups
- * @property-read \Illuminate\Database\Eloquent\Collection|\ViKon\Auth\models\UserPasswordReminder[] $reminders
+ * @property-read \Illuminate\Database\Eloquent\Collection|\ViKon\Auth\Models\Role[]                 $roles
+ * @property-read \Illuminate\Database\Eloquent\Collection|\ViKon\Auth\Models\Group[]                $groups
+ * @property-read \Illuminate\Database\Eloquent\Collection|\ViKon\Auth\Models\UserPasswordReminder[] $reminders
  * @property-read \UserProfile                                                                       $profile
- * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\models\User whereId($value)
- * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\models\User whereUsername($value)
- * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\models\User wherePassword($value)
- * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\models\User whereEmail($value)
- * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\models\User whereRememberToken($value)
- * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\models\User whereHome($value)
- * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\models\User whereBlocked($value)
- * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\models\User whereStatic($value)
- * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\models\User whereHidden($value)
+ * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\Models\User whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\Models\User whereUsername($value)
+ * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\Models\User wherePassword($value)
+ * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\Models\User whereEmail($value)
+ * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\Models\User whereRememberToken($value)
+ * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\Models\User whereHome($value)
+ * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\Models\User whereBlocked($value)
+ * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\Models\User whereStatic($value)
+ * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\Models\User whereHidden($value)
  */
 class User extends Model implements AuthenticatableContract, CanResetPasswordContract {
     use Authenticatable, CanResetPassword;

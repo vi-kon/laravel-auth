@@ -1,11 +1,11 @@
 <?php
 
-namespace ViKon\Auth\models;
+namespace ViKon\Auth\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * ViKon\Auth\models\Group
+ * ViKon\Auth\Models\Group
  *
  * @property integer                                                                 $id
  * @property string                                                                  $name
@@ -13,14 +13,14 @@ use Illuminate\Database\Eloquent\Model;
  * @property string                                                                  $description
  * @property boolean                                                                 $static
  * @property boolean                                                                 $hidden
- * @property-read \Illuminate\Database\Eloquent\Collection|\ViKon\Auth\models\User[] $users
- * @property-read \Illuminate\Database\Eloquent\Collection|\ViKon\Auth\models\Role[] $roles
- * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\models\Group whereId($value)
- * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\models\Group whereName($value)
- * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\models\Group whereToken($value)
- * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\models\Group whereDescription($value)
- * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\models\Group whereStatic($value)
- * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\models\Group whereHidden($value)
+ * @property-read \Illuminate\Database\Eloquent\Collection|\ViKon\Auth\Models\User[] $users
+ * @property-read \Illuminate\Database\Eloquent\Collection|\ViKon\Auth\Models\Role[] $roles
+ * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\Models\Group whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\Models\Group whereName($value)
+ * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\Models\Group whereToken($value)
+ * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\Models\Group whereDescription($value)
+ * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\Models\Group whereStatic($value)
+ * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\Models\Group whereHidden($value)
  */
 class Group extends Model {
     /**

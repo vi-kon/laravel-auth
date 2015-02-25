@@ -2,9 +2,9 @@
 
 namespace ViKon\Auth;
 
-use ViKon\Auth\models\Group;
-use ViKon\Auth\models\Role;
-use ViKon\Auth\models\User;
+use ViKon\Auth\Models\Group;
+use ViKon\Auth\Models\Role;
+use ViKon\Auth\Models\User;
 
 /**
  * Trait Seeder
@@ -23,7 +23,7 @@ trait Seeder {
      * @param bool $static User is static or not (Disable deleting on GUI)
      * @param bool $hidden User is hidden or not (Disable showing on GUI)
      *
-     * @return \ViKon\Auth\models\User|static
+     * @return \ViKon\Auth\Models\User|static
      */
     protected function createUser($username, $password, $email, $home = null, $static = false, $hidden = false) {
         $user = User::create([
@@ -47,7 +47,7 @@ trait Seeder {
      * @param bool $static Group is static or not (Disable deleting on GUI)
      * @param bool $hidden Group is hidden or not (Disable showing on GUI)
      *
-     * @return \ViKon\Auth\models\Group|static
+     * @return \ViKon\Auth\Models\Group|static
      */
     protected function createGroup($name, $token, $description = '', $static = false, $hidden = false) {
         $group = Group::create([
@@ -67,7 +67,7 @@ trait Seeder {
      * @param string $name Role unique name
      * @param string $description Role short description
      *
-     * @return \ViKon\Auth\models\Role|static
+     * @return \ViKon\Auth\Models\Role|static
      */
     protected function createRole($name, $description = '') {
         $role = Role::create([
