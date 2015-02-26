@@ -49,13 +49,13 @@ class Group extends Model {
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function users() {
-        return $this->belongsToMany('ViKon\Auth\models\User', 'rel_user_group', 'group_id', 'user_id');
+        return $this->belongsToMany('ViKon\Auth\Models\User', 'rel_user_group', 'group_id', 'user_id');
     }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function roles() {
-        return $this->belongsToMany('ViKon\Auth\models\Role', 'rel_group_role', 'group_id', 'role_id');
+        return $this->belongsToMany('ViKon\Auth\Models\Role', 'rel_group_role', 'group_id', 'role_id');
     }
 }

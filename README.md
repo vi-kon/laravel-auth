@@ -147,8 +147,8 @@ Group is for managing user roles as collection.
 
 | Type                      | Name    | Description      | Default | Database                                       |
 | ------------------------- | ------- | ---------------- |:-------:| ---------------------------------------------- |
-| \ViKon\Auth\models\User[] | `users` | Users collection | -       | many to many relation with `users` table       |
-| \ViKon\Auth\models\Role[] | `roles` | Roles collection | -       | many to many relation with `user_roles` table  |
+| \ViKon\Auth\Models\User[] | `users` | Users collection | -       | many to many relation with `users` table       |
+| \ViKon\Auth\Models\Role[] | `roles` | Roles collection | -       | many to many relation with `user_roles` table  |
 
 #### Methods (relations)
 
@@ -225,9 +225,9 @@ User representing model, implements `UserInterface`.
 
 | Type                          | Name        | Description          | Default | Database                                                    |
 | ----------------------------- | ----------- | -------------------- |:-------:| ----------------------------------------------------------- |
-| \ViKon\Auth\models\Role[]     | `roles`     | Users collection     | -       | many to many relation with `user_roles` table           |
-| \ViKon\Auth\models\Group[   ] | `groups`    | Groups collection    | -       | many to many relation with `user_groups` table           |
-| \ViKon\Auth\models\Reminder[] | `reminders` | Reminders collection | -       | many to many relation with `user_password_reminders` table  |
+| \ViKon\Auth\Models\Role[]     | `roles`     | Users collection     | -       | many to many relation with `user_roles` table           |
+| \ViKon\Auth\Models\Group[   ] | `groups`    | Groups collection    | -       | many to many relation with `user_groups` table           |
+| \ViKon\Auth\Models\Reminder[] | `reminders` | Reminders collection | -       | many to many relation with `user_password_reminders` table  |
 
 #### Methods (relations)
 

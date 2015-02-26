@@ -70,21 +70,21 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function roles() {
-        return $this->belongsToMany('ViKon\Auth\models\Role', 'rel_user_role', 'user_id', 'role_id');
+        return $this->belongsToMany('ViKon\Auth\Models\Role', 'rel_user_role', 'user_id', 'role_id');
     }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function groups() {
-        return $this->belongsToMany('ViKon\Auth\models\Group', 'rel_user_group', 'user_id', 'group_id');
+        return $this->belongsToMany('ViKon\Auth\Models\Group', 'rel_user_group', 'user_id', 'group_id');
     }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function reminders() {
-        return $this->hasMany('ViKon\Auth\models\UserPasswordReminder', 'user_id', 'id');
+        return $this->hasMany('ViKon\Auth\Models\UserPasswordReminder', 'user_id', 'id');
     }
 
     /**
