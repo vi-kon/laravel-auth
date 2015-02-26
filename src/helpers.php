@@ -9,7 +9,7 @@ if (!function_exists('user_has_role')) {
 
 if (!function_exists('user_has_roles')) {
 
-    function user_has_role($name) {
+    function user_has_roles($name) {
         return app('auth.role.user')->hasRoles($name);
     }
 }
