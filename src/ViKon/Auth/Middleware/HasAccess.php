@@ -43,10 +43,10 @@ class HasAccess implements Middleware {
 
         if (isset($action['roles'])) {
             if (!$this->guard->check()) {
-                return redirect()->guest(route(config('auth::login.route')));
+                return redirect()->guest(route(config('auth-role.login.route')));
             } elseif (!$this->authUser->hasRoles($action['roles'])) {
                 return redirect()
-                    ->route(config('auth::error-403.route'))
+                    ->route(config('auth-role.error-403.route'))
                     ->with('route-request-uri', $request->getRequestUri())
                     ->with('route-roles', $action['roles']);
             }

@@ -24,12 +24,14 @@ class AuthServiceProvider extends ServiceProvider {
      */
     public function boot() {
         $this->publishes([
-            __DIR__ . '/../../config/config.php' => config_path('auth_role.php'),
+            __DIR__ . '/../../config/config.php' => config_path('auth-role.php'),
         ], 'config');
 
         $this->publishes([
             __DIR__ . '/../../database/migrations/' => base_path('/database/migrations'),
         ], 'migrations');
+
+        app('router')->middleware('auth.role', 'ViKon\Auth\Middleware\HasAccess');
     }
 
     /**
@@ -49,6 +51,8 @@ class AuthServiceProvider extends ServiceProvider {
     public function register() {
         $this->app->singleton('auth.role.user', 'ViKon\Auth\AuthUser');
         $this->app->singleton('auth.role.route', 'ViKon\Auth\AuthRoute');
+
+        $this->mergeConfigFrom(__DIR__ . '/../../config/config.php', 'auth-role');
 
         \Event::listen('smarty-view.init', function ($config) {
             $config->set('smarty-view::plugins_path', array_merge($config->get('smarty-view::plugins_path'), [

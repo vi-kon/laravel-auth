@@ -103,11 +103,7 @@ Optionally you can add aliases back to `app.php`:
 
 ### Middleware
 
-To use middleware class assigned to route need to assign short-hand key to `middleware` property of your `app/Providers/RouteServiceProvider` class:
-```php
-// to your middleware array
-'auth.role' => 'ViKon\Auth\Middleware\HasAccess',
-```
+No need assign short-hand key to `Kernel`'s `routeMiddleware` properties, because ServiceProvider do it automatically.
 
 ---
 [Back to top](#laravel-5-role-based-authentication)
