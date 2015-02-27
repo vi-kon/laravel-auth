@@ -22,7 +22,7 @@ class AuthRoute {
      * Create new AuthRoute instance
      *
      * @param \Illuminate\Routing\Router $router
-     * @param \ViKon\Auth\AuthUser $authUser
+     * @param \ViKon\Auth\AuthUser       $authUser
      */
     public function __construct(Router $router, AuthUser $authUser) {
         $this->router = $router;

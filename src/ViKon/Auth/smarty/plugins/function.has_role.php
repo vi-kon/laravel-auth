@@ -3,7 +3,7 @@
 
 if (!function_exists('smarty_function_has_role')) {
     /**
-     * @param array $params
+     * @param array                    $params
      * @param Smarty_Internal_Template $smarty
      *
      * @throws SmartyException

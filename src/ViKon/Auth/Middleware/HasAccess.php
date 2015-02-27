@@ -20,8 +20,8 @@ class HasAccess implements Middleware {
 
     /**
      * @param \Illuminate\Routing\Router $router
-     * @param \Illuminate\Auth\Guard $guard
-     * @param \ViKon\Auth\AuthUser $authUser
+     * @param \Illuminate\Auth\Guard     $guard
+     * @param \ViKon\Auth\AuthUser       $authUser
      */
     public function __construct(Router $router, Guard $guard, AuthUser $authUser) {
         $this->router = $router;
@@ -33,7 +33,7 @@ class HasAccess implements Middleware {
      * Handle an incoming request.
      *
      * @param  \Illuminate\Http\Request $request
-     * @param  \Closure $next
+     * @param  \Closure                 $next
      *
      * @return \Illuminate\Http\RedirectResponse|mixed
      */

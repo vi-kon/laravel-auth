@@ -33,6 +33,15 @@ class AuthServiceProvider extends ServiceProvider {
     }
 
     /**
+     * Get the services provided by the provider.
+     *
+     * @return array
+     */
+    public function provides() {
+        return ['ViKon\Auth\AuthUser', 'ViKon\Auth\AuthRoute', 'auth.role.user', 'auth.role.route'];
+    }
+
+    /**
      * Register the service provider.
      *
      * @return void
@@ -46,14 +55,5 @@ class AuthServiceProvider extends ServiceProvider {
                 implode(DIRECTORY_SEPARATOR, [__DIR__, 'smarty', 'plugins'])
             ]));
         });
-    }
-
-    /**
-     * Get the services provided by the provider.
-     *
-     * @return array
-     */
-    public function provides() {
-        return ['ViKon\Auth\AuthUser', 'ViKon\Auth\AuthRoute', 'auth.role.user', 'auth.role.route'];
     }
 }
