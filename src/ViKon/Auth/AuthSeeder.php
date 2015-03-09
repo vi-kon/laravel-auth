@@ -5,6 +5,7 @@ namespace ViKon\Auth;
 use ViKon\Auth\Models\Group;
 use ViKon\Auth\Models\Role;
 use ViKon\Auth\Models\User;
+use ViKon\Utilities\Seeder;
 
 /**
  * Trait Seeder
@@ -14,7 +15,7 @@ use ViKon\Auth\Models\User;
  * @package ViKon\Auth
  *
  */
-trait Seeder {
+trait AuthSeeder {
     /**
      * @param string      $username User username
      * @param string      $password User password
@@ -84,8 +85,8 @@ trait Seeder {
      * Add auth entry if ViKon/Utilities is imported
      */
     private function addAuthEntry() {
-        if (class_exists('\ViKon\Utilities\Seeder') && $this instanceof \ViKon\Utilities\Seeder) {
-            $this->addEntry();
+        if (class_exists('\ViKon\Utilities\Seeder') && $this instanceof Seeder) {
+            $this->incProcessedEntryCount();
         }
     }
 }
