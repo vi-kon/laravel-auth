@@ -4,47 +4,25 @@ This is **Laravel 5** package for role based authenticating.
 
 ## Table of content
 
-* [Known issues](#known-issues)
 * [Todo](#todo)
 * [Changes](#changes)
 * [Features](#features)
 * [Installation](#installation)
 * [Models](#models)
-    * [Group](#group-model)
-    * [Role](#role-model)
-    * [User](#user-model)
-    * [UserPasswordReminder](#userpasswordreminder)
 * [Helper classes](#helper-classes)
-    * [AuthUser class](#authuser-class)
-	    * [getUser](#authusergetuser)
-        * [getUserId](#authusergetuserid)
-		* [hasRole](#authuserhasrole)
-		* [hasRoles](#authuserhasroles)
-		* [isBlocked](#authuserisblocked)
-    * [AuthRoute class](#authroute-class)
-		* [getRoles](#authroutegetroles)
-		* [hasCurrentUserAccess](#authroutehascurrentuseraccess)
-		* [isPublic](#authrouteispublic)
 * [Middleware](#middleware)
-	* [hasAccess](#hasaccess-middleware)
 * [Smarty plugins](#smarty-plugins)
-	* [has-role](#has-role-plugin)
-
-## Known issues
-
-* none
 
 ---
-[Back to top](#laravel-5-role-based-authentication)
+[Back to top][top]
 
 ## Todo
 
 * Fix incoming bugs
 * Finish documentation
-* Auto copy migration file
 
 ---
-[Back to top](#laravel-5-role-based-authentication)
+[Back to top][top]
 
 ## Changes
 
@@ -59,7 +37,7 @@ Version 2.0
 - Service provider is now deferred
 
 ---
-[Back to top](#laravel-5-role-based-authentication)
+[Back to top][top]
 
 ## Features
 
@@ -68,7 +46,7 @@ Version 2.0
 * Filter routes by individual roles
 
 ---
-[Back to top](#laravel-5-role-based-authentication)
+[Back to top][top]
 
 ## Installation
 
@@ -87,7 +65,7 @@ In your Laravel 5 project add following lines to `app.php`:
 ```
 
 ---
-[Back to top](#laravel-5-role-based-authentication)
+[Back to top][top]
 
 ### Aliases
 
@@ -99,14 +77,14 @@ Optionally you can add aliases back to `app.php`:
 ```
 
 ---
-[Back to top](#laravel-5-role-based-authentication)
+[Back to top][top]
 
 ### Middleware
 
 No need assign short-hand key to `Kernel`'s `routeMiddleware` properties, because ServiceProvider do it automatically.
 
 ---
-[Back to top](#laravel-5-role-based-authentication)
+[Back to top][top]
 
 ## Models
 
@@ -118,7 +96,7 @@ No need assign short-hand key to `Kernel`'s `routeMiddleware` properties, becaus
 Models are using pivot tables for many to many relations: `rel_role_group`, `rel_user_role`, `rel_user_group`.
 
 ---
-[Back to top](#laravel-5-role-based-authentication)
+[Back to top][top]
 
 ### Group model
 
@@ -157,7 +135,7 @@ Relations for Laravel Query Builder.
 
 
 ---
-[Back to top](#laravel-5-role-based-authentication)
+[Back to top][top]
 
 ### Role model
 
@@ -193,7 +171,7 @@ Relations for Laravel Query Builder.
 
 
 ---
-[Back to top](#laravel-5-role-based-authentication)
+[Back to top][top]
 
 ### User model
 
@@ -237,7 +215,7 @@ Relations for Laravel Query Builder.
 
 
 ---
-[Back to top](#laravel-5-role-based-authentication)
+[Back to top][top]
 
 ### UserPasswordReminder model
 
@@ -272,9 +250,20 @@ Relations for Laravel Query Builder.
 
 
 ---
-[Back to top](#laravel-5-role-based-authentication)
+[Back to top][top]
 
 ## Helper classes
+
+* [AuthUser class](#authuser-class)
+	* [getUser](#authusergetuser)
+	* [getUserId](#authusergetuserid)
+	* [hasRole](#authuserhasrole)
+	* [hasRoles](#authuserhasroles)
+	* [isBlocked](#authuserisblocked)
+* [AuthRoute class](#authroute-class)
+	* [getRoles](#authroutegetroles)
+	* [hasCurrentUserAccess](#authroutehascurrentuseraccess)
+	* [isPublic](#authrouteispublic)
 
 ### AuthUser class
 
@@ -289,7 +278,7 @@ The `AuthUser` class allow to check if current user has role or multiple roles.
 * [isBlocked](#authuserisblocked) - check if current user is blocked or not
 
 ---
-[Back to top](#laravel-5-role-based-authentication)
+[Back to top][top]
 
 #### AuthUser::getUser
 
@@ -302,7 +291,7 @@ mixed AuthUser::getUser()
 Return `NULL` if user is not authenticated, otherwise instance of `\ViKon\Auth\models\User`.
 
 ---
-[Back to top](#laravel-5-role-based-authentication)
+[Back to top][top]
 
 #### AuthUser::getUserId
 
@@ -315,7 +304,7 @@ mixed AuthUser::getUserId()
 Return `NULL` if user is not authenticated, otherwise user's id.
 
 ---
-[Back to top](#laravel-5-role-based-authentication)
+[Back to top][top]
 
 #### AuthUser::hasRole
 
@@ -332,7 +321,7 @@ Return `boolean` value. `TRUE` if current user has specific role, `FALSE` otherw
 
 
 ---
-[Back to top](#laravel-5-role-based-authentication)
+[Back to top][top]
 
 #### AuthUser::hasRoles
 
@@ -352,7 +341,7 @@ If more then one parameter passed to method, then all parameters are used as sin
 
 
 ---
-[Back to top](#laravel-5-role-based-authentication)
+[Back to top][top]
 
 #### AuthUser::isBlocked
 
@@ -365,7 +354,7 @@ bool AuthUser::isBlocked()
 Return `TRUE` if user is authenticated and is blocked, otherwise `FALSE`.
 
 ---
-[Back to top](#laravel-5-role-based-authentication)
+[Back to top][top]
 
 ### AuthRoute class
 
@@ -380,7 +369,7 @@ The `AuthRoute` class allow to get authentication information from route.
 TODO
 
 ---
-[Back to top](#laravel-5-role-based-authentication)
+[Back to top][top]
 
 ## Middleware
 
@@ -389,7 +378,7 @@ Auth middleware classes allow to filter individual routes by their custom roles.
 * [HasAccess](#hasaccess-middleware) - check if current user have roles to current route
 
 ---
-[Back to top](#laravel-5-role-based-authentication)
+[Back to top][top]
 
 ### HasAccess  middleware
 
@@ -440,7 +429,7 @@ Route::get('URL', $options);
 ```
 
 ---
-[Back to top](#laravel-5-role-based-authentication)
+[Back to top][top]
 
 ## Smarty plugins
 
@@ -449,7 +438,7 @@ For using this plugins need [vi-kon/laravel-smarty-view](https://github.com/vi-k
 * [has-role](#has-role-plugin)
 
 ---
-[Back to top](#laravel-5-role-based-authentication)
+[Back to top][top]
 
 ### has-role plugin
 
@@ -476,11 +465,13 @@ Return value is type of `boolean`. Can throw `\SmartyException` exception.
 ```
 
 ---
-[Back to top](#laravel-5-role-based-authentication)
+[Back to top][top]
 
 ## License
 
 This package is licensed under the MIT License
 
 ---
-[Back to top](#laravel-5-role-based-authentication)
+[Back to top][top]
+
+[top]: #laravel-5-role-based-authentication
