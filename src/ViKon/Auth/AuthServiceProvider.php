@@ -1,6 +1,5 @@
 <?php namespace ViKon\Auth;
 
-use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
 
 /**
@@ -10,9 +9,7 @@ use Illuminate\Support\ServiceProvider;
  *
  * @package ViKon\Auth
  */
-class AuthServiceProvider extends ServiceProvider
-{
-
+class AuthServiceProvider extends ServiceProvider {
     /**
      * Indicates if loading of the provider is deferred.
      *
@@ -25,48 +22,16 @@ class AuthServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
-    {
-        $this->package('vi-kon/auth');
+    public function boot() {
+        $this->publishes([
+            __DIR__ . '/../../config/config.php' => config_path('auth-role.php'),
+        ], 'config');
 
-        $this->app['auth-user'] = $this->app->share(function ()
-            {
-                return new AuthUser();
-            }
-        );
+        $this->publishes([
+            __DIR__ . '/../../database/migrations/' => base_path('/database/migrations'),
+        ], 'migrations');
 
-        $this->app['auth-route'] = $this->app->share(function ()
-            {
-                return new AuthRoute();
-            }
-        );
-
-        $this->app->booting(function ()
-            {
-                $loader = AliasLoader::getInstance();
-                $loader->alias('AuthUser', '\ViKon\Auth\Facades\AuthUser');
-                $loader->alias('AuthRoute', '\ViKon\Auth\Facades\AuthRoute');
-            }
-        );
-
-        \Event::listen('smarty-view.init', function ($config)
-        {
-            $config->set('smarty-view::plugins_path', array_merge(
-                $config->get('smarty-view::plugins_path'),
-                array(__DIR__ . DIRECTORY_SEPARATOR . 'smarty' . DIRECTORY_SEPARATOR . 'plugins')));
-        });
-
-        include_once __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'filters.php';
-    }
-
-    /**
-     * Register the service provider.
-     *
-     * @return void
-     */
-    public function register()
-    {
-        //
+        app('router')->middleware('auth.role', 'ViKon\Auth\Middleware\HasAccess');
     }
 
     /**
@@ -74,8 +39,25 @@ class AuthServiceProvider extends ServiceProvider
      *
      * @return array
      */
-    public function provides()
-    {
-        return array();
+    public function provides() {
+        return ['auth.role.user', 'auth.role.route'];
+    }
+
+    /**
+     * Register the service provider.
+     *
+     * @return void
+     */
+    public function register() {
+        $this->app->singleton('auth.role.user', 'ViKon\Auth\AuthUser');
+        $this->app->singleton('auth.role.route', 'ViKon\Auth\AuthRoute');
+
+        $this->mergeConfigFrom(__DIR__ . '/../../config/config.php', 'auth-role');
+
+        \Event::listen('smarty-view.init', function ($config) {
+            $config->set('smarty-view::plugins_path', array_merge($config->get('smarty-view::plugins_path'), [
+                implode(DIRECTORY_SEPARATOR, [__DIR__, 'smarty', 'plugins'])
+            ]));
+        });
     }
 }

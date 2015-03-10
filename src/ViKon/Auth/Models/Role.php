@@ -1,21 +1,22 @@
 <?php
 
-namespace ViKon\Auth\models;
+namespace ViKon\Auth\Models;
+
+use Illuminate\Database\Eloquent\Model;
 
 /**
- * ViKon\Auth\models\Role
+ * ViKon\Auth\Models\Role
  *
  * @property integer                                                                  $id
  * @property string                                                                   $name
  * @property string                                                                   $description
- * @property-read \Illuminate\Database\Eloquent\Collection|\ViKon\Auth\models\User[]  $users
- * @property-read \Illuminate\Database\Eloquent\Collection|\ViKon\Auth\models\Group[] $groups
- * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\models\Role whereId($value)
- * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\models\Role whereName($value)
- * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\models\Role whereDescription($value)
+ * @property-read \Illuminate\Database\Eloquent\Collection|\ViKon\Auth\Models\User[]  $users
+ * @property-read \Illuminate\Database\Eloquent\Collection|\ViKon\Auth\Models\Group[] $groups
+ * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\Models\Role whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\Models\Role whereName($value)
+ * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\Models\Role whereDescription($value)
  */
-class Role extends \Eloquent
-{
+class Role extends Model {
 
     /**
      *
@@ -42,16 +43,14 @@ class Role extends \Eloquent
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function users()
-    {
+    public function users() {
         return $this->belongsToMany('ViKon\Auth\models\User', 'rel_user_role', 'role_id', 'user_id');
     }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function groups()
-    {
+    public function groups() {
         return $this->belongsToMany('ViKon\Auth\models\Group', 'rel_group_role', 'role_id', 'group_id');
     }
 }

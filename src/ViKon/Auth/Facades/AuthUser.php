@@ -12,13 +12,11 @@ use Illuminate\Support\Facades\Facade;
  *
  * @package ViKon\Auth\Facades
  */
-class AuthUser extends Facade
-{
+class AuthUser extends Facade {
     /**
      * @return string
      */
-    protected static function getFacadeAccessor()
-    {
-        return 'auth-user';
+    protected static function getFacadeAccessor() {
+        return 'auth.role.user';
     }
 } 

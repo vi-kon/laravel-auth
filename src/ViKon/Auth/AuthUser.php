@@ -3,7 +3,8 @@
 
 namespace ViKon\Auth;
 
-use ViKon\Auth\models\User;
+use Illuminate\Auth\Guard;
+use ViKon\Auth\Models\User;
 
 /**
  * Class AuthUser
@@ -12,60 +13,45 @@ use ViKon\Auth\models\User;
  *
  * @package ViKon\Auth
  */
-class AuthUser
-{
-
+class AuthUser {
     /**
-     * @var null|\ViKon\Auth\models\User
+     * @var null|\ViKon\Auth\Models\User
      */
     private $user = null;
     /**
      * @var array
      */
-    private $roles = array();
+    private $roles = [];
 
-    public function __construct()
-    {
-        if (\Auth::check())
-        {
-            $this->user = \Auth::getUser();
-            if (!$this->user instanceof User)
-            {
+    /**
+     * Create AuthUser instance
+     *
+     * @param \Illuminate\Auth\Guard $guard
+     */
+    public function __construct(Guard $guard) {
+        if ($guard->check()) {
+            $this->user = $guard->getUser();
+            if (!$this->user instanceof User) {
                 $this->user = null;
-                \Log::debug('User is not instance of "ViKon\Auth\models\User"');
+                logger('User is not instance of "ViKon\Auth\models\User"');
 
                 return;
             }
-            $roles  = $this->user->roles;
+            $roles = $this->user->roles;
             $groups = $this->user->groups;
 
-            foreach ($roles as $role)
-            {
+            foreach ($roles as $role) {
                 $this->roles[] = $role->name;
             }
 
-            foreach ($groups as $group)
-            {
+            foreach ($groups as $group) {
                 $roles = $group->roles();
-                foreach ($roles->get() as $role)
-                {
+                foreach ($roles->get() as $role) {
                     $this->roles[] = $role->name;
                 }
             }
             $this->roles = array_unique($this->roles);
         }
-    }
-
-    /**
-     * Check if current user has single role
-     *
-     * @param string $role role name
-     *
-     * @return bool
-     */
-    public function hasRole($role)
-    {
-        return in_array((string) $role, $this->roles);
     }
 
     /**
@@ -75,33 +61,36 @@ class AuthUser
      *
      * @return bool
      */
-    public function hasRoles($roles)
-    {
-        if (func_num_args() > 1)
-        {
+    public function hasRoles($roles) {
+        if (func_num_args() > 1) {
             $roles = func_get_args();
         }
 
-        if (!is_array($roles))
-        {
+        if (!is_array($roles)) {
             return $this->hasRole($roles);
         }
 
-        if (count(array_intersect($roles, $this->roles)) === count($roles)) // I count roles because user need to have all roles passed as parameter
-        {
-            return true;
-        }
+        // Count roles because user need to have all roles passed as parameter
+        return count(array_intersect($roles, $this->roles)) === count($roles);
+    }
 
-        return false;
+    /**
+     * Check if current user has single role
+     *
+     * @param string $role role name
+     *
+     * @return bool
+     */
+    public function hasRole($role) {
+        return in_array((string)$role, $this->roles);
     }
 
     /**
      * Get current user instance
      *
-     * @return null|\ViKon\Auth\models\User
+     * @return null|\ViKon\Auth\Models\User
      */
-    public function getUser()
-    {
+    public function getUser() {
         return $this->user;
     }
 
@@ -110,11 +99,8 @@ class AuthUser
      *
      * @return int|null
      */
-    public function getUserId()
-    {
-        return $this->user !== null
-            ? $this->user->id
-            : null;
+    public function getUserId() {
+        return $this->user === null ? null : $this->user->id;
     }
 
     /**
@@ -122,8 +108,7 @@ class AuthUser
      *
      * @return bool
      */
-    public function isBlocked()
-    {
+    public function isBlocked() {
         return $this->user !== null && $this->user->blocked;
     }
 }

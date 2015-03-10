@@ -1,22 +1,23 @@
 <?php
 
-namespace ViKon\Auth\models;
+namespace ViKon\Auth\Models;
+
+use Illuminate\Database\Eloquent\Model;
 
 /**
- * ViKon\Auth\models\UserPasswordReminder
+ * ViKon\Auth\Models\UserPasswordReminder
  *
  * @property integer                      $id
  * @property integer                      $user_id
  * @property string                       $token
  * @property \Carbon\Carbon               $created_at
- * @property-read \ViKon\Auth\models\User $user
- * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\models\UserPasswordReminder whereId($value)
- * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\models\UserPasswordReminder whereUserId($value)
- * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\models\UserPasswordReminder whereToken($value)
- * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\models\UserPasswordReminder whereCreatedAt($value)
+ * @property-read \ViKon\Auth\Models\User $user
+ * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\Models\UserPasswordReminder whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\Models\UserPasswordReminder whereUserId($value)
+ * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\Models\UserPasswordReminder whereToken($value)
+ * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\Models\UserPasswordReminder whereCreatedAt($value)
  */
-class UserPasswordReminder extends \Eloquent
-{
+class UserPasswordReminder extends Model {
 
     /**
      *
@@ -43,8 +44,7 @@ class UserPasswordReminder extends \Eloquent
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function user()
-    {
+    public function user() {
         return $this->belongsTo('ViKon\Auth\models\User', 'id', 'user_id');
     }
 }
