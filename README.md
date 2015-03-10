@@ -54,11 +54,19 @@ Version 2.0
 
 To your `composer.json` file add following lines:
 
-```javascript
+```json
 // to your "require" object
-"vi-kon/laravel-auth": "2.*"
+"vi-kon/laravel-auth": "~2.*"
 ```
+
+Or run followung command in project root:
+
+```bash
+composer require vi-kon/laravel-auth
+```
+
 In your Laravel 5 project add following lines to `app.php`:
+
 ```php
 // to your providers array
 'ViKon\Auth\AuthServiceProvider',
