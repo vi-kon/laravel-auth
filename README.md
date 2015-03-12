@@ -11,6 +11,7 @@ This is **Laravel 5** package for role based authenticating.
 * [Models](#models)
 * [Helper classes](#helper-classes)
 * [Middleware](#middleware)
+* [Packages](#packages)
 * [Smarty plugins](#smarty-plugins)
 
 ---
@@ -25,6 +26,10 @@ This is **Laravel 5** package for role based authenticating.
 [Back to top][top]
 
 ## Changes
+
+Version 2.0.1
+
+- Group usernames into separated "packages"
 
 Version 2.0
 
@@ -44,6 +49,7 @@ Version 2.0
 * Role based access
 * Grouping roles
 * Filter routes by individual roles
+* Group usernames into modules
 
 ---
 [Back to top][top]
@@ -191,17 +197,20 @@ User representing model, implements `UserInterface`.
 
 #### Read/Write Properties
 
-| Type    | Name             | Description                      | Default | Database                |
-| ------- | ---------------- | -------------------------------- |:-------:| ----------------------- |
-| integer | `id`             | Unique user identifier           | -       | primary key, increments |
-| string  | `username`       | Username                         | -       | unique                  |
-| string  | `password`       | User password                    | -       | length 255              |
-| string  | `email`          | User e-mail address              | -       | length 255              |
-| string  | `remember_token` | Remember token for "Remember me" | null    | nullable                |
-| string  | `home`           | User home route name             | null    | nullable                |
-| boolean | `blocked`        | Check if user is blocked         | false   |                         |
-| boolean | `static`         | Disallow deleting on GUI         | false   |                         |
-| boolean | `hidden`         | Disallow showing on GUI          | false   |                         |
+| Type    | Name             | Description                      | Default  | Database                |
+| ------- | ---------------- | -------------------------------- |:--------:| ----------------------- |
+| integer | `id`             | Unique user identifier           | -        | primary key, increments |
+| string  | `username`       | Username                         | -        |                         |
+| string  | `password`       | User password                    | -        | length 255              |
+| string  | `email`          | User e-mail address              | -        | length 255              |
+| string  | `remember_token` | Remember token for "Remember me" | null     | nullable                |
+| string  | `module`         | Module name                      | "system" |
+| string  | `home`           | User home route name             | null     | nullable                |
+| boolean | `blocked`        | Check if user is blocked         | false    |                         |
+| boolean | `static`         | Disallow deleting on GUI         | false    |                         |
+| boolean | `hidden`         | Disallow showing on GUI          | false    |                         |
+
+The `username` and `module` columns has contracted unique index.
 
 #### Read properties (relations)
 
@@ -434,6 +443,35 @@ $options = [
     'roles'      => ['admin', 'superadmin'],
 ];
 Route::get('URL', $options);
+```
+
+---
+[Back to top][top]
+
+## Packages
+
+Packages are useful for grouping users into individual packages. In each package usernames are unique, however in other package using the same username is permitted.
+
+The default package is `system`. All users are stored in this package. 
+
+### Authentication
+
+For authenticating user in default package is simple, just call `attempt` method as usual:
+
+```php
+if (Auth::attempt(['email' => $email, 'password' => $password]))
+{
+    return redirect()->intended('dashboard');
+}
+```
+
+For authenticating in custom package, need to provide package name:
+
+```php
+if (Auth::attempt(['email' => $email, 'password' => $password, 'package' => $package]))
+{
+    return redirect()->intended('dashboard');
+}
 ```
 
 ---
