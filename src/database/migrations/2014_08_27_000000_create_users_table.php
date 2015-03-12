@@ -15,8 +15,7 @@ class CreateUsersTable extends Migration {
             $table->engine = 'InnoDB';
 
             $table->increments('id');
-            $table->string('username')
-                ->unique();
+            $table->string('username');
             $table->string('password');
             $table->string('email');
             $table->string('remember_token')
@@ -25,6 +24,8 @@ class CreateUsersTable extends Migration {
             $table->string('home')
                 ->nullable(true)
                 ->default(null);
+            $table->string('package')
+                ->default('system');
             $table->boolean('blocked')
                 ->default(false);
             $table->boolean('static')
@@ -32,6 +33,8 @@ class CreateUsersTable extends Migration {
             $table->boolean('hidden')
                 ->default(false);
             $table->timestamps();
+
+            $table->unique(['username', 'package']);
         });
     }
 

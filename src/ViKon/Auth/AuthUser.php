@@ -3,7 +3,7 @@
 
 namespace ViKon\Auth;
 
-use Illuminate\Auth\Guard;
+use Illuminate\Auth\Guard as AuthGuard;
 use ViKon\Auth\Models\User;
 
 /**
@@ -28,9 +28,9 @@ class AuthUser {
      *
      * @param \Illuminate\Auth\Guard $guard
      */
-    public function __construct(Guard $guard) {
+    public function __construct(AuthGuard $guard) {
         if ($guard->check()) {
-            $this->user = $guard->getUser();
+            $this->user = $guard->user();
             if (!$this->user instanceof User) {
                 $this->user = null;
                 logger('User is not instance of "ViKon\Auth\models\User"');

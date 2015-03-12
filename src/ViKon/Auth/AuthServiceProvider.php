@@ -1,5 +1,6 @@
 <?php namespace ViKon\Auth;
 
+use Illuminate\Auth\EloquentUserProvider;
 use Illuminate\Support\ServiceProvider;
 
 /**
@@ -32,6 +33,13 @@ class AuthServiceProvider extends ServiceProvider {
         ], 'migrations');
 
         app('router')->middleware('auth.role', 'ViKon\Auth\Middleware\HasAccess');
+
+        app('auth')->extend('eloquent', function ($app) {
+            $model = $app['config']['auth.model'];
+            $provider = new EloquentUserProvider($this->app['hash'], $model);
+
+            return new Guard($provider, $app['session.store']);
+        });
     }
 
     /**
