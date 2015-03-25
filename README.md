@@ -58,23 +58,23 @@ Version 2.0
 
 ### Basic
 
-To your `composer.json` file add following lines:
+To `composer.json` file add following lines:
 
 ```json
-// to your "require" object
+// to "require" object
 "vi-kon/laravel-auth": "~2.*"
 ```
 
-Or run followung command in project root:
+Or run following command in project root:
 
 ```bash
 composer require vi-kon/laravel-auth
 ```
 
-In your Laravel 5 project add following lines to `app.php`:
+In Laravel 5 project add following lines to `app.php`:
 
 ```php
-// to your providers array
+// to providers array
 'ViKon\Auth\AuthServiceProvider',
 ```
 
@@ -85,9 +85,20 @@ In your Laravel 5 project add following lines to `app.php`:
 
 Optionally you can add aliases back to `app.php`:
 ```php
-// to your aliases array
+// to aliases array
 'AuthUser'  => 'ViKon\Auth\Facades\AuthUser',
 'AuthRoute' => 'ViKon\Auth\Facades\AuthRoute',
+```
+
+---
+[Back to top][top]
+
+### Configuration and migration
+
+Installing configuration and migration files simple run:
+
+```bash
+php artisan vendor:publish --provider="ViKon\Auth\AuthServiceProvider"
 ```
 
 ---
@@ -405,7 +416,7 @@ Check if user have all roles to current route. To add role(s) to route only need
 
 #### Configuration
 
-In **config.php** file has multiple options. The following options are avalaible:
+In **auth-role.php** file has multiple options. The following options are available:
 
 ```php
 [
