@@ -22,6 +22,19 @@ return [
     |
     */
     'error-403' => [
-        'route' => 'error-403'
+        'route' => 'error-403',
     ],
+    /*
+    | --------------------------------------------------------------------------
+    | Profile
+    | --------------------------------------------------------------------------
+    | This model class name provides class for user profile. In user profile you
+    | can specify custom user fields. This model is connected to
+    | ViKon\Auth\Model\User via one to one connection.
+    |
+    | Note: In profile model the user_id field need to be opposite side of
+    | connection.
+    |
+    */
+    'profile'   => 'App\Model\Profile',
 ];
