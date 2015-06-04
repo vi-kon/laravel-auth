@@ -9,7 +9,8 @@ if (!function_exists('user_has_role')) {
      *
      * @return bool
      */
-    function user_has_role($role) {
+    function user_has_role($role)
+    {
         return app('auth.role.user')->hasRole($role);
     }
 }
@@ -23,7 +24,8 @@ if (!function_exists('user_has_roles')) {
      *
      * @return bool
      */
-    function user_has_roles() {
+    function user_has_roles()
+    {
         return app('auth.role.user')->hasRoles(func_get_args());
     }
 }

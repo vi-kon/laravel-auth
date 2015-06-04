@@ -9,8 +9,10 @@ namespace ViKon\Auth;
  *
  * @package ViKon\Auth
  */
-class Guard extends \Illuminate\Auth\Guard {
-    public function attempt(array $credentials = [], $remember = false, $login = true) {
+class Guard extends \Illuminate\Auth\Guard
+{
+    public function attempt(array $credentials = [], $remember = false, $login = true)
+    {
         if (!isset($credentials['package'])) {
             $credentials['package'] = 'system';
         }

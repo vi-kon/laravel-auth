@@ -1,6 +1,5 @@
 <?php
 
-
 namespace ViKon\Auth\Facades;
 
 use Illuminate\Support\Facades\Facade;
@@ -12,11 +11,13 @@ use Illuminate\Support\Facades\Facade;
  *
  * @package ViKon\Auth\Facades
  */
-class AuthRoute extends Facade {
+class AuthRoute extends Facade
+{
     /**
      * @return string
      */
-    protected static function getFacadeAccessor() {
+    protected static function getFacadeAccessor()
+    {
         return 'auth.role.route';
     }
-} 
+}

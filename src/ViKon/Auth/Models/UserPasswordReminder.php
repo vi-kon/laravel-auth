@@ -17,7 +17,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\Models\UserPasswordReminder whereToken($value)
  * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\Models\UserPasswordReminder whereCreatedAt($value)
  */
-class UserPasswordReminder extends Model {
+class UserPasswordReminder extends Model
+{
 
     /**
      *
@@ -44,7 +45,8 @@ class UserPasswordReminder extends Model {
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function user() {
+    public function user()
+    {
         return $this->belongsTo('ViKon\Auth\models\User', 'id', 'user_id');
     }
 }

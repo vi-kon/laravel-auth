@@ -22,7 +22,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\Models\Group whereStatic($value)
  * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\Models\Group whereHidden($value)
  */
-class Group extends Model {
+class Group extends Model
+{
     /**
      *
      * Disable updated_at and created_at columns
@@ -48,14 +49,16 @@ class Group extends Model {
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function users() {
+    public function users()
+    {
         return $this->belongsToMany('ViKon\Auth\Models\User', 'rel_user_group', 'group_id', 'user_id');
     }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function roles() {
+    public function roles()
+    {
         return $this->belongsToMany('ViKon\Auth\Models\Role', 'rel_group_role', 'group_id', 'role_id');
     }
 }

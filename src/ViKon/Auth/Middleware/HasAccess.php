@@ -8,7 +8,8 @@ use Illuminate\Contracts\Routing\Middleware;
 use Illuminate\Routing\Router;
 use ViKon\Auth\AuthUser;
 
-class HasAccess implements Middleware {
+class HasAccess implements Middleware
+{
     /** @var \Illuminate\Routing\Router */
     protected $router;
 
@@ -23,9 +24,10 @@ class HasAccess implements Middleware {
      * @param \Illuminate\Auth\Guard     $guard
      * @param \ViKon\Auth\AuthUser       $authUser
      */
-    public function __construct(Router $router, Guard $guard, AuthUser $authUser) {
-        $this->router = $router;
-        $this->guard = $guard;
+    public function __construct(Router $router, Guard $guard, AuthUser $authUser)
+    {
+        $this->router   = $router;
+        $this->guard    = $guard;
         $this->authUser = $authUser;
     }
 
@@ -37,11 +39,12 @@ class HasAccess implements Middleware {
      *
      * @return \Illuminate\Http\RedirectResponse|mixed
      */
-    public function handle($request, Closure $next) {
+    public function handle($request, Closure $next)
+    {
         $action = $this->router->current()
-            ->getAction();
+                               ->getAction();
 
-        if (isset($action['roles'])) {
+        if (array_key_exists('roles', $action)) {
             if (!$this->guard->check()) {
                 return redirect()->guest(route(config('auth-role.login.route')));
             } elseif (!$this->authUser->hasRoles($action['roles'])) {
