@@ -20,12 +20,12 @@ if (!function_exists('user_has_roles')) {
     /**
      * Check if current user has all roles passed as parameter
      *
-     * @param array|string $roles roles name array
+     * @param array|string ...$args roles name array
      *
      * @return bool
      */
-    function user_has_roles()
+    function user_has_roles(array ...$args)
     {
-        return app('auth.role.user')->hasRoles(func_get_args());
+        return app('auth.role.user')->hasRoles($args);
     }
 }

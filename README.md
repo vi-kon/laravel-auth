@@ -29,7 +29,7 @@ This is **Laravel 5** package for role based authenticating.
 
 Version 3.0.0
 
-- Models moved from `ViKon\Auth\Model\*` namespace to `ViKon\Auth\Model` namespace
+- Models moved from `ViKon\Auth\Model` namespace to `ViKon\Auth\Model` namespace
 - Removed Smarty support
 
 Version 2.0.2
@@ -74,7 +74,7 @@ To your `composer.json` file add following lines:
 "vi-kon/laravel-auth": "~2.*"
 ```
 
-Or run followung command in project root:
+Or run following command in project root:
 
 ```bash
 composer require vi-kon/laravel-auth
@@ -456,7 +456,7 @@ Check if user have all roles to current route. To add role(s) to route only need
 
 #### Configuration
 
-In **config.php** file has multiple options. The following options are avalaible:
+In **config.php** file has multiple options. The following options are available:
 
 ```php
 [

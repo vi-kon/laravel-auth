@@ -24,7 +24,7 @@ trait AuthSeederTrait
      * @param bool        $static   User is static or not (Disable deleting on GUI)
      * @param bool        $hidden   User is hidden or not (Disable showing on GUI)
      *
-     * @return \ViKon\Auth\Model\User|static
+     * @return \ViKon\Auth\Model\User
      */
     protected function createUser($username, $password, $email, $home = null, $static = false, $hidden = false)
     {
@@ -48,7 +48,7 @@ trait AuthSeederTrait
      * @param bool   $static      Group is static or not (Disable deleting on GUI)
      * @param bool   $hidden      Group is hidden or not (Disable showing on GUI)
      *
-     * @return \ViKon\Auth\Model\Group|static
+     * @return \ViKon\Auth\Model\Group
      */
     protected function createGroup($name, $token, $description = '', $static = false, $hidden = false)
     {
@@ -67,7 +67,7 @@ trait AuthSeederTrait
      * @param string $name        Role unique name
      * @param string $description Role short description
      *
-     * @return \ViKon\Auth\Model\Role|static
+     * @return \ViKon\Auth\Model\Role
      */
     protected function createRole($name, $description = '')
     {

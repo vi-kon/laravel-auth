@@ -7,7 +7,7 @@ namespace ViKon\Auth\Exception;
  *
  * @package ViKon\Auth\Exception
  *
- * @author  Kov·cs Vince <vincekovacs@hotmail.com>
+ * @author  Kov√°cs Vince <vincekovacs@hotmail.com>
  */
 class ProfileNotFoundException extends \Exception
 {

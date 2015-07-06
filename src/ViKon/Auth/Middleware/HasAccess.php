@@ -4,11 +4,17 @@ namespace ViKon\Auth\Middleware;
 
 use Closure;
 use Illuminate\Auth\Guard;
-use Illuminate\Contracts\Routing\Middleware;
 use Illuminate\Routing\Router;
 use ViKon\Auth\AuthUser;
 
-class HasAccess implements Middleware
+/**
+ * Class HasAccess
+ *
+ * @package ViKon\Auth\Middleware
+ *
+ * @author  Kovács Vince<vincekovacs@hotmail.com>
+ */
+class HasAccess
 {
     /** @var \Illuminate\Routing\Router */
     protected $router;

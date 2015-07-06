@@ -2,6 +2,7 @@
 
 use Illuminate\Auth\EloquentUserProvider;
 use Illuminate\Support\ServiceProvider;
+use ViKon\Auth\Middleware\HasAccess;
 
 /**
  * Class AuthServiceProvider
@@ -13,11 +14,14 @@ use Illuminate\Support\ServiceProvider;
 class AuthServiceProvider extends ServiceProvider
 {
     /**
-     * Indicates if loading of the provider is deferred.
-     *
-     * @var bool
+     * {@inheritDoc}
      */
-    protected $defer = false;
+    public function __construct($app)
+    {
+        $this->defer = false;
+
+        parent::__construct($app);
+    }
 
     /**
      * Bootstrap the application events.
@@ -26,17 +30,12 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->publishes([
-                             __DIR__ . '/../../config/config.php' => config_path('auth-role.php'),
-                         ], 'config');
+        $this->publishes([__DIR__ . '/../../config/config.php' => config_path('auth-role.php'),], 'config');
+        $this->publishes([__DIR__ . '/../../database/migrations/' => base_path('/database/migrations'),], 'migrations');
 
-        $this->publishes([
-                             __DIR__ . '/../../database/migrations/' => base_path('/database/migrations'),
-                         ], 'migrations');
+        $this->app->make('router')->middleware('auth.role', HasAccess::class);
 
-        app('router')->middleware('auth.role', 'ViKon\Auth\Middleware\HasAccess');
-
-        app('auth')->extend('eloquent', function ($app) {
+        $this->app->make('auth')->extend('eloquent', function ($app) {
             $model    = $app['config']['auth.model'];
             $provider = new EloquentUserProvider($this->app['hash'], $model);
 
@@ -45,9 +44,7 @@ class AuthServiceProvider extends ServiceProvider
     }
 
     /**
-     * Get the services provided by the provider.
-     *
-     * @return array
+     * {@inheritDoc}
      */
     public function provides()
     {
@@ -55,9 +52,7 @@ class AuthServiceProvider extends ServiceProvider
     }
 
     /**
-     * Register the service provider.
-     *
-     * @return void
+     * {@inheritDoc}
      */
     public function register()
     {

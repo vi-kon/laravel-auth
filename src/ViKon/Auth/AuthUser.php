@@ -14,8 +14,8 @@ use ViKon\Auth\Model\User;
  */
 class AuthUser
 {
-    /** @var null|\ViKon\Auth\Model\User */
-    private $user = null;
+    /** @var \ViKon\Auth\Model\User */
+    private $user;
 
     /**@var string[] */
     private $roles = [];
@@ -43,8 +43,8 @@ class AuthUser
             }
 
             foreach ($groups as $group) {
-                $roles = $group->roles();
-                foreach ($roles->get() as $role) {
+                $roles = $group->roles;
+                foreach ($roles as $role) {
                     $this->roles[] = $role->name;
                 }
             }
@@ -55,18 +55,14 @@ class AuthUser
     /**
      * Check if current user has all roles passed as parameter
      *
-     * @param array|string $roles roles name array
+     * @param string[] ...$roles roles name array
      *
      * @return bool
      */
-    public function hasRoles($roles)
+    public function hasRoles(...$roles)
     {
-        if (func_num_args() > 1) {
-            $roles = func_get_args();
-        }
-
-        if (!is_array($roles)) {
-            return $this->hasRole($roles);
+        if (count($roles) === 1) {
+            return $this->hasRole(reset($roles));
         }
 
         // Count roles because user need to have all roles passed as parameter
@@ -82,7 +78,7 @@ class AuthUser
      */
     public function hasRole($role)
     {
-        return in_array((string)$role, $this->roles);
+        return in_array((string)$role, $this->roles, true);
     }
 
     /**
