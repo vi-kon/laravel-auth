@@ -65,11 +65,5 @@ class AuthServiceProvider extends ServiceProvider
         $this->app->singleton('auth.role.route', 'ViKon\Auth\AuthRoute');
 
         $this->mergeConfigFrom(__DIR__ . '/../../config/config.php', 'auth-role');
-
-        \Event::listen('smarty-view.init', function ($config) {
-            $config->set('smarty-view::plugins_path', array_merge($config->get('smarty-view::plugins_path'), [
-                implode(DIRECTORY_SEPARATOR, [__DIR__, 'smarty', 'plugins']),
-            ]));
-        });
     }
 }

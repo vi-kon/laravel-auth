@@ -30,6 +30,7 @@ This is **Laravel 5** package for role based authenticating.
 Version 3.0.0
 
 - Models moved from `ViKon\Auth\Model\*` namespace to `ViKon\Auth\Model` namespace
+- Removed Smarty support
 
 Version 2.0.2
 
