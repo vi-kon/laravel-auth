@@ -27,6 +27,10 @@ This is **Laravel 5** package for role based authenticating.
 
 ## Changes
 
+Version 3.0.0
+
+- Models moved from `ViKon\Auth\Model\*` namespace to `ViKon\Auth\Model` namespace
+
 Version 2.0.2
 
 - Config option to add custom Profile model
@@ -42,7 +46,7 @@ Version 2.0
 - Added **ViKon\Auth\AuthUser** and **ViKon\Auth\AuthRoute** singletons
 - Package filters changed to **middleware** classes
 - Removed **auth.home** filter (middleware)
-- Code optimalization with Laravel 5 new features and conventions
+- Code optimization with Laravel 5 new features and conventions
 - Service provider is now deferred
 
 ---
@@ -121,7 +125,7 @@ Models are using pivot tables for many to many relations: `rel_role_group`, `rel
 
 Group is for managing user roles as collection.
 
-**Namespace**: `ViKon\Auth\models`
+**Namespace**: `ViKon\Auth\Model`
 
 **Database table**: `user_groups`
 
@@ -138,10 +142,10 @@ Group is for managing user roles as collection.
 
 #### Read properties (relations)
 
-| Type                      | Name    | Description      | Default | Database                                      |
-| ------------------------- | ------- | ---------------- |:-------:| --------------------------------------------- |
-| \ViKon\Auth\Models\User[] | `users` | Users collection | -       | many to many relation with `users` table      |
-| \ViKon\Auth\Models\Role[] | `roles` | Roles collection | -       | many to many relation with `user_roles` table |
+| Type                     | Name    | Description      | Default | Database                                      |
+| ------------------------ | ------- | ---------------- |:-------:| --------------------------------------------- |
+| \ViKon\Auth\Model\User[] | `users` | Users collection | -       | many to many relation with `users` table      |
+| \ViKon\Auth\Model\Role[] | `roles` | Roles collection | -       | many to many relation with `user_roles` table |
 
 #### Methods (relations)
 
@@ -160,7 +164,7 @@ Relations for Laravel Query Builder.
 
 Role is for allowing users to access routes or certain actions.
 
-**Namespace**: `ViKon\Auth\models`
+**Namespace**: `ViKon\Auth\Model`
 
 **Database table**: `user_roles`
 
@@ -176,8 +180,8 @@ Role is for allowing users to access routes or certain actions.
 
 | Type                       | Name     | Description       | Default | Database                                       |
 | -------------------------- | -------- | ----------------- |:-------:| ---------------------------------------------- |
-| \ViKon\Auth\models\User[]  | `users`  | Users collection  | -       | many to many relation with `users` table       |
-| \ViKon\Auth\models\Group[] | `groups` | Groups collection | -       | many to many relation with `user_groups` table |
+| \ViKon\Auth\Model\User[]  | `users`  | Users collection  | -       | many to many relation with `users` table       |
+| \ViKon\Auth\Model\Group[] | `groups` | Groups collection | -       | many to many relation with `user_groups` table |
 
 #### Methods (relations)
 
@@ -197,7 +201,7 @@ Relations for Laravel Query Builder.
 User representing model, implements `AuthenticatableContract` and `CanResetPasswordContract` interfaces and use
 `Authenticatable` and `CanResetPassword` traits.
 
-**Namespace**: `ViKon\Auth\models`
+**Namespace**: `ViKon\Auth\Model`
 
 **Database table**: `users`
 
@@ -220,11 +224,11 @@ The `username` and `module` columns has contracted unique index.
 
 #### Read properties (relations)
 
-| Type                          | Name        | Description          | Default | Database                                                   |
-| ----------------------------- | ----------- | -------------------- |:-------:| ---------------------------------------------------------- |
-| \ViKon\Auth\Models\Role[]     | `roles`     | Users collection     | -       | many to many relation with `user_roles` table              |
-| \ViKon\Auth\Models\Group[   ] | `groups`    | Groups collection    | -       | many to many relation with `user_groups` table             |
-| \ViKon\Auth\Models\Reminder[] | `reminders` | Reminders collection | -       | many to many relation with `user_password_reminders` table |
+| Type                         | Name        | Description          | Default | Database                                                   |
+| ---------------------------- | ----------- | -------------------- |:-------:| ---------------------------------------------------------- |
+| \ViKon\Auth\Model\Role[]     | `roles`     | Users collection     | -       | many to many relation with `user_roles` table              |
+| \ViKon\Auth\Model\Group[   ] | `groups`    | Groups collection    | -       | many to many relation with `user_groups` table             |
+| \ViKon\Auth\Model\Reminder[] | `reminders` | Reminders collection | -       | many to many relation with `user_password_reminders` table |
 
 #### Methods (relations)
 
@@ -244,7 +248,7 @@ Relations for Laravel Query Builder.
 
 Stores password reminder tokens with store time.
 
-**Namespace**: `ViKon\Auth\models`
+**Namespace**: `ViKon\Auth\Model`
 
 **Database table**: `user_password_reminders`
 
@@ -261,7 +265,7 @@ Stores password reminder tokens with store time.
 
 | Type                    | Name   | Description | Default | Database                                     |
 | ----------------------- | ------ | ----------- |:-------:| -------------------------------------------- |
-| \ViKon\Auth\models\User | `user` | User model  | -       | many to one relation with `user_roles` table |
+| \ViKon\Auth\Model\User | `user` | User model  | -       | many to one relation with `user_roles` table |
 
 #### Methods (relations)
 
@@ -351,7 +355,7 @@ Get current user.
 mixed AuthUser::getUser()
 ```
 
-Return `NULL` if user is not authenticated, otherwise instance of `\ViKon\Auth\models\User`.
+Return `NULL` if user is not authenticated, otherwise instance of `\ViKon\Auth\Model\User`.
 
 ---
 [Back to top][top]

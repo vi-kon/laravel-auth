@@ -1,56 +1,46 @@
 <?php
 
-namespace ViKon\Auth\Models;
+namespace ViKon\Auth\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class UserPasswordReminder
  *
- * @package ViKon\Auth\Models
+ * @package ViKon\Auth\Model
  *
  * @author  Kovács Vince<vincekovacs@hotmail.com>
  *
- * @property integer                      $id
- * @property integer                      $user_id
- * @property string                       $token
- * @property \Carbon\Carbon               $created_at
- * @property-read \ViKon\Auth\Models\User $user
- * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\Models\UserPasswordReminder whereId($value)
- * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\Models\UserPasswordReminder whereUserId($value)
- * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\Models\UserPasswordReminder whereToken($value)
- * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\Models\UserPasswordReminder whereCreatedAt($value)
+ * @property integer                     $id
+ * @property integer                     $user_id
+ * @property string                      $token
+ * @property \Carbon\Carbon              $created_at
+ * @property-read \ViKon\Auth\Model\User $user
+ *
+ * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\Model\UserPasswordReminder whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\Model\UserPasswordReminder whereUserId($value)
+ * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\Model\UserPasswordReminder whereToken($value)
+ * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\Model\UserPasswordReminder whereCreatedAt($value)
  */
 class UserPasswordReminder extends Model
 {
-
     /**
-     *
-     * Disable updated_at and created_at columns
-     *
-     * @var boolean
+     * {@inheritDoc}
      */
-    public $timestamps = false;
+    public function __construct(array $attributes = [])
+    {
+        $this->table      = 'user_password_reminders';
+        $this->timestamps = false;
 
-    /**
-     * The database table used by the model (mysql).
-     *
-     * @var string
-     */
-    protected $table = 'user_password_reminders';
+        parent::__construct($attributes);
+    }
 
-    /**
-     * The database table used by the model (mongodb).
-     *
-     * @var string
-     */
-    protected $collection = 'user_password_reminders';
-
+    /** @noinspection ClassMethodNameMatchesFieldNameInspection */
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function user()
     {
-        return $this->belongsTo('ViKon\Auth\models\User', 'id', 'user_id');
+        return $this->belongsTo(User::class, 'id', 'user_id');
     }
 }

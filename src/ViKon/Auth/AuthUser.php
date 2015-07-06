@@ -3,7 +3,7 @@
 namespace ViKon\Auth;
 
 use Illuminate\Auth\Guard as AuthGuard;
-use ViKon\Auth\Models\User;
+use ViKon\Auth\Model\User;
 
 /**
  * Class AuthUser
@@ -14,7 +14,7 @@ use ViKon\Auth\Models\User;
  */
 class AuthUser
 {
-    /** @var null|\ViKon\Auth\Models\User */
+    /** @var null|\ViKon\Auth\Model\User */
     private $user = null;
 
     /**@var string[] */
@@ -88,7 +88,7 @@ class AuthUser
     /**
      * Get current user instance
      *
-     * @return null|\ViKon\Auth\Models\User
+     * @return null|\ViKon\Auth\Model\User
      */
     public function getUser()
     {

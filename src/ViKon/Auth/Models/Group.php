@@ -1,69 +1,60 @@
 <?php
 
-namespace ViKon\Auth\Models;
+namespace ViKon\Auth\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class Group
  *
- * @package ViKon\Auth\Models
+ * @package ViKon\Auth\Model
  *
  * @author  Kovács Vince<vincekovacs@hotmail.com>
  *
- * @property integer                                                                 $id
- * @property string                                                                  $name
- * @property string                                                                  $token
- * @property string                                                                  $description
- * @property boolean                                                                 $static
- * @property boolean                                                                 $hidden
- * @property-read \Illuminate\Database\Eloquent\Collection|\ViKon\Auth\Models\User[] $users
- * @property-read \Illuminate\Database\Eloquent\Collection|\ViKon\Auth\Models\Role[] $roles
+ * @property integer                                                                $id
+ * @property string                                                                 $name
+ * @property string                                                                 $token
+ * @property string                                                                 $description
+ * @property boolean                                                                $static
+ * @property boolean                                                                $hidden
+ * @property-read \Illuminate\Database\Eloquent\Collection|\ViKon\Auth\Model\User[] $users
+ * @property-read \Illuminate\Database\Eloquent\Collection|\ViKon\Auth\Model\Role[] $roles
  *
- * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\Models\Group whereId($value)
- * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\Models\Group whereName($value)
- * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\Models\Group whereToken($value)
- * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\Models\Group whereDescription($value)
- * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\Models\Group whereStatic($value)
- * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\Models\Group whereHidden($value)
+ * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\Model\Group whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\Model\Group whereName($value)
+ * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\Model\Group whereToken($value)
+ * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\Model\Group whereDescription($value)
+ * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\Model\Group whereStatic($value)
+ * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\Model\Group whereHidden($value)
  */
 class Group extends Model
 {
     /**
-     *
-     * Disable updated_at and created_at columns
-     *
-     * @var boolean
+     * {@inheritDoc}
      */
-    public $timestamps = false;
+    public function __construct(array $attributes = [])
+    {
+        $this->table      = 'user_groups';
+        $this->timestamps = false;
 
-    /**
-     * The database table used by the model (mysql).
-     *
-     * @var string
-     */
-    protected $table = 'user_groups';
+        parent::__construct($attributes);
+    }
 
-    /**
-     * The database table used by the model (mongodb).
-     *
-     * @var string
-     */
-    protected $collection = 'user_groups';
-
+    /** @noinspection ClassMethodNameMatchesFieldNameInspection */
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function users()
     {
-        return $this->belongsToMany('ViKon\Auth\Models\User', 'rel_user_group', 'group_id', 'user_id');
+        return $this->belongsToMany(User::class, 'rel_user_group', 'group_id', 'user_id');
     }
 
+    /** @noinspection ClassMethodNameMatchesFieldNameInspection */
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function roles()
     {
-        return $this->belongsToMany('ViKon\Auth\Models\Role', 'rel_group_role', 'group_id', 'role_id');
+        return $this->belongsToMany(Role::class, 'rel_group_role', 'group_id', 'role_id');
     }
 }
