@@ -19,12 +19,9 @@
     "illuminate/support": "~5.0",
     "illuminate/auth": "~5.0"
   },
-  "suggest": {
-    "jenssegers/laravel-mongodb": "A MongoDB based Eloquent model and Query builder for Laravel 4"
-  },
   "autoload": {
     "psr-4": {
-      "ViKon\\Auth\\": "src/Auth"
+      "ViKon\\Auth\\": "src/ViKon/Auth"
     },
     "files": [
       "src/helpers.php"
