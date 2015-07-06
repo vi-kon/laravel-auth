@@ -14,13 +14,10 @@ use ViKon\Auth\Models\User;
  */
 class AuthUser
 {
-    /**
-     * @var null|\ViKon\Auth\Models\User
-     */
+    /** @var null|\ViKon\Auth\Models\User */
     private $user = null;
-    /**
-     * @var array
-     */
+
+    /**@var string[] */
     private $roles = [];
 
     /**

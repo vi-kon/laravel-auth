@@ -5,7 +5,11 @@ namespace ViKon\Auth\Models;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * ViKon\Auth\Models\Group
+ * Class Group
+ *
+ * @package ViKon\Auth\Models
+ *
+ * @author  Kovács Vince<vincekovacs@hotmail.com>
  *
  * @property integer                                                                 $id
  * @property string                                                                  $name
@@ -15,6 +19,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property boolean                                                                 $hidden
  * @property-read \Illuminate\Database\Eloquent\Collection|\ViKon\Auth\Models\User[] $users
  * @property-read \Illuminate\Database\Eloquent\Collection|\ViKon\Auth\Models\Role[] $roles
+ *
  * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\Models\Group whereId($value)
  * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\Models\Group whereName($value)
  * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\Models\Group whereToken($value)

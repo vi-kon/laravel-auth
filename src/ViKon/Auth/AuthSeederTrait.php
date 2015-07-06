@@ -13,7 +13,9 @@ use ViKon\Auth\Models\User;
  *
  * @package ViKon\Auth
  */
-trait AuthSeederTrait {
+trait AuthSeederTrait
+{
+    /** @noinspection MoreThanThreeArgumentsInspection */
     /**
      * @param string      $username User username
      * @param string      $password User password
@@ -24,19 +26,21 @@ trait AuthSeederTrait {
      *
      * @return \ViKon\Auth\Models\User|static
      */
-    protected function createUser($username, $password, $email, $home = null, $static = false, $hidden = false) {
+    protected function createUser($username, $password, $email, $home = null, $static = false, $hidden = false)
+    {
         $user = User::create([
-            'username' => $username,
-            'password' => bcrypt($password),
-            'email'    => $email,
-            'home'     => $home,
-            'static'   => $static,
-            'hidden'   => $hidden,
-        ]);
+                                 'username' => $username,
+                                 'password' => bcrypt($password),
+                                 'email' => $email,
+                                 'home' => $home,
+                                 'static' => $static,
+                                 'hidden' => $hidden,
+                             ]);
 
         return $user;
     }
 
+    /** @noinspection MoreThanThreeArgumentsInspection */
     /**
      * @param string $name        Group human readable name
      * @param string $token       Group token
@@ -46,14 +50,15 @@ trait AuthSeederTrait {
      *
      * @return \ViKon\Auth\Models\Group|static
      */
-    protected function createGroup($name, $token, $description = '', $static = false, $hidden = false) {
+    protected function createGroup($name, $token, $description = '', $static = false, $hidden = false)
+    {
         $group = Group::create([
-            'name'        => $name,
-            'token'       => $token,
-            'description' => $description,
-            'static'      => $static,
-            'hidden'      => $hidden,
-        ]);
+                                   'name' => $name,
+                                   'token' => $token,
+                                   'description' => $description,
+                                   'static' => $static,
+                                   'hidden' => $hidden,
+                               ]);
 
         return $group;
     }
@@ -64,11 +69,12 @@ trait AuthSeederTrait {
      *
      * @return \ViKon\Auth\Models\Role|static
      */
-    protected function createRole($name, $description = '') {
+    protected function createRole($name, $description = '')
+    {
         $role = Role::create([
-            'name'        => $name,
-            'description' => $description,
-        ]);
+                                 'name' => $name,
+                                 'description' => $description,
+                             ]);
 
         return $role;
     }

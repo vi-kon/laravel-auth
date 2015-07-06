@@ -11,6 +11,9 @@ namespace ViKon\Auth;
  */
 class Guard extends \Illuminate\Auth\Guard
 {
+    /**
+     * {@inheritDoc}
+     */
     public function attempt(array $credentials = [], $remember = false, $login = true)
     {
         if (!isset($credentials['package'])) {

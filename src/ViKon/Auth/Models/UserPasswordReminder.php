@@ -5,7 +5,11 @@ namespace ViKon\Auth\Models;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * ViKon\Auth\Models\UserPasswordReminder
+ * Class UserPasswordReminder
+ *
+ * @package ViKon\Auth\Models
+ *
+ * @author  Kovács Vince<vincekovacs@hotmail.com>
  *
  * @property integer                      $id
  * @property integer                      $user_id

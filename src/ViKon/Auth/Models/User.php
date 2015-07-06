@@ -10,7 +10,11 @@ use Illuminate\Database\Eloquent\Model;
 use ViKon\Auth\Exception\ProfileNotFoundException;
 
 /**
- * ViKon\Auth\Models\User
+ * Class User
+ *
+ * @package ViKon\Auth\Models
+ *
+ * @author  Kovács Vince<vincekovacs@hotmail.com>
  *
  * @property integer                                                                                 $id
  * @property string                                                                                  $username
@@ -25,6 +29,7 @@ use ViKon\Auth\Exception\ProfileNotFoundException;
  * @property-read \Illuminate\Database\Eloquent\Collection|\ViKon\Auth\Models\Group[]                $groups
  * @property-read \Illuminate\Database\Eloquent\Collection|\ViKon\Auth\Models\UserPasswordReminder[] $reminders
  * @property-read \UserProfile                                                                       $profile
+ *
  * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\Models\User whereId($value)
  * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\Models\User whereUsername($value)
  * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\Models\User wherePassword($value)

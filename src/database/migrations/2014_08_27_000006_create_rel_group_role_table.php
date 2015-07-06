@@ -6,7 +6,7 @@ use Illuminate\Database\Schema\Blueprint;
 /**
  * Class CreateRelGroupRoleTable
  *
- * @author Kov·cs Vince <kovacs.vince@sicontact.hu>
+ * @author Kov√°cs Vince<vincekovacs@hotmail.com>
  */
 class CreateRelGroupRoleTable extends Migration
 {

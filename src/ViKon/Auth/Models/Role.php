@@ -5,7 +5,11 @@ namespace ViKon\Auth\Models;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * ViKon\Auth\Models\Role
+ * Class Role
+ *
+ * @package ViKon\Auth\Models
+ *
+ * @author  Kovács Vince<vincekovacs@hotmail.com>
  *
  * @property integer                                                                  $id
  * @property string                                                                   $name

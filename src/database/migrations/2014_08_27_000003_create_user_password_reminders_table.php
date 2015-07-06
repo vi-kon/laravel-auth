@@ -3,6 +3,11 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
+/**
+ * Class CreateUserPasswordRemindersTable
+ *
+ * @author Kovács Vince<vincekovacs@hotmail.com>
+ */
 class CreateUserPasswordRemindersTable extends Migration
 {
 

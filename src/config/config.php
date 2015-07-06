@@ -10,7 +10,7 @@ return [
     | After successful authentication is redirected back.
     |
     */
-    'login'     => [
+    'login' => [
         'route' => 'login',
     ],
     /*
@@ -36,5 +36,5 @@ return [
     | connection.
     |
     */
-    'profile'   => 'App\Model\Profile',
+    'profile' => 'App\Model\Profile',
 ];
