@@ -1,8 +1,10 @@
 <?php namespace ViKon\Auth;
 
+use Auth\Middleware\PermissionMiddleware;
 use Illuminate\Auth\EloquentUserProvider;
+use Illuminate\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
-use ViKon\Auth\Middleware\HasAccess;
+use ViKon\Auth\Middleware\HasAccessMiddleware;
 
 /**
  * Class AuthServiceProvider
@@ -33,13 +35,14 @@ class AuthServiceProvider extends ServiceProvider
         $this->publishes([__DIR__ . '/../../config/config.php' => config_path('vi-kon/auth.php'),], 'config');
         $this->publishes([__DIR__ . '/../../database/migrations/' => base_path('/database/migrations'),], 'migrations');
 
-        $this->app->make('router')->middleware('auth.role', HasAccess::class);
+        $this->app->make('router')->middleware('auth.has_access', HasAccessMiddleware::class);
+        $this->app->make('router')->middleware('auth.permission', PermissionMiddleware::class);
 
-        $this->app->make('auth')->extend('eloquent', function ($app) {
-            $model    = $app['config']['auth.model'];
-            $provider = new EloquentUserProvider($this->app['hash'], $model);
+        $this->app->make('auth')->extend('eloquent', function (Application $app) {
+            $model    = $app->make('config')->get('auth.model');
+            $provider = new EloquentUserProvider($app->make('hash'), $model);
 
-            return new Guard($provider, $app['session.store']);
+            return new Guard($provider, $app->make('session.store'));
         });
     }
 
