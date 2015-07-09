@@ -52,10 +52,10 @@ class HasAccess
 
         if (array_key_exists('roles', $action)) {
             if (!$this->guard->check()) {
-                return redirect()->guest(route(config('auth-role.login.route')));
+                return redirect()->guest(route(config('vi-kon.auth.login.route')));
             } elseif (!$this->authUser->hasRoles($action['roles'])) {
                 return redirect()
-                    ->route(config('auth-role.error-403.route'))
+                    ->route(config('vi-kon.auth.error-403.route'))
                     ->with('route-request-uri', $request->getRequestUri())
                     ->with('route-roles', $action['roles']);
             }

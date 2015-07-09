@@ -91,10 +91,10 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     public function profile()
     {
-        if (class_exists(config('auth-role.profile'))) {
-            return $this->hasOne(config('auth-role.profile'), 'user_id', 'id');
+        if (class_exists(config('vi-kon.auth.profile'))) {
+            return $this->hasOne(config('vi-kon.auth.profile'), 'user_id', 'id');
         }
 
-        throw new ProfileNotFoundException('Provided profile class not found (' . config('auth-role.profile') . ')');
+        throw new ProfileNotFoundException('Provided profile class not found (' . config('vi-kon.auth.profile') . ')');
     }
 }
