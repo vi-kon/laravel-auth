@@ -2,7 +2,7 @@
 
 namespace ViKon\Auth\Model;
 
-use Illuminate\Database\Eloquent\Model;
+use ViKon\Auth\Eloquent\Model;
 
 /**
  * Class Role

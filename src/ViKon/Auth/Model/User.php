@@ -6,7 +6,7 @@ use Illuminate\Auth\Authenticatable;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
-use Illuminate\Database\Eloquent\Model;
+use ViKon\Auth\Eloquent\Model;
 use ViKon\Auth\Exception\ProfileNotFoundException;
 
 /**
@@ -91,10 +91,10 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     public function profile()
     {
-        if (class_exists(config('vi-kon.auth.profile'))) {
-            return $this->hasOne(config('vi-kon.auth.profile'), 'user_id', 'id');
+        if (class_exists(static::$config->get('vi-kon.auth.profile'))) {
+            return $this->hasOne(static::$config->get('vi-kon.auth.profile'), 'user_id', 'id');
         }
 
-        throw new ProfileNotFoundException('Provided profile class not found (' . config('vi-kon.auth.profile') . ')');
+        throw new ProfileNotFoundException('Provided profile class not found (' . static::$config->get('vi-kon.auth.profile') . ')');
     }
 }
