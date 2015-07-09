@@ -1,6 +1,6 @@
 <?php
 
-namespace Auth\Middleware;
+namespace ViKon\Auth\Middleware;
 
 use Illuminate\Container\Container;
 use Illuminate\Http\Request;
@@ -9,7 +9,7 @@ use ViKon\Auth\Guard;
 /**
  * Class PermissionMiddleware
  *
- * @package Auth\Middleware
+ * @package ViKon\Auth\Middleware
  *
  * @author  Kovács Vince<vincekovacs@hotmail.com>
  */

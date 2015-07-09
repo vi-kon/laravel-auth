@@ -1,10 +1,10 @@
 <?php namespace ViKon\Auth;
 
-use Auth\Middleware\PermissionMiddleware;
 use Illuminate\Auth\EloquentUserProvider;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
 use ViKon\Auth\Middleware\HasAccessMiddleware;
+use ViKon\Auth\Middleware\PermissionMiddleware;
 
 /**
  * Class AuthServiceProvider
