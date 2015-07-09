@@ -11,14 +11,17 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @author  Kovács Vince<vincekovacs@hotmail.com>
  *
- * @property integer                                                                 $id
- * @property string                                                                  $name
- * @property string                                                                  $description
- * @property-read \Illuminate\Database\Eloquent\Collection|\ViKon\Auth\Model\User[]  $users
- * @property-read \Illuminate\Database\Eloquent\Collection|\ViKon\Auth\Model\Group[] $groups
+ * @property integer                                                                      $id
+ * @property string                                                                       $token
+ * @property boolean                                                                      $static
+ * @property boolean                                                                      $hidden
+ * @property-read \Illuminate\Database\Eloquent\Collection|\ViKon\Auth\Model\User[]       $users
+ * @property-read \Illuminate\Database\Eloquent\Collection|\ViKon\Auth\Model\Permission[] $permissions
+ *
  * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\Model\Role whereId($value)
- * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\Model\Role whereName($value)
- * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\Model\Role whereDescription($value)
+ * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\Model\Role whereToken($value)
+ * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\Model\Role whereStatic($value)
+ * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\Model\Role whereHidden($value)
  */
 class Role extends Model
 {
@@ -46,8 +49,8 @@ class Role extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function groups()
+    public function permissions()
     {
-        return $this->belongsToMany(Group::class, 'rel_group_role', 'role_id', 'group_id');
+        return $this->belongsToMany(Permission::class, 'rel_role_permission', 'role_id', 'permission_id');
     }
 }

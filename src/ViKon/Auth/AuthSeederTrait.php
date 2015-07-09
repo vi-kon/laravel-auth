@@ -2,8 +2,8 @@
 
 namespace ViKon\Auth;
 
-use ViKon\Auth\Model\Group;
 use ViKon\Auth\Model\Role;
+use ViKon\Auth\Model\Permission;
 use ViKon\Auth\Model\User;
 
 /**
@@ -48,11 +48,11 @@ trait AuthSeederTrait
      * @param bool   $static      Group is static or not (Disable deleting on GUI)
      * @param bool   $hidden      Group is hidden or not (Disable showing on GUI)
      *
-     * @return \ViKon\Auth\Model\Group
+     * @return \ViKon\Auth\Model\Role
      */
     protected function createGroup($name, $token, $description = '', $static = false, $hidden = false)
     {
-        $group = Group::create([
+        $group = Role::create([
                                    'name' => $name,
                                    'token' => $token,
                                    'description' => $description,
@@ -67,11 +67,11 @@ trait AuthSeederTrait
      * @param string $name        Role unique name
      * @param string $description Role short description
      *
-     * @return \ViKon\Auth\Model\Role
+     * @return \ViKon\Auth\Model\Permission
      */
     protected function createRole($name, $description = '')
     {
-        $role = Role::create([
+        $role = Permission::create([
                                  'name' => $name,
                                  'description' => $description,
                              ]);

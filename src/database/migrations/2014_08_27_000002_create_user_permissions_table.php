@@ -4,13 +4,12 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
 /**
- * Class CreateUserRolesTable
+ * Class CreateUserPermissionsTable
  *
  * @author Kovács Vince<vincekovacs@hotmail.com>
  */
-class CreateUserRolesTable extends Migration
+class CreateUserPermissionsTable extends Migration
 {
-
     /**
      * Run the migrations.
      *
@@ -18,12 +17,11 @@ class CreateUserRolesTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_roles', function (Blueprint $table) {
+        Schema::create('user_permissions', function (Blueprint $table) {
             $table->engine = 'InnoDB';
 
             $table->increments('id');
-            $table->string('name');
-            $table->string('description', 1000);
+            $table->string('token');
         });
     }
 
@@ -34,6 +32,6 @@ class CreateUserRolesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('user_roles');
+        Schema::drop('user_permissions');
     }
 }

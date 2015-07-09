@@ -25,8 +25,8 @@ use ViKon\Auth\Exception\ProfileNotFoundException;
  * @property boolean                                                                                $blocked
  * @property boolean                                                                                $static
  * @property boolean                                                                                $hidden
+ * @property-read \Illuminate\Database\Eloquent\Collection|\ViKon\Auth\Model\Permission[]           $permissions
  * @property-read \Illuminate\Database\Eloquent\Collection|\ViKon\Auth\Model\Role[]                 $roles
- * @property-read \Illuminate\Database\Eloquent\Collection|\ViKon\Auth\Model\Group[]                $groups
  * @property-read \Illuminate\Database\Eloquent\Collection|\ViKon\Auth\Model\UserPasswordReminder[] $reminders
  * @property-read \UserProfile                                                                      $profile
  *
@@ -60,18 +60,18 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function roles()
+    public function permissions()
     {
-        return $this->belongsToMany(Role::class, 'rel_user_role', 'user_id', 'role_id');
+        return $this->belongsToMany(Permission::class, 'rel_user_permission', 'user_id', 'permission_id');
     }
 
     /** @noinspection ClassMethodNameMatchesFieldNameInspection */
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function groups()
+    public function roles()
     {
-        return $this->belongsToMany(Group::class, 'rel_user_group', 'user_id', 'group_id');
+        return $this->belongsToMany(Role::class, 'rel_user_roles', 'user_id', 'role_id');
     }
 
     /** @noinspection ClassMethodNameMatchesFieldNameInspection */

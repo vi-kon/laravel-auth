@@ -4,11 +4,11 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
 /**
- * Class CreateUserGroupsTable
+ * Class CreateUserRolesTable
  *
  * @author Kovács Vince<vincekovacs@hotmail.com>
  */
-class CreateUserGroupsTable extends Migration
+class CreateUserRolesTable extends Migration
 {
 
     /**
@@ -18,16 +18,14 @@ class CreateUserGroupsTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_groups', function (Blueprint $table) {
+        Schema::create('user_roles', function (Blueprint $table) {
             $table->engine = 'InnoDB';
 
             $table->increments('id');
-            $table->string('name');
             $table->string('token')
                   ->nullable(true)
                   ->default(null)
                   ->unique();
-            $table->string('description', 1000);
             $table->boolean('static')
                   ->default(false);
             $table->boolean('hidden')
@@ -43,6 +41,6 @@ class CreateUserGroupsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('user_groups');
+        Schema::drop('user_roles');
     }
 }
