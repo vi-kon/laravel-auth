@@ -63,7 +63,6 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton('auth.role.user', 'ViKon\Auth\AuthUser');
         $this->app->singleton('auth.role.route', 'ViKon\Auth\AuthRoute');
 
         $this->mergeConfigFrom(__DIR__ . '/../../config/config.php', 'auth-role');
