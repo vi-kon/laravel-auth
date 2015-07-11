@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use ViKon\Auth\Database\Migration\Migration;
 
 /**
  * Class CreateUserPasswordRemindersTable
@@ -10,7 +10,6 @@ use Illuminate\Database\Schema\Blueprint;
  */
 class CreateUserPasswordRemindersTable extends Migration
 {
-
     /**
      * Run the migrations.
      *
@@ -18,7 +17,7 @@ class CreateUserPasswordRemindersTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_password_reminders', function (Blueprint $table) {
+        static::$schema->create(static::$config->get('vi-kon.auth.table.user_password_reminders'), function (Blueprint $table) {
             $table->engine = 'InnoDB';
 
             $table->increments('id');
@@ -40,6 +39,6 @@ class CreateUserPasswordRemindersTable extends Migration
      */
     public function down()
     {
-        Schema::drop('user_password_reminders');
+        static::$schema->drop(static::$config->get('vi-kon.auth.table.user_password_reminders'));
     }
 }

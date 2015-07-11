@@ -1,6 +1,6 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
+use ViKon\Auth\Database\Migration\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
 /**
@@ -10,7 +10,6 @@ use Illuminate\Database\Schema\Blueprint;
  */
 class CreateRelUserPermissionTable extends Migration
 {
-
     /**
      * Run the migrations.
      *
@@ -18,7 +17,7 @@ class CreateRelUserPermissionTable extends Migration
      */
     public function up()
     {
-        Schema::create('rel_user_permission', function (Blueprint $table) {
+        static::$schema->create(static::$config->get('vi-kon.auth.table.rel__user__permission'), function (Blueprint $table) {
             $table->engine = 'InnoDB';
 
             $table->unsignedInteger('user_id');
@@ -44,6 +43,6 @@ class CreateRelUserPermissionTable extends Migration
      */
     public function down()
     {
-        Schema::drop('rel_user_permission');
+        static::$schema->drop(static::$config->get('vi-kon.auth.table.rel__user__permission'));
     }
 }

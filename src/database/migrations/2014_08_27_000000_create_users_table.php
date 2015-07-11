@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use ViKon\Auth\Database\Migration\Migration;
 
 /**
  * Class CreateUsersTable
@@ -10,7 +10,6 @@ use Illuminate\Database\Schema\Blueprint;
  */
 class CreateUsersTable extends Migration
 {
-
     /**
      * Run the migrations.
      *
@@ -18,7 +17,7 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        static::$schema->create(static::$config->get('vi-kon.auth.table.users'), function (Blueprint $table) {
             $table->engine = 'InnoDB';
 
             $table->increments('id');
@@ -52,6 +51,6 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::drop('users');
+        static::$schema->drop(static::$config->get('vi-kon.auth.table.users'));
     }
 }

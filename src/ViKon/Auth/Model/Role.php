@@ -2,7 +2,7 @@
 
 namespace ViKon\Auth\Model;
 
-use ViKon\Auth\Eloquent\Model;
+use ViKon\Auth\Database\Eloquent\Model;
 
 /**
  * Class Role
@@ -30,7 +30,7 @@ class Role extends Model
      */
     public function __construct(array $attributes = [])
     {
-        $this->table      = 'user_roles';
+        $this->table      = static::$config->get('vi-kon.auth.table.user_roles');
         $this->timestamps = false;
 
         parent::__construct($attributes);
@@ -42,7 +42,7 @@ class Role extends Model
      */
     public function users()
     {
-        return $this->belongsToMany(User::class, 'rel_user_role', 'role_id', 'user_id');
+        return $this->belongsToMany(User::class, static::$config->get('vi-kon.auth.table.rel__user__role'), 'role_id', 'user_id');
     }
 
     /** @noinspection ClassMethodNameMatchesFieldNameInspection */
@@ -51,6 +51,6 @@ class Role extends Model
      */
     public function permissions()
     {
-        return $this->belongsToMany(Permission::class, 'rel_role_permission', 'role_id', 'permission_id');
+        return $this->belongsToMany(Permission::class, static::$config->get('vi-kon.auth.table.rel__role__permission'), 'role_id', 'permission_id');
     }
 }

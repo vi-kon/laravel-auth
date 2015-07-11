@@ -26,6 +26,28 @@ return [
     ],
     /*
     | --------------------------------------------------------------------------
+    | Database table names
+    | --------------------------------------------------------------------------
+    | This option allow overwrite default table names. Configured values are
+    | used in models and migration files too.
+    |
+    | Caution: If migration files are already migration and values are changed
+    | then migration down will fail.
+    |
+    */
+    'table'     => [
+        // User tables
+        'users'                   => 'users',
+        'user_roles'              => 'user_roles',
+        'user_permissions'        => 'user_permissions',
+        'user_password_reminders' => 'user_password_reminders',
+        // Pivot tables
+        'rel__user__role'         => 'rel__user__role',
+        'rel__user__permission'   => 'rel__user__permission',
+        'rel__role__permission'   => 'rel__role__permission',
+    ],
+    /*
+    | --------------------------------------------------------------------------
     | Profile
     | --------------------------------------------------------------------------
     | This model class name provides class for user profile. In user profile you

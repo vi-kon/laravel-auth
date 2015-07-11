@@ -6,7 +6,7 @@ use Illuminate\Auth\Authenticatable;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
-use ViKon\Auth\Eloquent\Model;
+use ViKon\Auth\Database\Eloquent\Model;
 use ViKon\Auth\Exception\ProfileNotFoundException;
 
 /**
@@ -49,7 +49,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     public function __construct(array $attributes = [])
     {
-        $this->table      = 'users';
+        $this->table      = static::$config->get('vi-kon.auth.table.users');
         $this->timestamps = false;
         $this->hidden     = ['password', 'remember_token'];
 
@@ -62,7 +62,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     public function permissions()
     {
-        return $this->belongsToMany(Permission::class, 'rel_user_permission', 'user_id', 'permission_id');
+        return $this->belongsToMany(Permission::class, static::$config->get('vi-kon.auth.table.rel__user__permission'), 'user_id', 'permission_id');
     }
 
     /** @noinspection ClassMethodNameMatchesFieldNameInspection */
@@ -71,7 +71,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     public function roles()
     {
-        return $this->belongsToMany(Role::class, 'rel_user_roles', 'user_id', 'role_id');
+        return $this->belongsToMany(Role::class, static::$config->get('vi-kon.auth.table.rel__user__role'), 'user_id', 'role_id');
     }
 
     /** @noinspection ClassMethodNameMatchesFieldNameInspection */

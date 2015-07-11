@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use ViKon\Auth\Database\Migration\Migration;
 
 /**
  * Class CreateRelUserRoleTable
@@ -18,7 +18,7 @@ class CreateRelUserRoleTable extends Migration
      */
     public function up()
     {
-        Schema::create('rel_user_role', function (Blueprint $table) {
+        static::$schema->create(static::$config->get('vi-kon.auth.table.rel__user__role'), function (Blueprint $table) {
             $table->engine = 'InnoDB';
 
             $table->unsignedInteger('user_id');
@@ -44,6 +44,6 @@ class CreateRelUserRoleTable extends Migration
      */
     public function down()
     {
-        Schema::drop('rel_user_role');
+        static::$schema->drop(static::$config->get('vi-kon.auth.table.rel__user__role'));
     }
 }
