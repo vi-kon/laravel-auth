@@ -65,6 +65,6 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->app->singleton('auth.role.route', 'ViKon\Auth\AuthRoute');
 
-        $this->mergeConfigFrom(__DIR__ . '/../../config/config.php', 'auth-role');
+        $this->mergeConfigFrom(__DIR__ . '/../../config/config.php', 'vi-kon.auth');
     }
 }
