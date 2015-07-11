@@ -3,7 +3,8 @@
 use Illuminate\Auth\EloquentUserProvider;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
-use ViKon\Auth\Eloquent\Model;
+use ViKon\Auth\Database\Eloquent\Model;
+use ViKon\Auth\Database\Migration\Migration;
 use ViKon\Auth\Middleware\HasAccessMiddleware;
 use ViKon\Auth\Middleware\PermissionMiddleware;
 
@@ -46,8 +47,10 @@ class AuthServiceProvider extends ServiceProvider
             return new Guard($provider, $app->make('session.store'));
         });
 
-        // Set config to access in all models in authentication
+        // Set config to access in all models and migrations in authentication
         Model::setConfig($this->app->make('config'));
+        Migration::setConfig($this->app->make('config'));
+        Migration::setSchema($this->app->make('db')->connection()->getSchemaBuilder());
     }
 
     /**

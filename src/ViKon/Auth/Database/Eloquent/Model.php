@@ -1,6 +1,6 @@
 <?php
 
-namespace ViKon\Auth\Eloquent;
+namespace ViKon\Auth\Database\Eloquent;
 
 use Illuminate\Contracts\Config\Repository;
 
@@ -16,5 +16,4 @@ class Model extends \Illuminate\Database\Eloquent\Model
     {
         static::$config = $config;
     }
-
 }
