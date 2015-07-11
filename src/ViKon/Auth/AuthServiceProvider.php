@@ -5,6 +5,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
 use ViKon\Auth\Database\Eloquent\Model;
 use ViKon\Auth\Database\Migration\Migration;
+use ViKon\Auth\Facades\RouterAuth;
 use ViKon\Auth\Middleware\HasAccessMiddleware;
 use ViKon\Auth\Middleware\PermissionMiddleware;
 
@@ -58,7 +59,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function provides()
     {
-        return ['auth.role.user', 'auth.role.route'];
+        return ['vi-kon.auth.router'];
     }
 
     /**
@@ -66,7 +67,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton('auth.role.route', 'ViKon\Auth\AuthRoute');
+        $this->app->singleton('vi-kon.auth.router', RouterAuth::class);
 
         $this->mergeConfigFrom(__DIR__ . '/../../config/config.php', 'vi-kon.auth');
     }
