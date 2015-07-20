@@ -35,8 +35,8 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->publishes([__DIR__ . '/../../config/config.php' => config_path('vi-kon/auth.php'),], 'config');
-        $this->publishes([__DIR__ . '/../../database/migrations/' => base_path('/database/migrations'),], 'migrations');
+        $this->publishes([__DIR__ . '/../../config/config.php' => config_path('vi-kon/auth.php')], 'config');
+        $this->publishes([__DIR__ . '/../../database/migrations/' => base_path('database/migrations')], 'migrations');
 
         $this->app->make('router')->middleware('auth.has_access', HasAccessMiddleware::class);
         $this->app->make('router')->middleware('auth.permission', PermissionMiddleware::class);

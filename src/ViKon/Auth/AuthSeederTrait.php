@@ -2,8 +2,8 @@
 
 namespace ViKon\Auth;
 
-use ViKon\Auth\Model\Role;
 use ViKon\Auth\Model\Permission;
+use ViKon\Auth\Model\Role;
 use ViKon\Auth\Model\User;
 
 /**
@@ -31,10 +31,10 @@ trait AuthSeederTrait
         $user = User::create([
                                  'username' => $username,
                                  'password' => bcrypt($password),
-                                 'email' => $email,
-                                 'home' => $home,
-                                 'static' => $static,
-                                 'hidden' => $hidden,
+                                 'email'    => $email,
+                                 'home'     => $home,
+                                 'static'   => $static,
+                                 'hidden'   => $hidden,
                              ]);
 
         return $user;
@@ -53,12 +53,12 @@ trait AuthSeederTrait
     protected function createGroup($name, $token, $description = '', $static = false, $hidden = false)
     {
         $group = Role::create([
-                                   'name' => $name,
-                                   'token' => $token,
-                                   'description' => $description,
-                                   'static' => $static,
-                                   'hidden' => $hidden,
-                               ]);
+                                  'name'        => $name,
+                                  'token'       => $token,
+                                  'description' => $description,
+                                  'static'      => $static,
+                                  'hidden'      => $hidden,
+                              ]);
 
         return $group;
     }
@@ -72,9 +72,9 @@ trait AuthSeederTrait
     protected function createRole($name, $description = '')
     {
         $role = Permission::create([
-                                 'name' => $name,
-                                 'description' => $description,
-                             ]);
+                                       'name'        => $name,
+                                       'description' => $description,
+                                   ]);
 
         return $role;
     }

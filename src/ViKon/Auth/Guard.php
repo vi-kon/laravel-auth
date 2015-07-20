@@ -29,6 +29,23 @@ class Guard extends \Illuminate\Auth\Guard
     }
 
     /** @noinspection ClassMethodNameMatchesFieldNameInspection */
+
+    /**
+     * Check if authenticated user has permission
+     *
+     * @param string $permission
+     *
+     * @return bool|null return NULL if user is not authenticated
+     */
+    public function hasPermission($permission)
+    {
+        if ($this->user() === null) {
+            return null;
+        }
+
+        return in_array($permission, $this->permissions, true);
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -61,22 +78,6 @@ class Guard extends \Illuminate\Auth\Guard
         }
 
         return $user;
-    }
-
-    /**
-     * Check if authenticated user has permission
-     *
-     * @param string $permission
-     *
-     * @return bool|null return NULL if user is not authenticated
-     */
-    public function hasPermission($permission)
-    {
-        if ($this->user() === null) {
-            return null;
-        }
-
-        return in_array($permission, $this->permissions, true);
     }
 
     /**
