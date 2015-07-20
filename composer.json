@@ -4,7 +4,9 @@
   "keywords"         : [
     "laravel",
     "authentication",
-    "route"
+    "route",
+    "role",
+    "permission"
   ],
   "license"          : "MIT",
   "homepage"         : "https://github.com/vi-kon/laravel-auth",
