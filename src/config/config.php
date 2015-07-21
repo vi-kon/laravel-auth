@@ -5,9 +5,9 @@ return [
     | --------------------------------------------------------------------------
     | Login settings
     | --------------------------------------------------------------------------
-    | The login route for HasAccessMiddleware middleware feature. If user is not
-    | authenticated then HasAccessMiddleware middleware redirect user to this route.
-    | After successful authentication is redirected back.
+    | If user is not authenticated then authentication middleware redirect user
+    | to this route. After successful authentication is redirected back to
+    | original route.
     |
     */
     'login'     => [
@@ -18,7 +18,7 @@ return [
     | Error 403
     | --------------------------------------------------------------------------
     | If user is authenticated and no sufficient permissions to access route,
-    | then HasAccessMiddleware middleware redirect to this route.
+    | then authenticated middlewares redirect to this route.
     |
     */
     'error-403' => [
