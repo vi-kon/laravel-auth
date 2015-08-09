@@ -22,6 +22,7 @@ use ViKon\Auth\Exception\ProfileNotFoundException;
  * @property string                                                                                 $email
  * @property string                                                                                 $remember_token
  * @property string                                                                                 $home
+ * @property string                                                                                 $namespace
  * @property boolean                                                                                $blocked
  * @property boolean                                                                                $static
  * @property boolean                                                                                $hidden
@@ -36,6 +37,7 @@ use ViKon\Auth\Exception\ProfileNotFoundException;
  * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\Model\User whereEmail($value)
  * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\Model\User whereRememberToken($value)
  * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\Model\User whereHome($value)
+ * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\Model\User whereNamespace($value)
  * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\Model\User whereBlocked($value)
  * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\Model\User whereStatic($value)
  * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\Model\User whereHidden($value)
@@ -44,23 +46,15 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 {
     use Authenticatable, CanResetPassword;
 
-    const FIELD_ID       = 'id';
-    const FIELD_USERNAME = 'username';
-    const FIELD_PASSWORD = 'password';
-    const FIELD_EMAIL    = 'email';
-    const FIELD_HOME     = 'home';
-    const FIELD_BLOCKED  = 'blocked';
-    const FIELD_STATIC   = 'static';
-    const FIELD_HIDDEN   = 'hidden';
-
-    const FIELD_ID       = 'id';
-    const FIELD_USERNAME = 'username';
-    const FIELD_PASSWORD = 'password';
-    const FIELD_EMAIL    = 'email';
-    const FIELD_HOME     = 'home';
-    const FIELD_BLOCKED  = 'blocked';
-    const FIELD_STATIC   = 'static';
-    const FIELD_HIDDEN   = 'hidden';
+    const FIELD_ID        = 'id';
+    const FIELD_USERNAME  = 'username';
+    const FIELD_PASSWORD  = 'password';
+    const FIELD_EMAIL     = 'email';
+    const FIELD_HOME      = 'home';
+    const FIELD_NAMESPACE = 'namespace';
+    const FIELD_BLOCKED   = 'blocked';
+    const FIELD_STATIC    = 'static';
+    const FIELD_HIDDEN    = 'hidden';
 
     /**
      * {@inheritDoc}

@@ -21,8 +21,8 @@ class Guard extends \Illuminate\Auth\Guard
      */
     public function attempt(array $credentials = [], $remember = false, $login = true)
     {
-        if (!array_key_exists('package', $credentials)) {
-            $credentials['package'] = 'system';
+        if (!array_key_exists('namespaces', $credentials)) {
+            $credentials['namespaces'] = null;
         }
 
         return parent::attempt($credentials, $remember, $login);
