@@ -87,7 +87,7 @@ class Guard extends \Illuminate\Auth\Guard
      *
      * @return bool|null return NULL if user is not authenticated
      */
-    public function hasPermissions(array ...$permissions)
+    public function hasPermissions(...$permissions)
     {
         if ($this->user() === null) {
             return null;
