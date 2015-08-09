@@ -25,6 +25,11 @@ use ViKon\Auth\Database\Eloquent\Model;
  */
 class Role extends Model
 {
+    const FIELD_ID     = 'id';
+    const FIELD_TOKEN  = 'token';
+    const FIELD_STATIC = 'static';
+    const FIELD_HIDDEN = 'hidden';
+
     /**
      * {@inheritDoc}
      */

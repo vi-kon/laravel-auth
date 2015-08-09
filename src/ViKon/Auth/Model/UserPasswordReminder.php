@@ -24,6 +24,11 @@ use ViKon\Auth\Database\Eloquent\Model;
  */
 class UserPasswordReminder extends Model
 {
+    const FIELD_ID         = 'id';
+    const FIELD_USER_ID    = 'user_id';
+    const FIELD_TOKEN      = 'token';
+    const FIELD_CREATED_AT = 'created_at';
+
     /**
      * {@inheritDoc}
      */
