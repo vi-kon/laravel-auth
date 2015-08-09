@@ -30,8 +30,9 @@ class CreateUsersTable extends Migration
             $table->string('home')
                   ->nullable(true)
                   ->default(null);
-            $table->string('package')
-                  ->default('system');
+            $table->string('namespaces')
+                  ->nullable(true)
+                  ->default(null);
             $table->boolean('blocked')
                   ->default(false);
             $table->boolean('static')
@@ -40,7 +41,7 @@ class CreateUsersTable extends Migration
                   ->default(false);
             $table->timestamps();
 
-            $table->unique(['username', 'package']);
+            $table->unique(['username', 'namespaces']);
         });
     }
 
