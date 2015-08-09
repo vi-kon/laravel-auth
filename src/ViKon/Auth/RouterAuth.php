@@ -46,6 +46,18 @@ class RouterAuth
     }
 
     /**
+     * Check if authenticated user has access to current route
+     *
+     * Note: Route have to have name
+     *
+     * @return bool|null NULL if route not found, otherwise TRUE or FALSE depend if user has access to route or not
+     */
+    public function hasAccessToCurrentRoute()
+    {
+        return $this->hasAccess($this->router->current()->getName());
+    }
+
+    /**
      * Get permissions for named route
      *
      * @param string $name named route named
