@@ -4,15 +4,26 @@ This is **Laravel 5** package for role-permission based authenticating.
 
 ## Table of content
 
+* [Features](#features)
 * [Todo](#todo)
 * [Changes](#changes)
-* [Features](#features)
 * [Installation](#installation)
 * [Models](#models)
 * [Helper classes](#helper-classes)
 * [Middleware](#middleware)
 * [Packages](#packages)
 * [Smarty plugins](#smarty-plugins)
+
+---
+[Back to top][top]
+
+## Features
+
+* Permission based access
+* Grouping permissions (Roles)
+* Restrict routes access by individual permission
+* Allow same username, separated to individual namespaces (each namespace require
+  individual login screen or option to specify namespace at login)
 
 ---
 [Back to top][top]
@@ -55,17 +66,6 @@ Version 2.0
 - Removed **auth.home** filter (middleware)
 - Code optimization with Laravel 5 new features and conventions
 - Service provider is now deferred
-
----
-[Back to top][top]
-
-## Features
-
-* Permission based access
-* Grouping permissions (Roles)
-* Restrict routes access by individual permission
-* Allow same username, separated to individual packages (each package require
-  individual login)
 
 ---
 [Back to top][top]
