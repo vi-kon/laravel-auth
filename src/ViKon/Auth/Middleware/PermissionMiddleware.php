@@ -53,7 +53,7 @@ class PermissionMiddleware
         if (!$this->guard->hasPermission($permission)) {
             return $redirect->route($config->get('vi-kon.auth.error-403.route'))
                             ->with('route-request-uri', $request->getRequestUri())
-                            ->with('route-permissions', $permission);
+                            ->with('route-permissions', [$permission]);
         }
 
         return $next($request);
