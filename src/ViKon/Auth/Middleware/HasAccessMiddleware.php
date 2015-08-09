@@ -44,10 +44,20 @@ class HasAccessMiddleware
     {
         $action = $this->container->make('router')->current()->getAction();
 
+        if (array_key_exists('permission', $action)) {
+            $action['permissions'] = $action['permission'];
+        }
+
         if (array_key_exists('permissions', $action)) {
-            $url      = $this->container->make('url');
-            $config   = $this->container->make('config');
-            $redirect = $this->container->make('redirect');
+            $url         = $this->container->make('url');
+            $config      = $this->container->make('config');
+            $redirect    = $this->container->make('redirect');
+            $permissions = $action['permissions'];
+
+            /** @noinspection ArrayCastingEquivalentInspection */
+            if (!is_array($permissions)) {
+                $permissions = [$permissions];
+            }
 
             // If user is not authenticated redirect to login route
             if (!$this->guard->check()) {
@@ -55,10 +65,10 @@ class HasAccessMiddleware
             }
 
             // If user is authenticated but has no permission to access given route then redirect to 403 route
-            if (!$this->guard->hasPermissions($action['permissions'])) {
+            if (!$this->guard->hasPermissions(...$permissions)) {
                 return $redirect->route($config->get('vi-kon.auth.error-403.route'))
                                 ->with('route-request-uri', $request->getRequestUri())
-                                ->with('route-permissions', $action['permissions']);
+                                ->with('route-permissions', $permissions);
             }
         }
 
