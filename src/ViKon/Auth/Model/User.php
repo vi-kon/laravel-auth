@@ -29,7 +29,7 @@ use ViKon\Auth\Exception\ProfileNotFoundException;
  * @property-read \Illuminate\Database\Eloquent\Collection|\ViKon\Auth\Model\Permission[]           $permissions
  * @property-read \Illuminate\Database\Eloquent\Collection|\ViKon\Auth\Model\Role[]                 $roles
  * @property-read \Illuminate\Database\Eloquent\Collection|\ViKon\Auth\Model\UserPasswordReminder[] $reminders
- * @property-read \UserProfile                                                                      $profile
+ * @property-read \Illuminate\Database\Eloquent\Model                                               $profile
  *
  * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\Model\User whereId($value)
  * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\Model\User whereUsername($value)
