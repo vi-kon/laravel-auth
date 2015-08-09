@@ -1,11 +1,11 @@
 <?php namespace ViKon\Auth;
 
 use Illuminate\Auth\EloquentUserProvider;
+use Illuminate\Contracts\Config\Repository;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
 use ViKon\Auth\Database\Eloquent\Model;
 use ViKon\Auth\Database\Migration\Migration;
-use ViKon\Auth\Facades\RouterAuth;
 use ViKon\Auth\Middleware\HasAccessMiddleware;
 use ViKon\Auth\Middleware\PermissionMiddleware;
 
@@ -38,19 +38,19 @@ class AuthServiceProvider extends ServiceProvider
         $this->publishes([__DIR__ . '/../../config/config.php' => config_path('vi-kon/auth.php')], 'config');
         $this->publishes([__DIR__ . '/../../database/migrations/' => base_path('database/migrations')], 'migrations');
 
-        $this->app->make('router')->middleware('auth.has_access', HasAccessMiddleware::class);
+        $this->app->make('router')->middleware('auth.has-access', HasAccessMiddleware::class);
         $this->app->make('router')->middleware('auth.permission', PermissionMiddleware::class);
 
         $this->app->make('auth')->extend('eloquent', function (Application $app) {
             $model    = $app->make('config')->get('auth.model');
             $provider = new EloquentUserProvider($app->make('hash'), $model);
 
-            return new Guard($provider, $app->make('session.store'));
+            return new Guard($provider, $app->make('session.store'), $app->make('request'));
         });
 
         // Set config to access in all models and migrations in authentication
-        Model::setConfig($this->app->make('config'));
-        Migration::setConfig($this->app->make('config'));
+        Model::setConfig($this->app->make(Repository::class));
+        Migration::setConfig($this->app->make(Repository::class));
         Migration::setSchema($this->app->make('db')->connection()->getSchemaBuilder());
     }
 
@@ -59,7 +59,11 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function provides()
     {
-        return ['vi-kon.auth.router'];
+        return [
+            RouterAuth::class,
+            Guard::class,
+            ModelFactory::class,
+        ];
     }
 
     /**
@@ -67,7 +71,13 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton('vi-kon.auth.router', RouterAuth::class);
+        $this->app->singleton(RouterAuth::class, RouterAuth::class);
+        $this->app->singleton(Guard::class, function (Application $app) {
+            return $app->make('auth')->driver('eloquent');
+        });
+        $this->app->singleton(ModelFactory::class, function () {
+            return new ModelFactory();
+        });
 
         $this->mergeConfigFrom(__DIR__ . '/../../config/config.php', 'vi-kon.auth');
     }
