@@ -46,15 +46,16 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 {
     use Authenticatable, CanResetPassword;
 
-    const FIELD_ID        = 'id';
-    const FIELD_USERNAME  = 'username';
-    const FIELD_PASSWORD  = 'password';
-    const FIELD_EMAIL     = 'email';
-    const FIELD_HOME      = 'home';
-    const FIELD_NAMESPACE = 'namespace';
-    const FIELD_BLOCKED   = 'blocked';
-    const FIELD_STATIC    = 'static';
-    const FIELD_HIDDEN    = 'hidden';
+    const FIELD_ID             = 'id';
+    const FIELD_USERNAME       = 'username';
+    const FIELD_PASSWORD       = 'password';
+    const FIELD_EMAIL          = 'email';
+    const FIELD_HOME           = 'home';
+    const FIELD_NAMESPACE      = 'namespace';
+    const FIELD_BLOCKED        = 'blocked';
+    const FIELD_STATIC         = 'static';
+    const FIELD_HIDDEN         = 'hidden';
+    const FIELD_REMEMBER_TOKEN = 'remember_token';
 
     /**
      * {@inheritDoc}
