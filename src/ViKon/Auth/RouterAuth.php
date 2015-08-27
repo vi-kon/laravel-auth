@@ -42,7 +42,7 @@ class RouterAuth
             return null;
         }
 
-        return $this->guard->hasPermissions(...$permissions);
+        return $this->guard->hasPermissions($permissions);
     }
 
     /**

@@ -24,7 +24,7 @@ if (!function_exists('user_has_roles')) {
      *
      * @return bool
      */
-    function user_has_permissions(array ...$permissions)
+    function user_has_permissions($permissions)
     {
         return app('auth.driver')->hasPermissions($permissions);
     }

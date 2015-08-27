@@ -65,7 +65,7 @@ class HasAccessMiddleware
             }
 
             // If user is authenticated but has no permission to access given route then redirect to 403 route
-            if (!$this->guard->hasPermissions(...$permissions)) {
+            if (!$this->guard->hasPermissions($permissions)) {
                 return $redirect->route($config->get('vi-kon.auth.error-403.route'))
                                 ->with('route-request-uri', $request->getRequestUri())
                                 ->with('route-permissions', $permissions);
