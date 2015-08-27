@@ -121,4 +121,28 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 
         throw new ProfileNotFoundException('Provided profile class not found (' . static::$config->get('vi-kon.auth.profile') . ')');
     }
+
+    /**
+     * Check if user has given role
+     *
+     * @param string $role
+     *
+     * @return bool
+     */
+    public function hasRole($role)
+    {
+        return !$this->roles->where('token', $role)->isEmpty();
+    }
+
+    /**
+     * Check if user has given permission
+     *
+     * @param string $permission
+     *
+     * @return bool
+     */
+    public function hasPermission($permission)
+    {
+        return !$this->permissions->where('token', $permission)->isEmpty();
+    }
 }
