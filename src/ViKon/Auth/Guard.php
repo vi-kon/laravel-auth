@@ -142,6 +142,17 @@ class Guard extends \Illuminate\Auth\Guard
     }
 
     /**
+     * {@inheritDoc}
+     */
+    public function logout()
+    {
+        parent::logout();
+
+        $this->roles       = null;
+        $this->permissions = null;
+    }
+
+    /**
      * Return if current user is blocked
      *
      * If user is not role based user, then always return false
