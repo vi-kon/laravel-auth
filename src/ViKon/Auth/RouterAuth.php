@@ -65,7 +65,7 @@ class RouterAuth
      *
      * @param string $name named route named
      *
-     * @return null NULL if route not found, otherwise array of permissions
+     * @return string[]|null NULL if route not found, otherwise array of permissions
      */
     public function getPermissions($name)
     {
