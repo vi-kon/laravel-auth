@@ -36,6 +36,13 @@ class UserPasswordReminder extends Model
     {
         $this->table      = static::$config->get('vi-kon.auth.table.user_password_reminders');
         $this->timestamps = false;
+        $this->casts      = [
+            static::FIELD_USER_ID => 'integer',
+            static::FIELD_TOKEN   => 'integer',
+        ];
+        $this->dates      = [
+            static::FIELD_CREATED_AT,
+        ];
 
         parent::__construct($attributes);
     }

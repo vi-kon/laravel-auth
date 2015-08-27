@@ -64,7 +64,18 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     {
         $this->table      = static::$config->get('vi-kon.auth.table.users');
         $this->timestamps = false;
-        $this->hidden     = ['password', 'remember_token'];
+        $this->hidden     = [static::FIELD_PASSWORD, static::FIELD_REMEMBER_TOKEN];
+        $this->casts      = [
+            static::FIELD_USERNAME       => 'string',
+            static::FIELD_PASSWORD       => 'string',
+            static::FIELD_EMAIL          => 'string',
+            static::FIELD_HOME           => 'string',
+            static::FIELD_NAMESPACE      => 'string',
+            static::FIELD_BLOCKED        => 'boolean',
+            static::FIELD_STATIC         => 'boolean',
+            static::FIELD_HIDDEN         => 'boolean',
+            static::FIELD_REMEMBER_TOKEN => 'string',
+        ];
 
         parent::__construct($attributes);
     }

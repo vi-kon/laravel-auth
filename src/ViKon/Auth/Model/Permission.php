@@ -31,6 +31,9 @@ class Permission extends Model
     {
         $this->table = static::$config->get('vi-kon.auth.table.user_permissions');;
         $this->timestamps = false;
+        $this->casts      = [
+            static::FIELD_TOKEN => 'string',
+        ];
 
         parent::__construct($attributes);
     }

@@ -37,6 +37,11 @@ class Role extends Model
     {
         $this->table      = static::$config->get('vi-kon.auth.table.user_roles');
         $this->timestamps = false;
+        $this->casts      = [
+            static::FIELD_TOKEN  => 'string',
+            static::FIELD_STATIC => 'boolean',
+            static::FIELD_HIDDEN => 'boolean',
+        ];
 
         parent::__construct($attributes);
     }
