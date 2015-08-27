@@ -27,6 +27,8 @@ class ModelFactory
             $user->{$key} = $attribute;
         }
 
+        $user->save();
+
         return $user;
     }
 
@@ -45,6 +47,8 @@ class ModelFactory
             $role->{$key} = $attribute;
         }
 
+        $role->save();
+
         return $role;
     }
 
@@ -57,6 +61,8 @@ class ModelFactory
     {
         $permission        = new Permission();
         $permission->token = trim($token);
+
+        $permission->save();
 
         return $permission;
     }
