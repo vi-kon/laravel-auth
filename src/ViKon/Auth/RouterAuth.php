@@ -88,12 +88,13 @@ class RouterAuth
 
         // Get permissions from array syntax
         $action = $route->getAction();
+
+        if (array_key_exists('permission', $action)) {
+            $permissions[] = $action['permission'];
+        }
+
         if (array_key_exists('permissions', $action)) {
-            if (is_array($action['permissions'])) {
-                $permissions = $action['permissions'];
-            } else {
-                $permissions[] = $action['permissions'];
-            }
+            $permissions = array_merge($permissions, $action['permissions']);
         }
 
         return array_unique($permissions);
