@@ -38,11 +38,14 @@ class RouterAuth
      */
     public function hasAccess($name)
     {
-        if (($permissions = $this->getPermissions($name)) === null) {
+        $permissions = $this->getPermissions($name);
+        $roles       = $this->getRoles($name);
+
+        if ($permissions === null && $roles === null) {
             return null;
         }
 
-        return $this->guard->hasPermissions($permissions);
+        return $this->guard->hasPermissions($permissions) && $this->guard->hasRoles($roles);
     }
 
     /**
@@ -94,6 +97,38 @@ class RouterAuth
         }
 
         return array_unique($permissions);
+    }
+
+    /**
+     * Get roles for named route
+     *
+     * @param string $name named route named
+     *
+     * @return string[]|null NULL if route not found, otherwise array of roles
+     */
+    public function getRoles($name)
+    {
+        $route = $this->router->getRoutes()->getByName($name);
+
+        // If route not exists, return NULL
+        if ($route === null) {
+            return null;
+        }
+
+        $roles = [];
+
+        // Get permissions from array syntax
+        $action = $route->getAction();
+
+        if (array_key_exists('role', $action)) {
+            $roles[] = $action['role'];
+        }
+
+        if (array_key_exists('roles', $action)) {
+            $roles = array_merge($roles, $action['roles']);
+        }
+
+        return array_unique($roles);
     }
 
     /**

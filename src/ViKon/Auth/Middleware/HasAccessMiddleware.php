@@ -5,6 +5,7 @@ namespace ViKon\Auth\Middleware;
 use Closure;
 use Illuminate\Container\Container;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use ViKon\Auth\Guard;
 
 /**
@@ -44,16 +45,25 @@ class HasAccessMiddleware
     {
         $action = $this->container->make('router')->current()->getAction();
 
+        if (array_key_exists('role', $action)) {
+            $action['roles'] = $action['role'];
+        }
+
         if (array_key_exists('permission', $action)) {
             $action['permissions'] = $action['permission'];
         }
 
-        if (array_key_exists('permissions', $action)) {
+        if (array_key_exists('roles', $action) || array_key_exists('permissions', $action)) {
             $url         = $this->container->make('url');
             $config      = $this->container->make('config');
             $redirect    = $this->container->make('redirect');
-            $permissions = $action['permissions'];
+            $roles       = Arr::get($action, 'roles', []);
+            $permissions = Arr::get($action, 'permissions', []);
 
+            /** @noinspection ArrayCastingEquivalentInspection */
+            if (!is_array($roles)) {
+                $roles = [$roles];
+            }
             /** @noinspection ArrayCastingEquivalentInspection */
             if (!is_array($permissions)) {
                 $permissions = [$permissions];
@@ -65,7 +75,7 @@ class HasAccessMiddleware
             }
 
             // If user is authenticated but has no permission to access given route then redirect to 403 route
-            if (!$this->guard->hasPermissions($permissions)) {
+            if (!$this->guard->hasRoles($roles) || !$this->guard->hasPermissions($permissions)) {
                 return $redirect->route($config->get('vi-kon.auth.error-403.route'))
                                 ->with('route-request-uri', $request->getRequestUri())
                                 ->with('route-permissions', $permissions);
