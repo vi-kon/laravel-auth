@@ -21,8 +21,8 @@ This is **Laravel 5** package for role-permission based authenticating.
 
 * Permission based access
 * Grouping permissions (Roles)
-* Restrict routes access by individual permission
-* Allow same username, separated to individual namespaces (each namespace require
+* Restrict routes access by individual permission(s) or role(s)
+* Allow to use same username, separated to individual namespaces (each namespace require
   individual login screen or option to specify namespace at login)
 
 ---
@@ -44,10 +44,11 @@ Version 3.0
 
 - **Laravel 5.1** support
 - New `PermissionMiddleware` and `LoginRedirectorMiddleware` 
-- Config publish location changed from `config/auth-role.php` to `config/vi-kon/auth.php`
+- Publish location for config changed from `config/auth-role.php` to `config/vi-kon/auth.php`
 - `Group` model renamed to `Role` and `Role` model renamed to `Permission` for better usability
 - Models moved from `ViKon\Auth\Models` namespace to `ViKon\Auth\Model` namespace
 - Removed Smarty support
+- User "packages" renamed to namespace
 
 Version 2.0.2
 
@@ -143,10 +144,12 @@ Route::get('/', [
 ]);
 // Multiple routes in group
 Route::group(['middleware' => 'auth.has-access'], function () {
+    // ...
     Route::get('/', [
         'permission' => 'access.some.controller',
         'uses'       => 'SomeController@index',
     ]);
+    // ...
 });
 ```
 
@@ -156,7 +159,7 @@ This middleware allow to redirect user (if not authenticated) to custom login pa
 
 #### Permission middleware
 
-Permission middleware get permission from their argument.
+Permission middleware get permission from their argument and restrict user if has no permission to access the route.
 
 ---
 [Back to top][top]
@@ -527,15 +530,15 @@ Route::get('URL', $options);
 ---
 [Back to top][top]
 
-## Packages
+## Namespaces
 
-Packages are useful for grouping users into individual packages. In each package usernames are unique, however in other package using the same username is permitted.
+Namespaces are useful for grouping users into individual login groups. In each namespace usernames are unique, however in other namespace using the same username is permitted.
 
 The default package is `system`. All users are stored in this package. 
 
 ### Authentication
 
-For authenticating user in default package is simple, just call `attempt` method as usual:
+For authenticating user in default namespace is simple, just call `attempt` method as usual:
 
 ```php
 if (Auth::attempt(['email' => $email, 'password' => $password]))
@@ -544,10 +547,10 @@ if (Auth::attempt(['email' => $email, 'password' => $password]))
 }
 ```
 
-For authenticating in custom package, need to provide package name:
+For authenticating in custom namespace, need to provide namespace name:
 
 ```php
-if (Auth::attempt(['email' => $email, 'password' => $password, 'package' => $package]))
+if (Auth::attempt(['email' => $email, 'password' => $password, 'namespace' => $namespace]))
 {
     return redirect()->intended('dashboard');
 }
