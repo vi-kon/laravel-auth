@@ -7,6 +7,7 @@ use Illuminate\Support\ServiceProvider;
 use ViKon\Auth\Database\Eloquent\Model;
 use ViKon\Auth\Database\Migration\Migration;
 use ViKon\Auth\Middleware\HasAccessMiddleware;
+use ViKon\Auth\Middleware\LoginRedirectorMiddleware;
 use ViKon\Auth\Middleware\PermissionMiddleware;
 
 /**
@@ -39,6 +40,7 @@ class AuthServiceProvider extends ServiceProvider
         $this->publishes([__DIR__ . '/../../database/migrations/' => base_path('database/migrations')], 'migrations');
 
         $this->app->make('router')->middleware('auth.has-access', HasAccessMiddleware::class);
+        $this->app->make('router')->middleware('auth.login-redirector', LoginRedirectorMiddleware::class);
         $this->app->make('router')->middleware('auth.permission', PermissionMiddleware::class);
 
         $this->app->make('auth')->extend('eloquent', function (Application $app) {

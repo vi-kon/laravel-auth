@@ -43,7 +43,7 @@ This is **Laravel 5** package for role-permission based authenticating.
 Version 3.0
 
 - **Laravel 5.1** support
-- New `PermissionMiddleware` 
+- New `PermissionMiddleware` and `LoginRedirectorMiddleware` 
 - Config publish location changed from `config/auth-role.php` to `config/vi-kon/auth.php`
 - `Group` model renamed to `Role` and `Role` model renamed to `Permission` for better usability
 - Models moved from `ViKon\Auth\Models` namespace to `ViKon\Auth\Model` namespace
@@ -121,6 +121,7 @@ No need to assign short-hand key to `App\Http\Kernel`'s `routeMiddleware` proper
 because `AuthServiceProvider` do it automatically. These middlewares are:
 
 * [HasAccessMiddleware](#has-access-middleware)
+* [LoginRedirectorMiddleware](#login-redirector-middleware)
 * [PermissionMiddleware](#permission-middleware)
 
 #### Has Access middleware
@@ -148,6 +149,10 @@ Route::group(['middleware' => 'auth.has-access'], function () {
     ]);
 });
 ```
+
+#### Login redirector middleware
+
+This middleware allow to redirect user (if not authenticated) to custom login page. It is useful if users are separated to individual namespaces and some routes belongs to first namespace and some routes belongs to second namespace.
 
 #### Permission middleware
 
