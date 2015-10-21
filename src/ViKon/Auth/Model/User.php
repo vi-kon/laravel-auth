@@ -28,6 +28,7 @@ use ViKon\Auth\Exception\ProfileNotFoundException;
  * @property boolean                                                                                $hidden
  * @property-read \Illuminate\Database\Eloquent\Collection|\ViKon\Auth\Model\Permission[]           $permissions
  * @property-read \Illuminate\Database\Eloquent\Collection|\ViKon\Auth\Model\Role[]                 $roles
+ * @property-read \Illuminate\Database\Eloquent\Collection|\ViKon\Auth\Model\Group[]                $groups
  * @property-read \Illuminate\Database\Eloquent\Collection|\ViKon\Auth\Model\UserPasswordReminder[] $reminders
  * @property-read \Illuminate\Database\Eloquent\Model                                               $profile
  *
@@ -100,6 +101,15 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 
     /** @noinspection ClassMethodNameMatchesFieldNameInspection */
     /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function groups()
+    {
+        return $this->belongsToMany(Group::class, static::$config->get('vi-kon.auth.table.rel__user__group'), 'user_id', 'group_id');
+    }
+
+    /** @noinspection ClassMethodNameMatchesFieldNameInspection */
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function reminders()
@@ -123,6 +133,18 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     }
 
     /**
+     * Check if user has given group
+     *
+     * @param string $group
+     *
+     * @return bool
+     */
+    public function hasGroup($group)
+    {
+        return !$this->groups->where('token', $group)->isEmpty();
+    }
+
+    /**
      * Check if user has given role
      *
      * @param string $role
@@ -131,7 +153,17 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     public function hasRole($role)
     {
-        return !$this->roles->where('token', $role)->isEmpty();
+        if (!$this->roles->where('token', $role)->isEmpty()) {
+            return true;
+        }
+
+        foreach ($this->groups as $group) {
+            if (!$group->roles->where('token', $role)->isEmpty()) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
@@ -143,6 +175,24 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     public function hasPermission($permission)
     {
-        return !$this->permissions->where('token', $permission)->isEmpty();
+        if (!$this->permissions->where('token', $permission)->isEmpty()) {
+            return true;
+        }
+
+        foreach ($this->groups as $group) {
+            foreach ($group->roles as $role) {
+                if (!$role->permissions->where('token', $permission)->isEmpty()) {
+                    return true;
+                }
+            }
+        }
+
+        foreach ($this->roles as $role) {
+            if (!$role->permissions->where('token', $permission)->isEmpty()) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

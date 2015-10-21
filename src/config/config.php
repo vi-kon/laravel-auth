@@ -41,10 +41,14 @@ return [
         'user_roles'              => 'user_roles',
         'user_permissions'        => 'user_permissions',
         'user_password_reminders' => 'user_password_reminders',
+        'user_groups'             => 'user_groups',
         // Pivot tables
         'rel__user__role'         => 'rel__user__role',
         'rel__user__permission'   => 'rel__user__permission',
         'rel__role__permission'   => 'rel__role__permission',
+        'rel__user__group'        => 'rel__user__group',
+        'rel__group__role'        => 'rel__group__role',
+        'rel__group__permission'  => 'rel__group__permission',
     ],
     /*
     | --------------------------------------------------------------------------

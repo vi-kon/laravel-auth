@@ -30,7 +30,7 @@ class CreateUsersTable extends Migration
             $table->string('home')
                   ->nullable(true)
                   ->default(null);
-            $table->string('namespaces')
+            $table->string('namespace')
                   ->nullable(true)
                   ->default(null);
             $table->boolean('blocked')
@@ -41,7 +41,7 @@ class CreateUsersTable extends Migration
                   ->default(false);
             $table->timestamps();
 
-            $table->unique(['username', 'namespaces']);
+            $table->unique(['username', 'namespace']);
         });
     }
 

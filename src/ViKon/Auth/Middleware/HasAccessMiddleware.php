@@ -46,6 +46,9 @@ class HasAccessMiddleware
     {
         $action = $this->container->make('router')->current()->getAction();
 
+        if (array_key_exists('group', $action)) {
+            $action['groups'] = $action['group'];
+        }
         if (array_key_exists('role', $action)) {
             $action['roles'] = $action['role'];
         }
@@ -65,9 +68,14 @@ class HasAccessMiddleware
             }
 
             // Get roles and permissions
+            $groups      = Arr::get($action, 'groups', []);
             $roles       = Arr::get($action, 'roles', []);
             $permissions = Arr::get($action, 'permissions', []);
 
+            /** @noinspection ArrayCastingEquivalentInspection */
+            if (!is_array($groups)) {
+                $groups = [$groups];
+            }
             /** @noinspection ArrayCastingEquivalentInspection */
             if (!is_array($roles)) {
                 $roles = [$roles];
@@ -78,13 +86,15 @@ class HasAccessMiddleware
             }
 
             // If user is authenticated but has no permission to access given route then redirect to 403 route
-            if (!$this->guard->hasRoles($roles) || !$this->guard->hasPermissions($permissions)) {
+            if (!$this->guard->hasGroups($groups) || !$this->guard->hasRoles($roles) || !$this->guard->hasPermissions($permissions)) {
                 $router = $this->container->make('router');
 
                 // Check if config defined 403 error route exists or not
                 if ($router->has($config->get('vi-kon.auth.error-403.route'))) {
                     return $redirect->route($config->get('vi-kon.auth.error-403.route'))
                                     ->with('route-request-uri', $request->getRequestUri())
+                                    ->with('route-groups', $groups)
+                                    ->with('route-roles', $roles)
                                     ->with('route-permissions', $permissions);
                 }
 

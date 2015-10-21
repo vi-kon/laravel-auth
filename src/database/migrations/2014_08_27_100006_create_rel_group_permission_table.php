@@ -1,14 +1,14 @@
 <?php
 
-use ViKon\Auth\Database\Migration\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use ViKon\Auth\Database\Migration\Migration;
 
 /**
- * Class CreateRelUserPermissionTable
+ * Class CreateRelGroupPermissionTable
  *
  * @author Kovács Vince<vincekovacs@hotmail.com>
  */
-class CreateRelUserPermissionTable extends Migration
+class CreateRelGroupPermissionTable extends Migration
 {
     /**
      * Run the migrations.
@@ -17,20 +17,20 @@ class CreateRelUserPermissionTable extends Migration
      */
     public function up()
     {
-        static::$schema->create(static::$config->get('vi-kon.auth.table.rel__user__permission'), function (Blueprint $table) {
+        static::$schema->create(static::$config->get('vi-kon.auth.table.rel__group__permission'), function (Blueprint $table) {
             $table->engine = 'InnoDB';
 
-            $table->unsignedInteger('user_id');
-            $table->foreign('user_id')
+            $table->unsignedInteger('group_id');
+            $table->foreign('group_id')
                   ->references('id')
-                  ->on('users')
+                  ->on(static::$config->get('vi-kon.auth.table.user_groups'))
                   ->onUpdate('cascade')
                   ->onDelete('cascade');
 
             $table->unsignedInteger('permission_id');
             $table->foreign('permission_id')
                   ->references('id')
-                  ->on('user_permissions')
+                  ->on(static::$config->get('vi-kon.auth.table.user_permissions'))
                   ->onUpdate('cascade')
                   ->onDelete('cascade');
         });
@@ -43,6 +43,6 @@ class CreateRelUserPermissionTable extends Migration
      */
     public function down()
     {
-        static::$schema->drop(static::$config->get('vi-kon.auth.table.rel__user__permission'));
+        static::$schema->drop(static::$config->get('vi-kon.auth.table.rel__group__permission'));
     }
 }
