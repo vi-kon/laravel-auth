@@ -77,6 +77,10 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
             static::FIELD_HIDDEN         => 'boolean',
             static::FIELD_REMEMBER_TOKEN => 'string',
         ];
+        $this->guarded    = [
+            static::FIELD_USERNAME,
+            static::FIELD_PASSWORD,
+        ];
 
         parent::__construct($attributes);
     }

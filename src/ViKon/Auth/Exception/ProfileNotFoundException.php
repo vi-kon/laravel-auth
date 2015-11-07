@@ -9,7 +9,7 @@ namespace ViKon\Auth\Exception;
  *
  * @author  Kovács Vince <vincekovacs@hotmail.com>
  */
-class ProfileNotFoundException extends \Exception
+class ProfileNotFoundException extends \LogicException
 {
 
 }
