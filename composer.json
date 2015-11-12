@@ -1,10 +1,12 @@
 {
   "name"             : "vi-kon/laravel-auth",
-  "description"      : "Role based authenticator for Laravel 4",
+  "description"      : "Role-permission based authenticator for Laravel 5.1",
   "keywords"         : [
     "laravel",
     "authentication",
-    "route"
+    "route",
+    "role",
+    "permission"
   ],
   "license"          : "MIT",
   "homepage"         : "https://github.com/vi-kon/laravel-auth",
@@ -15,18 +17,18 @@
     }
   ],
   "require"          : {
-    "php"               : ">=5.4.0",
-    "illuminate/support": "~5.0"
-  },
-  "suggest"          : {
-    "jenssegers/laravel-mongodb": "A MongoDB based Eloquent model and Query builder for Laravel 4"
+    "php"                   : ">=5.5.9",
+    "illuminate/auth"       : "~5.1",
+    "illuminate/config"     : "~5.1",
+    "illuminate/container"  : "~5.1",
+    "illuminate/database"   : "~5.1",
+    "illuminate/routing"    : "~5.1",
+    "illuminate/support"    : "~5.1",
+    "vi-kon/laravel-support": "1.0.0-RC1"
   },
   "autoload"         : {
-    "psr-0": {
-      "ViKon\\Auth\\": "src/"
-    },
     "psr-4": {
-      "ViKon\\Auth\\": "src/"
+      "ViKon\\Auth\\": "src/ViKon/Auth"
     },
     "files": [
       "src/helpers.php"

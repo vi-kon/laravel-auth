@@ -1,12 +1,12 @@
-# Laravel 5 role based authentication
+# Laravel 5.1 role-permission based authentication
 
-This is **Laravel 5** package for role based authenticating.
+This is **Laravel 5** package for role-permission based authenticating.
 
 ## Table of content
 
+* [Features](#features)
 * [Todo](#todo)
 * [Changes](#changes)
-* [Features](#features)
 * [Installation](#installation)
 * [Models](#models)
 * [Helper classes](#helper-classes)
@@ -17,15 +17,42 @@ This is **Laravel 5** package for role based authenticating.
 ---
 [Back to top][top]
 
+## Features
+
+* Permission based access
+* Grouping permissions (Roles)
+* Restrict routes access by individual permission(s) or role(s)
+* Allow to use same username, separated to individual namespaces (each namespace require
+  individual login screen or option to specify namespace at login)
+
+---
+[Back to top][top]
+
 ## Todo
 
 * Fix incoming bugs
 * Finish documentation
+* Write tests
+* Cache metadata
 
 ---
 [Back to top][top]
 
 ## Changes
+
+Version 3.0
+
+- **Laravel 5.1** support
+- New `PermissionMiddleware` and `LoginRedirectorMiddleware` 
+- Publish location for config changed from `config/auth-role.php` to `config/vi-kon/auth.php`
+- `Group` model renamed to `Role` and `Role` model renamed to `Permission` for better usability
+- Models moved from `ViKon\Auth\Models` namespace to `ViKon\Auth\Model` namespace
+- Removed Smarty support
+- User "packages" renamed to namespace
+
+Version 2.0.2
+
+- Config option to add custom Profile model
 
 Version 2.0.1
 
@@ -34,48 +61,45 @@ Version 2.0.1
 Version 2.0
 
 - **Laravel 5** support (requirement)
-- Removed **AuthUser** and **AuthRoute** aliases
-- Added **ViKon\Auth\AuthUser** and **ViKon\Auth\AuthRoute** singletons
+- Removed **AuthUser** and **RouterAuth** aliases
+- Added **ViKon\Auth\AuthUser** and **ViKon\Auth\RouterAuth** singletons
 - Package filters changed to **middleware** classes
 - Removed **auth.home** filter (middleware)
-- Code optimalization with Laravel 5 new features and conventions
+- Code optimization with Laravel 5 new features and conventions
 - Service provider is now deferred
-
----
-[Back to top][top]
-
-## Features
-
-* Role based access
-* Grouping roles
-* Filter routes by individual roles
-* Group usernames into modules
 
 ---
 [Back to top][top]
 
 ## Installation
 
-### Basic
+#### Composer
 
-To your `composer.json` file add following lines:
+There are multiple way to install package via composer
 
-```json
-// to your "require" object
-"vi-kon/laravel-auth": "~2.*"
-```
+* To your `composer.json` file add following lines:
 
-Or run followung command in project root:
+    ```json
+    // to your "require" object
+    "vi-kon/laravel-auth": "~3.*"
+    ```
 
-```bash
-composer require vi-kon/laravel-auth
-```
+* Or run following command in project root:
 
-In your Laravel 5 project add following lines to `app.php`:
+    ```bash
+    composer require vi-kon/laravel-auth
+    ```
+
+    This command will add above line in your composer.json file and download
+    required package files.
+
+#### Setup
+
+In your Laravel 5.1 project add following lines to `config/app.php`:
 
 ```php
-// to your providers array
-'ViKon\Auth\AuthServiceProvider',
+// to providers array
+\ViKon\Auth\AuthServiceProvider::class,
 ```
 
 ---
@@ -85,9 +109,8 @@ In your Laravel 5 project add following lines to `app.php`:
 
 Optionally you can add aliases back to `app.php`:
 ```php
-// to your aliases array
-'AuthUser'  => 'ViKon\Auth\Facades\AuthUser',
-'AuthRoute' => 'ViKon\Auth\Facades\AuthRoute',
+// to aliases array
+'RouterAuth' => \ViKon\Auth\Facades\RouterAuth::class,
 ```
 
 ---
@@ -95,103 +118,83 @@ Optionally you can add aliases back to `app.php`:
 
 ### Middleware
 
-No need assign short-hand key to `Kernel`'s `routeMiddleware` properties, because ServiceProvider do it automatically.
+No need to assign short-hand key to `App\Http\Kernel`'s `routeMiddleware` property,
+because `AuthServiceProvider` do it automatically. These middlewares are:
+
+* [HasAccessMiddleware](#has-access-middleware)
+* [LoginRedirectorMiddleware](#login-redirector-middleware)
+* [PermissionMiddleware](#permission-middleware)
+
+#### Has Access middleware
+
+Has access middleware can attach to groups or routes. This middleware check if route
+has assigned permission and if current user has permission to access that route.
+
+##### Usage
+
+Part of `routes.php`:
+
+```php
+// Single route
+Route::get('/', [
+    'middleware' => 'auth.has-access',
+    'permission' => 'access.some.controller',
+    'uses'       => 'SomeController@index',
+
+]);
+// Multiple routes in group
+Route::group(['middleware' => 'auth.has-access'], function () {
+    // ...
+    Route::get('/', [
+        'permission' => 'access.some.controller',
+        'uses'       => 'SomeController@index',
+    ]);
+    // ...
+});
+```
+
+#### Login redirector middleware
+
+This middleware allow to redirect user (if not authenticated) to custom login page. It is useful if users are separated to individual namespaces and some routes belongs to first namespace and some routes belongs to second namespace.
+
+#### Permission middleware
+
+Permission middleware get permission from their argument and restrict user if has no permission to access the route.
 
 ---
 [Back to top][top]
 
 ## Models
 
-* [Group](#group-model)
-* [Role](#role-model)
+All models have configurable database names. These database names are hold under
+`table.*` config value. In this short introduction default table names are used.
+The package holds following models:
+
 * [User](#user-model)
+* [Role](#role-model)
+* [Permission](#permission-model)
 * [UserPasswordReminder](#userpasswordreminder-model)
+* [Profile](#profile-model)
 
-Models are using pivot tables for many to many relations: `rel_role_group`, `rel_user_role`, `rel_user_group`.
+Models are using pivot tables for many to many relations: `rel__role__group`,
+`rel__user__role`, `rel__user__group`.
 
----
-[Back to top][top]
+> **Note**: All table names, even pivot table names are configurable via config
+> file.
 
-### Group model
-
-Group is for managing user roles as collection.
-
-**Namespace**: `ViKon\Auth\models`
-
-**Database table**: `user_groups`
-
-#### Read/Write Properties
-
-| Type    | Name          | Description               | Default | Database                |
-| ------- | ------------- | ------------------------- |:-------:| ----------------------- |
-| integer | `id`          | Unique group identifier   | -       | primary key, increments |
-| string  | `name`        | Human readable group name | -       | length 255              |
-| string  | `description` | Short description         | -       | length 1000             |
-| string  | `token`       | Unique group name (token) | null    | unique, nullable        |
-| boolean | `static`      | Disallow deleting on GUI  | false   |                         |
-| boolean | `hidden`      | Disallow showing on GUI   | false   |                         |
-
-#### Read properties (relations)
-
-| Type                      | Name    | Description      | Default | Database                                       |
-| ------------------------- | ------- | ---------------- |:-------:| ---------------------------------------------- |
-| \ViKon\Auth\Models\User[] | `users` | Users collection | -       | many to many relation with `users` table       |
-| \ViKon\Auth\Models\Role[] | `roles` | Roles collection | -       | many to many relation with `user_roles` table  |
-
-#### Methods (relations)
-
-Relations for Laravel Query Builder.
-
-| Type          | Name      | Description                      | Database                                       |
-| ------------- | --------- | -------------------------------- | ---------------------------------------------- |
-| BelongsToMany | `users()` | Users relation for query builder | many to many relation with `users` table       |
-| BelongsToMany | `roles()` | Roles relation for query builder | many to many relation with `user_roles` table  |
-
-
----
-[Back to top][top]
-
-### Role model
-
-Role is for allowing users to access routes or certain actions.
-
-**Namespace**: `ViKon\Auth\models`
-
-**Database table**: `user_roles`
-
-#### Read/Write Properties
-
-| Type    | Name          | Description            | Default | Database                |
-| ------- | ------------- | ---------------------- |:-------:| ----------------------- |
-| integer | `id`          | Unique role identifier | -       | primary key, increments |
-| string  | `name`        | Unique role name       | -       | unique                  |
-| string  | `description` | Short description      | -       | length 1000             |
-
-#### Read properties (relations)
-
-| Type                       | Name     | Description       | Default | Database                                        |
-| -------------------------- | -------- | ----------------- |:-------:| ----------------------------------------------- |
-| \ViKon\Auth\models\User[]  | `users`  | Users collection  | -       | many to many relation with `users` table        |
-| \ViKon\Auth\models\Group[] | `groups` | Groups collection | -       | many to many relation with `user_groups` table  |
-
-#### Methods (relations)
-
-Relations for Laravel Query Builder.
-
-| Type          | Name       | Description                       | Database                                       |
-| ------------- | ---------- | --------------------------------- | ---------------------------------------------- |
-| BelongsToMany | `users()`  | Users relation for query builder  | many to many relation with `users` table       |
-| BelongsToMany | `groups()` | Groups relation for query builder | many to many relation with `user_group` table  |
-
+> **Warning**: Not recommended to change table names if database is already
+> migrated, because migrations down method will try to execute on wrong tables.
 
 ---
 [Back to top][top]
 
 ### User model
 
-User representing model, implements `UserInterface`.
+User representing model, implements `AuthenticatableContract` and
+`CanResetPasswordContract` interfaces and use `Authenticatable` and
+`CanResetPassword` traits.
 
-**Namespace**: `ViKon\Auth\models`
+**Namespace**: `ViKon\Auth\Model`
 
 **Database table**: `users`
 
@@ -204,32 +207,109 @@ User representing model, implements `UserInterface`.
 | string  | `password`       | User password                    | -        | length 255              |
 | string  | `email`          | User e-mail address              | -        | length 255              |
 | string  | `remember_token` | Remember token for "Remember me" | null     | nullable                |
-| string  | `module`         | Module name                      | "system" |
+| string  | `package`        | Package name                     | "system" | length 255              |
 | string  | `home`           | User home route name             | null     | nullable                |
 | boolean | `blocked`        | Check if user is blocked         | false    |                         |
 | boolean | `static`         | Disallow deleting on GUI         | false    |                         |
 | boolean | `hidden`         | Disallow showing on GUI          | false    |                         |
 
-The `username` and `module` columns has contracted unique index.
+The `username` and `package` columns has contracted unique index.
 
 #### Read properties (relations)
 
-| Type                          | Name        | Description          | Default | Database                                                    |
-| ----------------------------- | ----------- | -------------------- |:-------:| ----------------------------------------------------------- |
-| \ViKon\Auth\Models\Role[]     | `roles`     | Users collection     | -       | many to many relation with `user_roles` table           |
-| \ViKon\Auth\Models\Group[   ] | `groups`    | Groups collection    | -       | many to many relation with `user_groups` table           |
-| \ViKon\Auth\Models\Reminder[] | `reminders` | Reminders collection | -       | many to many relation with `user_password_reminders` table  |
+| Type                           | Name          | Description            | Default | Database                                                   |
+| ------------------------------ | ------------- | ---------------------- |:-------:| ---------------------------------------------------------- |
+| \ViKon\Auth\Model\Role[]       | `roles`       | Roles collection       | -       | many to many relation with `user_roles` table              |
+| \ViKon\Auth\Model\Permission[] | `permissions` | Permissions collection | -       | many to many relation with `user_permissions` table        |
+| \ViKon\Auth\Model\Reminder[]   | `reminders`   | Reminders collection   | -       | many to many relation with `user_password_reminders` table |
 
 #### Methods (relations)
 
 Relations for Laravel Query Builder.
 
-| Type          | Name          | Description                          | Database                                                    |
-| ------------- | ------------- | ------------------------------------ | ----------------------------------------------------------- |
-| BelongsToMany | `roles()`     | Users relation for query builder     | many to many relation with `user_roles` table               |
-| BelongsToMany | `groups()`    | Groups relation for query builder    | many to many relation with `user_group` table               |
-| BelongsToMany | `reminders()` | Reminders relation for query builder | many to many relation with `user_password_reminders` table  |
+| Type          | Name            | Description                            | Database                                                                                         |
+| ------------- | --------------- | -------------------------------------- | ------------------------------------------------------------------------------------------------ |
+| BelongsToMany | `roles()`       | Users relation for query builder       | many to many relation with `user_roles` table                                                    |
+| BelongsToMany | `permissions()` | Permissions relation for query builder | many to many relation with `user_permissions` table                                              |
+| BelongsToMany | `reminders()`   | Reminders relation for query builder   | many to many relation with `user_password_reminders` table                                       |
+| HasOne        | `profile()`     | Return attached user profile           | one to one relation to `user_profile` table (this table can customized via custom Profile model) |
 
+---
+[Back to top][top]
+
+### Role model
+
+Role is for managing user permissions as collection. So this is a helper to add
+multiple permissions to user. Each role can contain multiple permissions.
+
+**Namespace**: `ViKon\Auth\Model`
+
+**Database table**: `user_roles`
+
+#### Read/Write Properties
+
+| Type    | Name          | Description              | Default | Database                |
+| ------- | ------------- | ------------------------ |:-------:| ----------------------- |
+| integer | `id`          | Unique role identifier   | -       | primary key, increments |
+| string  | `token`       | Unique role name (token) | null    | unique, nullable        |
+| boolean | `static`      | Disallow deleting on GUI | false   |                         |
+| boolean | `hidden`      | Disallow showing on GUI  | false   |                         |
+
+#### Read properties (relations)
+
+| Type                           | Name          | Description            | Default | Database                                            |
+| ------------------------------ | ------------- | ---------------------- |:-------:| --------------------------------------------------- |
+| \ViKon\Auth\Model\User[]       | `users`       | Users collection       | -       | many to many relation with `users` table            |
+| \ViKon\Auth\Model\Permission[] | `permissions` | Permissions collection | -       | many to many relation with `user_permissions` table |
+
+#### Methods (relations)
+
+Relations for Laravel Query Builder.
+
+| Type          | Name            | Description                      | Database                                            |
+| ------------- | --------------- | -------------------------------- | --------------------------------------------------- |
+| BelongsToMany | `users()`       | Users relation for query builder | many to many relation with `users` table            |
+| BelongsToMany | `permissions()` | Roles relation for query builder | many to many relation with `user_permissions` table |
+
+
+---
+[Back to top][top]
+
+### Permission model
+
+Permissions is for granting some kind of access to users, like access routes or
+certain actions. Each action should have individual permissions.
+
+For example in REST controller should have `{action name}.index`,
+`{action name}.show` `{action name}.create`, `{action name}.edit` and
+`{action name}.destroy` permissions for individual actions.
+
+**Namespace**: `ViKon\Auth\Model`
+
+**Database table**: `user_permissions`
+
+#### Read/Write Properties
+
+| Type    | Name    | Description                   | Default | Database                |
+| ------- | ------- | ----------------------------- |:-------:| ----------------------- |
+| integer | `id`    | Unique permissions identifier | -       | primary key, increments |
+| string  | `token` | Unique permissions token      | -       | unique                  |
+
+#### Read properties (relations)
+
+| Type                     | Name    | Description      | Default | Database                                      |
+| ------------------------ | ------- | ---------------- |:-------:| --------------------------------------------- |
+| \ViKon\Auth\Model\User[] | `users` | Users collection | -       | many to many relation with `users` table      |
+| \ViKon\Auth\Model\Role[] | `roles` | Roles collection | -       | many to many relation with `user_roles` table |
+
+#### Methods (relations)
+
+Relations for Laravel Query Builder.
+
+| Type          | Name      | Description                      | Database                                      |
+| ------------- | --------- | -------------------------------- | --------------------------------------------- |
+| BelongsToMany | `users()` | Users relation for query builder | many to many relation with `users` table      |
+| BelongsToMany | `roles()` | Roles relation for query builder | many to many relation with `user_roles` table |
 
 ---
 [Back to top][top]
@@ -238,7 +318,7 @@ Relations for Laravel Query Builder.
 
 Stores password reminder tokens with store time.
 
-**Namespace**: `ViKon\Auth\models`
+**Namespace**: `ViKon\Auth\Model`
 
 **Database table**: `user_password_reminders`
 
@@ -253,174 +333,176 @@ Stores password reminder tokens with store time.
 
 #### Read properties (relations)
 
-| Type                    | Name   | Description | Default | Database                                     |
-| ----------------------- | ------ | ----------- |:-------:| -------------------------------------------- |
-| \ViKon\Auth\models\User | `user` | User model  | -       | many to one relation with `user_roles` table |
+| Type                   | Name   | Description | Default | Database                                |
+| ---------------------- | ------ | ----------- |:-------:| --------------------------------------- |
+| \ViKon\Auth\Model\User | `user` | User model  | -       | many to one relation with `users` table |
 
 #### Methods (relations)
 
 Relations for Laravel Query Builder.
 
-| Type      | Name     | Description                     | Database                                      |
-| --------- | -------- | ------------------------------- | --------------------------------------------- |
-| BelongsTo | `user()` | User relation for query builder | many to many relation with `user_roles` table |
+| Type      | Name     | Description                     | Database                                 |
+| --------- | -------- | ------------------------------- | ---------------------------------------- |
+| BelongsTo | `user()` | User relation for query builder | many to many relation with `users` table |
 
+
+---
+[Back to top][top]
+
+### Profile model
+
+Profile model is not implemented in this package. This is only for support to add
+custom data to users via single one to one relation. In config with `profile`
+option can customize Profile model location.
+
+Profile model has only one restriction. Need to have `user_id` column, which is
+point to User's model `id` column.
+
+Short example for profile migration file:
+
+```php
+class CreateProfileTable extends Migration
+{
+    public function up()
+    {
+        Schema::create('user_profile', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
+
+            $table->increments('id');
+
+            // Foreign connection to user table
+            $table->unsignedInteger('user_id')
+                  ->unique();
+            $table->foreign('user_id')
+                  ->references('id')
+                  ->on('users')
+                  ->onUpdate('cascade')
+                  ->onDelete('cascade');
+        });
+    }
+
+    public function down()
+    {
+        Schema::drop('user_profile');
+    }
+}
+```
 
 ---
 [Back to top][top]
 
 ## Helper classes
 
-* [AuthUser class](#authuser-class)
-	* [getUser](#authusergetuser)
-	* [getUserId](#authusergetuserid)
-	* [hasRole](#authuserhasrole)
-	* [hasRoles](#authuserhasroles)
-	* [isBlocked](#authuserisblocked)
-* [AuthRoute class](#authroute-class)
-	* [getRoles](#authroutegetroles)
-	* [hasCurrentUserAccess](#authroutehascurrentuseraccess)
-	* [isPublic](#authrouteispublic)
+* [Guard class](#guard-class)
+* [RouterAuth class](#routerauth-class)
 
-### AuthUser class
+### Guard class
 
-The `AuthUser` class allow to check if current user has role or multiple roles.
+The `Guard` class extends Laravel's default `Guard` class to grant access for new
+features. These features allow to get permission for current user, check if user
+is blocked or not.
 
 ### Methods
 
-* [getUser](#authusergetuser) - get current user
-* [getUserId](#authusergetuserid) - get current user's id
-* [hasRole](#authuserhasrole) - check if current user has specific role
-* [hasRoles](#authuserhasroles) - check if current user has all roles
-* [isBlocked](#authuserisblocked) - check if current user is blocked or not
+Some methods are not newly implemented, just overwritten.
+
+* [attempt](#guardAttempt) - try to authenticate user with credentials (auto inject
+  into credentials default role package if set)
+* [hasPermission](#guardHasPermission) - check if authenticated user has a specific
+  permission
+* [hasPermissions](#guardHasPermissions) - check if authenticated user has multiple
+  permissions at once
+* [isBlocked](#guardIsBlocked) - check if authenticated user is blocked or not
+* [user](#guardUser) - get authenticated user
+
+TODO method descriptions
 
 ---
 [Back to top][top]
 
-#### AuthUser::getUser
+### RouterAuth class
 
-Get current user.
-
-```php
-mixed AuthUser::getUser()
-```
-
-Return `NULL` if user is not authenticated, otherwise instance of `\ViKon\Auth\models\User`.
-
----
-[Back to top][top]
-
-#### AuthUser::getUserId
-
-Get current user's id.
-
-```php
-mixed AuthUser::getUserId()
-```
-
-Return `NULL` if user is not authenticated, otherwise user's id.
-
----
-[Back to top][top]
-
-#### AuthUser::hasRole
-
-Check if current user has specific role.
-
-```php
-bool AuthUser::hasRole(string $role)
-```
-| Type                | Name     | Description                                |
-| ------------------- | -------- | ------------------------------------------ |
-| `string`            | `$role`  | name of specific role                      |
-
-Return `boolean` value. `TRUE` if current user has specific role, `FALSE` otherwise.
-
-
----
-[Back to top][top]
-
-#### AuthUser::hasRoles
-
-Check if current user has all roles passed as parameter.
-
-```php
-bool AuthUser::hasRoles(mixed $role1 [, string $role2 [, string $role3 [, ... ] ] ])
-```
-
-| Type                   | Name     | Description                                |
-| ---------------------- | -------- | ------------------------------------------ |
-| `string` or `string[]` | `$role1` | name of first role or array of all roles   |
-| `string`               | `$role2` | name of second role                        |
-| `string`               | `$role3` | name of third role                         |
-
-If more then one parameter passed to method, then all parameters are used as single role and converted to string.
-
-
----
-[Back to top][top]
-
-#### AuthUser::isBlocked
-
-Check if current user is blocked or not.
-
-```php
-bool AuthUser::isBlocked()
-```
-
-Return `TRUE` if user is authenticated and is blocked, otherwise `FALSE`.
-
----
-[Back to top][top]
-
-### AuthRoute class
-
-The `AuthRoute` class allow to get authentication information from route.
+The `RouterAuth` class allow to get authentication information from route.
 
 ### Methods
 
-* [getRoles](#authroutegetroles) - get roles for a named route
-* [hasCurrentUserAccess](#authroutehascurrentuseraccess) - check if current user has access to named route
-* [isPublic](#authrouteispublic) - check if route is public (route has no roles)
+* [hasAccess](#routerAuthHasAccess) - get roles for a named route
+* [isPublic](#routerAuthIsPublic) - check if current user has access to named route
+* [getPermissions](#routerAuthGetPermissions) - check if route is public (route has
+  no permissions)
 
-TODO
+TODO method descriptions
 
 ---
 [Back to top][top]
 
 ## Middleware
 
-Auth middleware classes allow to filter individual routes by their custom roles.
+Middleware classes allow to filter individual routes by their attached permissions.
 
-* [HasAccess](#hasaccess-middleware) - check if current user have roles to current route
+* [HasAccessMiddleware](#hasaccess-middleware) - check if authenticated user have
+  single or multiple permissions to current route
+* [HasAccessMiddleware](#hasaccess-middleware) - check if authenticated user have
+  single permission to current route
+
+> **Note:** Syntax is only difference between these middlewares.
 
 ---
 [Back to top][top]
 
-### HasAccess  middleware
+### PermissionMiddleware middleware
 
-Check if user have all roles to current route. To add role(s) to route only need add `roles` key to route options with right roles.
+> **Note:** The router cannot get parameter from this middleware. 
 
-**Note**: If current route's `roles` key is empty or not exists, then `HasAccess` do nothing.
+### HasAccessMiddleware middleware
+
+Check if authenticated user have all permissions to current route. To add
+permission(s) to route only need add `permissions` key to route options with right
+permissions.
+
+```php
+Router::get('/', [
+    'permissions' => 'permission.name',
+]);
+```
+
+Or if multiple permissions are passed (Authenticated user have to has all
+permissions to access route):
+
+```php
+Router::get('/', [
+    'permissions' => [
+        'permission.first.name',
+        'permission.second.name',
+    ],
+]);
+```
+
+> **Note**: If current route's `permissions` key is empty or not exists, then route
+> is mark as public and no route restriction will made.
 
 #### Configuration
 
-In **config.php** file has multiple options. The following options are avalaible:
+With `php artisan publish --provider="ViKon/Auth/AuthServiceProvider" --tag="config"`
+command you can publish all config files to `vi-kon/auth.php`.
 
-```php
-[
-    'login'     => [
-        'route'    => 'login',
-    ],
-    'error-403' => [
-        'route' => 'error-403'
-    ],
-]
-```
+In this file there are multiple options. The following options are available:
 
-If user is not authenticated and route need role permission(s), then HasAccess redirect user to `login.route` config value. If user is authenticated and hasn't got enough permission to access route, then HasAccess redirect to `error-403.route` config value. Otherwise HasAccess allow access to route.
+* **login.route** - login screen route name
+* **error-403.route** - route name if user is already authenticated but has no
+  access to route
 
-**Note:** The `login.route` and `error-403.route` store the route name.
+If user is not authenticated and route is not public, then middlewares redirect
+user to named route, where named route name is stored in `login.route`
+config value.
+
+If user is authenticated and hasn't got enough permissions to access route, then
+middlewares redirect to named route stored in `error-403.route` config
+value.
+
+Otherwise middlewares allow access to route.
+
+> **Note:** The `login.route` and `error-403.route` stores the route name.
 
 On 403 error the following parameters are flashed to session during redirect:
 
@@ -432,15 +514,15 @@ On 403 error the following parameters are flashed to session during redirect:
 ```php
 // check if user have "admin" role
 $options = [
-    'middleware' => 'auth.role',
-    'roles'      => 'admin',
+    'middleware'  => 'auth.role',
+    'permissions' => 'admin',
 ];
 Route::get('URL', $options);
 
 // check if user have "admin" and "superadmin" roles
 $options = [
-    'middleware' => 'auth.role',
-    'roles'      => ['admin', 'superadmin'],
+    'middleware'  => 'auth.role',
+    'permissions' => ['admin', 'superadmin'],
 ];
 Route::get('URL', $options);
 ```
@@ -448,15 +530,15 @@ Route::get('URL', $options);
 ---
 [Back to top][top]
 
-## Packages
+## Namespaces
 
-Packages are useful for grouping users into individual packages. In each package usernames are unique, however in other package using the same username is permitted.
+Namespaces are useful for grouping users into individual login groups. In each namespace usernames are unique, however in other namespace using the same username is permitted.
 
 The default package is `system`. All users are stored in this package. 
 
 ### Authentication
 
-For authenticating user in default package is simple, just call `attempt` method as usual:
+For authenticating user in default namespace is simple, just call `attempt` method as usual:
 
 ```php
 if (Auth::attempt(['email' => $email, 'password' => $password]))
@@ -465,49 +547,13 @@ if (Auth::attempt(['email' => $email, 'password' => $password]))
 }
 ```
 
-For authenticating in custom package, need to provide package name:
+For authenticating in custom namespace, need to provide namespace name:
 
 ```php
-if (Auth::attempt(['email' => $email, 'password' => $password, 'package' => $package]))
+if (Auth::attempt(['email' => $email, 'password' => $password, 'namespace' => $namespace]))
 {
     return redirect()->intended('dashboard');
 }
-```
-
----
-[Back to top][top]
-
-## Smarty plugins
-
-For using this plugins need [vi-kon/laravel-smarty-view](https://github.com/vi-kon/laravel-smarty-view) package. Installation instruction found on package documentation.
-
-* [has-role](#has-role-plugin)
-
----
-[Back to top][top]
-
-### has-role plugin
-
-The **has-role** tag is alias for:
-
-```php
-return \AuthUser::hasRole($roleName);
-```
-
-Return value is type of `boolean`. Can throw `\SmartyException` exception.
-
-#### Attributes
-
-| Type     | Name      | Description     | Required | Default |
-| -------- | --------- | --------------- |:--------:| ------- |
-| `string` | `role`    | Role token name | x        | -       |
-
-#### Usage
-
-```smarty
-{if {has_role role="admin.index"}}
-  ...
-{/if}
 ```
 
 ---
