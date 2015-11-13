@@ -29,7 +29,6 @@ class CreateUserRolesTable extends Migration
                   ->default(false);
             $table->boolean('hidden')
                   ->default(false);
-            $table->timestamps();
         });
     }
 
