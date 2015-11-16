@@ -4,9 +4,16 @@ namespace ViKon\Auth\Factory;
 
 use Illuminate\Support\Arr;
 use ViKon\Auth\Model\User;
-use ViKon\Support\Database\Repository\AbstractFactory;
+use ViKon\Support\Database\ModelFactory;
 
-class UserFactory extends AbstractFactory
+/**
+ * Class UserFactory
+ *
+ * @package ViKon\Auth\Factory
+ *
+ * @author  Kovács Vince<vincekovacs@hotmail.com>
+ */
+class UserFactory extends ModelFactory
 {
     /**
      * Create new user and return it
@@ -20,8 +27,8 @@ class UserFactory extends AbstractFactory
     public function build($username, $password, array $optional = [])
     {
         $user           = new User();
-        $user->username = strtolower($username);
-        $user->password = bcrypt($password);
+        $user->username = $username;
+        $user->password = $password;
         $user->fill($optional);
 
         return $user;
@@ -61,7 +68,7 @@ class UserFactory extends AbstractFactory
             // Set password for user if provided in optional array
             if (Arr::has($optional, User::FIELD_PASSWORD)) {
                 if ($optional[User::FIELD_PASSWORD] !== null || $optional[User::FIELD_PASSWORD] !== '') {
-                    $user->password = bcrypt($optional[User::FIELD_PASSWORD]);
+                    $user->password = $optional[User::FIELD_PASSWORD];
                 }
                 Arr::forget($optional, User::FIELD_PASSWORD);
             }
