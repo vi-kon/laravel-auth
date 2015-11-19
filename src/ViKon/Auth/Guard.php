@@ -29,7 +29,7 @@ class Guard extends \Illuminate\Auth\Guard
     public function attempt(array $credentials = [], $remember = false, $login = true)
     {
         if (!array_key_exists('namespace', $credentials)) {
-            $credentials['namespace'] = null;
+            $credentials['namespace'] = '';
         }
 
         return parent::attempt($credentials, $remember, $login);
