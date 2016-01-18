@@ -157,7 +157,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     public function setPasswordAttribute($password)
     {
-        $this->attributes[static::FIELD_PASSWORD] = bcrypt($password);
+        $this->attributes[static::FIELD_PASSWORD] = app('hash')->make($password);
     }
 
     /**
