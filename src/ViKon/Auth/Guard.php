@@ -11,6 +11,8 @@ use ViKon\Auth\Model\User;
  * @author  Kovács Vince <vincekovacs@hotmail.com>
  *
  * @package ViKon\Auth
+ *
+ * @method \ViKon\Auth\Model\User getLastAttempted()
  */
 class Guard extends \Illuminate\Auth\Guard
 {
