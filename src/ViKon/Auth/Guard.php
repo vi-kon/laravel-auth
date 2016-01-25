@@ -150,6 +150,8 @@ class Guard extends \Illuminate\Auth\Guard
 
     /**
      * {@inheritDoc}
+     *
+     * @return \ViKon\Auth\Model\User|null
      */
     public function user()
     {
