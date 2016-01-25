@@ -20,6 +20,6 @@ trait FormRequestRouteAuthorizer
     public function authorize(Router $router)
     {
         /** @noinspection PhpUndefinedFieldInspection */
-        return $this->container->make(RouterAuth::class)->hasAccess($router->current()->getName());
+        return $this->container->make(RouterAuth::class)->hasAccess($router->current()->getName()) !== false;
     }
 }
