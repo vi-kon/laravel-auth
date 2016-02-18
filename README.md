@@ -449,7 +449,7 @@ Router::get('/', [
 
 #### Configuration
 
-With `php artisan publish --provider="ViKon/Auth/AuthServiceProvider" --tag="config"`
+With `php artisan vendor:publish --provider="ViKon\Auth\AuthServiceProvider" --tag="config"`
 command you can publish all config files to `vi-kon/auth.php`.
 
 In this file there are multiple options. The following options are available:
