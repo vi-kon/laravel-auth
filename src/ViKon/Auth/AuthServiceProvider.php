@@ -6,7 +6,6 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
 use ViKon\Auth\Database\Eloquent\Model;
 use ViKon\Auth\Database\Migration\Migration;
-use ViKon\Auth\Factory\UserFactory;
 use ViKon\Auth\Middleware\HasAccessMiddleware;
 use ViKon\Auth\Middleware\LoginRedirectorMiddleware;
 use ViKon\Auth\Middleware\PermissionMiddleware;
@@ -65,8 +64,6 @@ class AuthServiceProvider extends ServiceProvider
         return [
             RouterAuth::class,
             Guard::class,
-            ModelFactory::class,
-            UserFactory::class,
         ];
     }
 
@@ -78,12 +75,6 @@ class AuthServiceProvider extends ServiceProvider
         $this->app->singleton(RouterAuth::class, RouterAuth::class);
         $this->app->singleton(Guard::class, function (Application $app) {
             return $app->make('auth')->driver('eloquent');
-        });
-        $this->app->singleton(ModelFactory::class, function () {
-            return new ModelFactory();
-        });
-        $this->app->singleton(UserFactory::class, function (Application $app) {
-            return new UserFactory($app->make('db')->connection());
         });
 
         $this->mergeConfigFrom(__DIR__ . '/../../config/config.php', 'vi-kon.auth');

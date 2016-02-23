@@ -28,8 +28,8 @@ trait AuthSeederTrait
     protected function newUserModel($username, $password, array $options = [])
     {
         $user           = new User();
-        $user->username = strtolower($username);
-        $user->password = bcrypt($password);
+        $user->username = $username;
+        $user->password = $password;
 
         foreach ($options as $key => $value) {
             $user->{$key} = $value;

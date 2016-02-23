@@ -11,6 +11,8 @@ use ViKon\Auth\Model\User;
  * @author  Kovács Vince <vincekovacs@hotmail.com>
  *
  * @package ViKon\Auth
+ *
+ * @method \ViKon\Auth\Model\User getLastAttempted()
  */
 class Guard extends \Illuminate\Auth\Guard
 {
@@ -29,7 +31,7 @@ class Guard extends \Illuminate\Auth\Guard
     public function attempt(array $credentials = [], $remember = false, $login = true)
     {
         if (!array_key_exists('namespace', $credentials)) {
-            $credentials['namespace'] = null;
+            $credentials['namespace'] = '';
         }
 
         return parent::attempt($credentials, $remember, $login);
@@ -148,6 +150,8 @@ class Guard extends \Illuminate\Auth\Guard
 
     /**
      * {@inheritDoc}
+     *
+     * @return \ViKon\Auth\Model\User|null
      */
     public function user()
     {

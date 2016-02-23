@@ -137,6 +137,30 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     }
 
     /**
+     * Set username to lowercase
+     *
+     * @param string $username
+     *
+     * @return void
+     */
+    public function setUsernameAttribute($username)
+    {
+        $this->attributes[static::FIELD_USERNAME] = strtolower($username);
+    }
+
+    /**
+     * Hash password for user model
+     *
+     * @param string $password
+     *
+     * @return void
+     */
+    public function setPasswordAttribute($password)
+    {
+        $this->attributes[static::FIELD_PASSWORD] = app('hash')->make($password);
+    }
+
+    /**
      * Check if user has given group
      *
      * @param string $group

@@ -31,8 +31,7 @@ class CreateUsersTable extends Migration
                   ->nullable(true)
                   ->default(null);
             $table->string('namespace')
-                  ->nullable(true)
-                  ->default(null);
+                  ->default('');
             $table->boolean('blocked')
                   ->default(false);
             $table->boolean('static')
