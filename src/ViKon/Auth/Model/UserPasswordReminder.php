@@ -2,7 +2,7 @@
 
 namespace ViKon\Auth\Model;
 
-use ViKon\Auth\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class UserPasswordReminder
@@ -34,7 +34,7 @@ class UserPasswordReminder extends Model
      */
     public function __construct(array $attributes = [])
     {
-        $this->table      = static::$config->get('vi-kon.auth.table.user_password_reminders');
+        $this->table      = config('vi-kon.auth.table.user_password_reminders');
         $this->timestamps = false;
         $this->casts      = [
             static::FIELD_USER_ID => 'integer',

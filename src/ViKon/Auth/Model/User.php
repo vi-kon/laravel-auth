@@ -6,7 +6,7 @@ use Illuminate\Auth\Authenticatable;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
-use ViKon\Auth\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Model;
 use ViKon\Auth\Exception\ProfileNotFoundException;
 
 /**
@@ -63,7 +63,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     public function __construct(array $attributes = [])
     {
-        $this->table      = static::$config->get('vi-kon.auth.table.users');
+        $this->table      = config('vi-kon.auth.table.users');
         $this->timestamps = false;
         $this->hidden     = [static::FIELD_PASSWORD, static::FIELD_REMEMBER_TOKEN];
         $this->casts      = [
@@ -91,7 +91,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     public function permissions()
     {
-        return $this->belongsToMany(Permission::class, static::$config->get('vi-kon.auth.table.rel__user__permission'), 'user_id', 'permission_id');
+        return $this->belongsToMany(Permission::class, config('vi-kon.auth.table.rel__user__permission'), 'user_id', 'permission_id');
     }
 
     /** @noinspection ClassMethodNameMatchesFieldNameInspection */
@@ -100,7 +100,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     public function roles()
     {
-        return $this->belongsToMany(Role::class, static::$config->get('vi-kon.auth.table.rel__user__role'), 'user_id', 'role_id');
+        return $this->belongsToMany(Role::class, config('vi-kon.auth.table.rel__user__role'), 'user_id', 'role_id');
     }
 
     /** @noinspection ClassMethodNameMatchesFieldNameInspection */
@@ -109,7 +109,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     public function groups()
     {
-        return $this->belongsToMany(Group::class, static::$config->get('vi-kon.auth.table.rel__user__group'), 'user_id', 'group_id');
+        return $this->belongsToMany(Group::class, config('vi-kon.auth.table.rel__user__group'), 'user_id', 'group_id');
     }
 
     /** @noinspection ClassMethodNameMatchesFieldNameInspection */
@@ -129,11 +129,11 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     public function profile()
     {
-        if (class_exists(static::$config->get('vi-kon.auth.profile'))) {
-            return $this->hasOne(static::$config->get('vi-kon.auth.profile'), 'user_id', 'id');
+        if (class_exists(config('vi-kon.auth.profile'))) {
+            return $this->hasOne(config('vi-kon.auth.profile'), 'user_id', 'id');
         }
 
-        throw new ProfileNotFoundException('Provided profile class not found (' . static::$config->get('vi-kon.auth.profile') . ')');
+        throw new ProfileNotFoundException('Provided profile class not found (' . config('vi-kon.auth.profile') . ')');
     }
 
     /**

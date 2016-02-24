@@ -2,7 +2,7 @@
 
 namespace ViKon\Auth\Model;
 
-use ViKon\Auth\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class Role
@@ -36,7 +36,7 @@ class Role extends Model
      */
     public function __construct(array $attributes = [])
     {
-        $this->table      = static::$config->get('vi-kon.auth.table.user_roles');
+        $this->table      = config('vi-kon.auth.table.user_roles');
         $this->timestamps = false;
         $this->casts      = [
             static::FIELD_TOKEN  => 'string',
@@ -53,7 +53,7 @@ class Role extends Model
      */
     public function users()
     {
-        return $this->belongsToMany(User::class, static::$config->get('vi-kon.auth.table.rel__user__role'), 'role_id', 'user_id');
+        return $this->belongsToMany(User::class, config('vi-kon.auth.table.rel__user__role'), 'role_id', 'user_id');
     }
 
     /** @noinspection ClassMethodNameMatchesFieldNameInspection */
@@ -62,7 +62,7 @@ class Role extends Model
      */
     public function groups()
     {
-        return $this->belongsToMany(Group::class, static::$config->get('vi-kon.auth.table.rel__group__role'), 'role_id', 'group_id');
+        return $this->belongsToMany(Group::class, config('vi-kon.auth.table.rel__group__role'), 'role_id', 'group_id');
     }
 
     /** @noinspection ClassMethodNameMatchesFieldNameInspection */
@@ -71,6 +71,6 @@ class Role extends Model
      */
     public function permissions()
     {
-        return $this->belongsToMany(Permission::class, static::$config->get('vi-kon.auth.table.rel__role__permission'), 'role_id', 'permission_id');
+        return $this->belongsToMany(Permission::class, config('vi-kon.auth.table.rel__role__permission'), 'role_id', 'permission_id');
     }
 }
