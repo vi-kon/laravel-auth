@@ -2,6 +2,7 @@
 
 namespace ViKon\Auth;
 
+use Illuminate\Auth\SessionGuard;
 use Illuminate\Database\Eloquent\Collection;
 use ViKon\Auth\Model\User;
 
@@ -14,7 +15,7 @@ use ViKon\Auth\Model\User;
  *
  * @method \ViKon\Auth\Model\User getLastAttempted()
  */
-class Guard extends \Illuminate\Auth\SessionGuard
+class Guard extends SessionGuard
 {
     /** @type string[]|null */
     protected $groups;
