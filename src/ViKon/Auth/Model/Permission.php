@@ -36,7 +36,6 @@ class Permission extends Model
         parent::__construct($attributes);
     }
 
-    /** @noinspection ClassMethodNameMatchesFieldNameInspection */
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
@@ -45,7 +44,6 @@ class Permission extends Model
         return $this->belongsToMany(User::class, config('vi-kon.auth.table.rel__user__permission'), 'permission_id', 'user_id');
     }
 
-    /** @noinspection ClassMethodNameMatchesFieldNameInspection */
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
@@ -54,7 +52,6 @@ class Permission extends Model
         return $this->belongsToMany(Group::class, config('vi-kon.auth.table.rel__group__permission'), 'permission_id', 'group_id');
     }
 
-    /** @noinspection ClassMethodNameMatchesFieldNameInspection */
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */

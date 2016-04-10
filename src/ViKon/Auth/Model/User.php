@@ -74,7 +74,6 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         parent::__construct($attributes);
     }
 
-    /** @noinspection ClassMethodNameMatchesFieldNameInspection */
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
@@ -83,7 +82,6 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         return $this->belongsToMany(Permission::class, config('vi-kon.auth.table.rel__user__permission'), 'user_id', 'permission_id');
     }
 
-    /** @noinspection ClassMethodNameMatchesFieldNameInspection */
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
@@ -92,7 +90,6 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         return $this->belongsToMany(Role::class, config('vi-kon.auth.table.rel__user__role'), 'user_id', 'role_id');
     }
 
-    /** @noinspection ClassMethodNameMatchesFieldNameInspection */
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
@@ -101,7 +98,6 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         return $this->belongsToMany(Group::class, config('vi-kon.auth.table.rel__user__group'), 'user_id', 'group_id');
     }
 
-    /** @noinspection ClassMethodNameMatchesFieldNameInspection */
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
@@ -110,7 +106,6 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         return $this->hasMany(UserPasswordReminder::class, 'user_id', 'id');
     }
 
-    /** @noinspection ClassMethodNameMatchesFieldNameInspection */
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne|null
      *

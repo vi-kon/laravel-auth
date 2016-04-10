@@ -40,7 +40,6 @@ class Group extends Model
         parent::__construct($attributes);
     }
 
-    /** @noinspection ClassMethodNameMatchesFieldNameInspection */
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
@@ -49,7 +48,6 @@ class Group extends Model
         return $this->belongsToMany(User::class, config('vi-kon.auth.table.rel__user__group'), 'group_id', 'user_id');
     }
 
-    /** @noinspection ClassMethodNameMatchesFieldNameInspection */
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
@@ -58,7 +56,6 @@ class Group extends Model
         return $this->belongsToMany(Role::class, config('vi-kon.auth.table.rel__group__role'), 'group_id', 'role_id');
     }
 
-    /** @noinspection ClassMethodNameMatchesFieldNameInspection */
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
