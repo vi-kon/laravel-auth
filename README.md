@@ -46,7 +46,7 @@ There are multiple way to install package via composer
 
     ```json
     // to your "require" object
-    "vi-kon/laravel-auth": "~3.*"
+    "vi-kon/laravel-auth": "^3.0"
     ```
 
 * Or run following command in project root:

@@ -1,8 +1,8 @@
 **Note**: This file is up to date only on master branch.
 
-# Version 3.0
+# Version 3.0-RC
 
-- **Laravel 5.1** support
+- **Laravel 5.2** support
 - New `PermissionMiddleware` and `LoginRedirectorMiddleware` 
 - Publish location for config changed from `config/auth-role.php` to `config/vi-kon/auth.php`
 - `Group` model renamed to `Role` and `Role` model renamed to `Permission` for better usability
