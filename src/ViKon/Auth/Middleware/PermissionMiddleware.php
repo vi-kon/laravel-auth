@@ -3,8 +3,8 @@
 namespace ViKon\Auth\Middleware;
 
 use Illuminate\Container\Container;
+use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\Request;
-use ViKon\Auth\Guard;
 
 /**
  * Class PermissionMiddleware
@@ -18,12 +18,12 @@ class PermissionMiddleware
     /** @var \Illuminate\Container\Container */
     protected $container;
 
-    /** @var \Illuminate\Auth\Guard */
+    /** @type \Illuminate\Contracts\Auth\Guard */
     protected $guard;
 
     /**
-     * @param \Illuminate\Container\Container $container
-     * @param \ViKon\Auth\Guard               $guard
+     * @param \Illuminate\Container\Container  $container
+     * @param \Illuminate\Contracts\Auth\Guard $guard
      */
     public function __construct(Container $container, Guard $guard)
     {

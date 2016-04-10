@@ -14,7 +14,7 @@ use ViKon\Auth\Model\User;
  *
  * @method \ViKon\Auth\Model\User getLastAttempted()
  */
-class Guard extends \Illuminate\Auth\Guard
+class Guard extends \Illuminate\Auth\SessionGuard
 {
     /** @type string[]|null */
     protected $groups;

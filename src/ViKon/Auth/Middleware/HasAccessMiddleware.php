@@ -4,10 +4,10 @@ namespace ViKon\Auth\Middleware;
 
 use Closure;
 use Illuminate\Container\Container;
+use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Symfony\Component\HttpKernel\Exception\HttpException;
-use ViKon\Auth\Guard;
 
 /**
  * Class HasAccessMiddleware
@@ -21,12 +21,12 @@ class HasAccessMiddleware
     /** @var \Illuminate\Container\Container */
     protected $container;
 
-    /** @var \Illuminate\Auth\Guard */
+    /** @type \Illuminate\Contracts\Auth\Guard */
     protected $guard;
 
     /**
-     * @param \Illuminate\Container\Container $container
-     * @param \ViKon\Auth\Guard               $guard
+     * @param \Illuminate\Container\Container  $container
+     * @param \Illuminate\Contracts\Auth\Guard $guard
      */
     public function __construct(Container $container, Guard $guard)
     {
