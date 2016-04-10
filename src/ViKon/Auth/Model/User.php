@@ -26,6 +26,7 @@ use ViKon\Auth\Exception\ProfileNotFoundException;
  * @property boolean                                                                                $blocked
  * @property boolean                                                                                $static
  * @property boolean                                                                                $hidden
+ *
  * @property-read \Illuminate\Database\Eloquent\Collection|\ViKon\Auth\Model\Permission[]           $permissions
  * @property-read \Illuminate\Database\Eloquent\Collection|\ViKon\Auth\Model\Role[]                 $roles
  * @property-read \Illuminate\Database\Eloquent\Collection|\ViKon\Auth\Model\Group[]                $groups

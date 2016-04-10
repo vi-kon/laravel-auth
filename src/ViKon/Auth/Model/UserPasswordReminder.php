@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property integer                     $user_id
  * @property string                      $token
  * @property \Carbon\Carbon              $created_at
+ *
  * @property-read \ViKon\Auth\Model\User $user
  */
 class UserPasswordReminder extends Model

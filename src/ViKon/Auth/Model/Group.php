@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string                                                                       $token
  * @property boolean                                                                      $static
  * @property boolean                                                                      $hidden
+ *
  * @property-read \Illuminate\Database\Eloquent\Collection|\ViKon\Auth\Model\User[]       $users
  * @property-read \Illuminate\Database\Eloquent\Collection|\ViKon\Auth\Model\Role[]       $roles
  * @property-read \Illuminate\Database\Eloquent\Collection|\ViKon\Auth\Model\Permission[] $permissions

@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property integer                                                                 $id
  * @property string                                                                  $token
+ *
  * @property-read \Illuminate\Database\Eloquent\Collection|\ViKon\Auth\Model\User[]  $users
  * @property-read \Illuminate\Database\Eloquent\Collection|\ViKon\Auth\Model\Group[] $groups
  * @property-read \Illuminate\Database\Eloquent\Collection|\ViKon\Auth\Model\Role[]  $roles
