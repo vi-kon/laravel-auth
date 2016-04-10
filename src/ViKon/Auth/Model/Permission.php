@@ -16,9 +16,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read \Illuminate\Database\Eloquent\Collection|\ViKon\Auth\Model\User[]  $users
  * @property-read \Illuminate\Database\Eloquent\Collection|\ViKon\Auth\Model\Group[] $groups
  * @property-read \Illuminate\Database\Eloquent\Collection|\ViKon\Auth\Model\Role[]  $roles
- *
- * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\Model\Permission whereId($value)
- * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\Model\Permission whereToken($value)
  */
 class Permission extends Model
 {

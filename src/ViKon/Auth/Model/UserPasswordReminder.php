@@ -16,11 +16,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property string                      $token
  * @property \Carbon\Carbon              $created_at
  * @property-read \ViKon\Auth\Model\User $user
- *
- * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\Model\UserPasswordReminder whereId($value)
- * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\Model\UserPasswordReminder whereUserId($value)
- * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\Model\UserPasswordReminder whereToken($value)
- * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\Model\UserPasswordReminder whereCreatedAt($value)
  */
 class UserPasswordReminder extends Model
 {

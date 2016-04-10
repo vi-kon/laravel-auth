@@ -18,8 +18,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read \Illuminate\Database\Eloquent\Collection|\ViKon\Auth\Model\User[]       $users
  * @property-read \Illuminate\Database\Eloquent\Collection|\ViKon\Auth\Model\Role[]       $roles
  * @property-read \Illuminate\Database\Eloquent\Collection|\ViKon\Auth\Model\Permission[] $permissions
- *
- * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\Model\Group whereToken($token)
  */
 class Group extends Model
 {

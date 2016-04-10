@@ -18,11 +18,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read \Illuminate\Database\Eloquent\Collection|\ViKon\Auth\Model\User[]       $users
  * @property-read \Illuminate\Database\Eloquent\Collection|\ViKon\Auth\Model\Group[]      $groups
  * @property-read \Illuminate\Database\Eloquent\Collection|\ViKon\Auth\Model\Permission[] $permissions
- *
- * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\Model\Role whereId($value)
- * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\Model\Role whereToken($value)
- * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\Model\Role whereStatic($value)
- * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\Model\Role whereHidden($value)
  */
 class Role extends Model
 {

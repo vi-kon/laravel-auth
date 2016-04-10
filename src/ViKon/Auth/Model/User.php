@@ -31,17 +31,6 @@ use ViKon\Auth\Exception\ProfileNotFoundException;
  * @property-read \Illuminate\Database\Eloquent\Collection|\ViKon\Auth\Model\Group[]                $groups
  * @property-read \Illuminate\Database\Eloquent\Collection|\ViKon\Auth\Model\UserPasswordReminder[] $reminders
  * @property-read \Illuminate\Database\Eloquent\Model                                               $profile
- *
- * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\Model\User whereId($value)
- * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\Model\User whereUsername($value)
- * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\Model\User wherePassword($value)
- * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\Model\User whereEmail($value)
- * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\Model\User whereRememberToken($value)
- * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\Model\User whereHome($value)
- * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\Model\User whereNamespace($value)
- * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\Model\User whereBlocked($value)
- * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\Model\User whereStatic($value)
- * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\Model\User whereHidden($value)
  */
 class User extends Model implements AuthenticatableContract, CanResetPasswordContract
 {
