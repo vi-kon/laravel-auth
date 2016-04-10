@@ -43,7 +43,6 @@ class UserPasswordReminder extends Model
         parent::__construct($attributes);
     }
 
-    /** @noinspection ClassMethodNameMatchesFieldNameInspection */
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
