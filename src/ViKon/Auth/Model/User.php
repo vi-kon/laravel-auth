@@ -6,7 +6,7 @@ use Illuminate\Auth\Authenticatable;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
-use ViKon\Auth\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Model;
 use ViKon\Auth\Exception\ProfileNotFoundException;
 
 /**
@@ -26,22 +26,12 @@ use ViKon\Auth\Exception\ProfileNotFoundException;
  * @property boolean                                                                                $blocked
  * @property boolean                                                                                $static
  * @property boolean                                                                                $hidden
+ *
  * @property-read \Illuminate\Database\Eloquent\Collection|\ViKon\Auth\Model\Permission[]           $permissions
  * @property-read \Illuminate\Database\Eloquent\Collection|\ViKon\Auth\Model\Role[]                 $roles
  * @property-read \Illuminate\Database\Eloquent\Collection|\ViKon\Auth\Model\Group[]                $groups
  * @property-read \Illuminate\Database\Eloquent\Collection|\ViKon\Auth\Model\UserPasswordReminder[] $reminders
  * @property-read \Illuminate\Database\Eloquent\Model                                               $profile
- *
- * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\Model\User whereId($value)
- * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\Model\User whereUsername($value)
- * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\Model\User wherePassword($value)
- * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\Model\User whereEmail($value)
- * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\Model\User whereRememberToken($value)
- * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\Model\User whereHome($value)
- * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\Model\User whereNamespace($value)
- * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\Model\User whereBlocked($value)
- * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\Model\User whereStatic($value)
- * @method static \Illuminate\Database\Query\Builder|\ViKon\Auth\Model\User whereHidden($value)
  */
 class User extends Model implements AuthenticatableContract, CanResetPasswordContract
 {
@@ -63,7 +53,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     public function __construct(array $attributes = [])
     {
-        $this->table      = static::$config->get('vi-kon.auth.table.users');
+        $this->table      = config('vi-kon.auth.table.users');
         $this->timestamps = false;
         $this->hidden     = [static::FIELD_PASSWORD, static::FIELD_REMEMBER_TOKEN];
         $this->casts      = [
@@ -85,34 +75,30 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         parent::__construct($attributes);
     }
 
-    /** @noinspection ClassMethodNameMatchesFieldNameInspection */
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function permissions()
     {
-        return $this->belongsToMany(Permission::class, static::$config->get('vi-kon.auth.table.rel__user__permission'), 'user_id', 'permission_id');
+        return $this->belongsToMany(Permission::class, config('vi-kon.auth.table.rel__user__permission'), 'user_id', 'permission_id');
     }
 
-    /** @noinspection ClassMethodNameMatchesFieldNameInspection */
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function roles()
     {
-        return $this->belongsToMany(Role::class, static::$config->get('vi-kon.auth.table.rel__user__role'), 'user_id', 'role_id');
+        return $this->belongsToMany(Role::class, config('vi-kon.auth.table.rel__user__role'), 'user_id', 'role_id');
     }
 
-    /** @noinspection ClassMethodNameMatchesFieldNameInspection */
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function groups()
     {
-        return $this->belongsToMany(Group::class, static::$config->get('vi-kon.auth.table.rel__user__group'), 'user_id', 'group_id');
+        return $this->belongsToMany(Group::class, config('vi-kon.auth.table.rel__user__group'), 'user_id', 'group_id');
     }
 
-    /** @noinspection ClassMethodNameMatchesFieldNameInspection */
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
@@ -121,7 +107,6 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         return $this->hasMany(UserPasswordReminder::class, 'user_id', 'id');
     }
 
-    /** @noinspection ClassMethodNameMatchesFieldNameInspection */
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne|null
      *
@@ -129,11 +114,11 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     public function profile()
     {
-        if (class_exists(static::$config->get('vi-kon.auth.profile'))) {
-            return $this->hasOne(static::$config->get('vi-kon.auth.profile'), 'user_id', 'id');
+        if (class_exists(config('vi-kon.auth.profile'))) {
+            return $this->hasOne(config('vi-kon.auth.profile'), 'user_id', 'id');
         }
 
-        throw new ProfileNotFoundException('Provided profile class not found (' . static::$config->get('vi-kon.auth.profile') . ')');
+        throw new ProfileNotFoundException('Provided profile class not found (' . config('vi-kon.auth.profile') . ')');
     }
 
     /**

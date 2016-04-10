@@ -1,7 +1,7 @@
 <?php
 
+use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
-use ViKon\Auth\Database\Migration\Migration;
 
 /**
  * Class CreateUserPermissionsTable
@@ -17,7 +17,9 @@ class CreateUserPermissionsTable extends Migration
      */
     public function up()
     {
-        static::$schema->create(static::$config->get('vi-kon.auth.table.user_permissions'), function (Blueprint $table) {
+        $schema = app()->make('db')->connection()->getSchemaBuilder();
+
+        $schema->create(config('vi-kon.auth.table.user_permissions'), function (Blueprint $table) {
             $table->engine = 'InnoDB';
 
             $table->increments('id');
@@ -32,6 +34,8 @@ class CreateUserPermissionsTable extends Migration
      */
     public function down()
     {
-        static::$schema->drop(static::$config->get('vi-kon.auth.table.user_permissions'));
+        $schema = app()->make('db')->connection()->getSchemaBuilder();
+
+        $schema->drop(config('vi-kon.auth.table.user_permissions'));
     }
 }

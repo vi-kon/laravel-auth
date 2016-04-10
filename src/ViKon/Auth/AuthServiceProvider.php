@@ -1,11 +1,8 @@
 <?php namespace ViKon\Auth;
 
-use Illuminate\Auth\EloquentUserProvider;
-use Illuminate\Contracts\Config\Repository;
+use Illuminate\Contracts\Container\Container;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
-use ViKon\Auth\Database\Eloquent\Model;
-use ViKon\Auth\Database\Migration\Migration;
 use ViKon\Auth\Middleware\HasAccessMiddleware;
 use ViKon\Auth\Middleware\LoginRedirectorMiddleware;
 use ViKon\Auth\Middleware\PermissionMiddleware;
@@ -43,17 +40,11 @@ class AuthServiceProvider extends ServiceProvider
         $this->app->make('router')->middleware('auth.login-redirector', LoginRedirectorMiddleware::class);
         $this->app->make('router')->middleware('auth.permission', PermissionMiddleware::class);
 
-        $this->app->make('auth')->extend('eloquent', function (Application $app) {
-            $model    = $app->make('config')->get('auth.model');
-            $provider = new EloquentUserProvider($app->make('hash'), $model);
+        $this->app->make('auth')->extend('vi-kon.session', function (Container $app, $name, array $config) {
+            $provider = $app->make('auth')->createUserProvider($config['provider']);
 
-            return new Guard($provider, $app->make('session.store'), $app->make('request'));
+            return new Guard($name, $provider, $app->make('session.store'), $app->make('request'));
         });
-
-        // Set config to access in all models and migrations in authentication
-        Model::setConfig($this->app->make(Repository::class));
-        Migration::setConfig($this->app->make(Repository::class));
-        Migration::setSchema($this->app->make('db')->connection()->getSchemaBuilder());
     }
 
     /**
@@ -74,7 +65,7 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->app->singleton(RouterAuth::class, RouterAuth::class);
         $this->app->singleton(Guard::class, function (Application $app) {
-            return $app->make('auth')->driver('eloquent');
+            return $app->make('auth')->guard();
         });
 
         $this->mergeConfigFrom(__DIR__ . '/../../config/config.php', 'vi-kon.auth');

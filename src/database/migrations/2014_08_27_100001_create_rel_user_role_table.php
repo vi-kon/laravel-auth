@@ -1,7 +1,7 @@
 <?php
 
+use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
-use ViKon\Auth\Database\Migration\Migration;
 
 /**
  * Class CreateRelUserRoleTable
@@ -18,20 +18,22 @@ class CreateRelUserRoleTable extends Migration
      */
     public function up()
     {
-        static::$schema->create(static::$config->get('vi-kon.auth.table.rel__user__role'), function (Blueprint $table) {
+        $schema = app()->make('db')->connection()->getSchemaBuilder();
+
+        $schema->create(config('vi-kon.auth.table.rel__user__role'), function (Blueprint $table) {
             $table->engine = 'InnoDB';
 
             $table->unsignedInteger('user_id');
             $table->foreign('user_id')
                   ->references('id')
-                  ->on(static::$config->get('vi-kon.auth.table.users'))
+                  ->on(config('vi-kon.auth.table.users'))
                   ->onUpdate('cascade')
                   ->onDelete('cascade');
 
             $table->unsignedInteger('role_id');
             $table->foreign('role_id')
                   ->references('id')
-                  ->on(static::$config->get('vi-kon.auth.table.user_roles'))
+                  ->on(config('vi-kon.auth.table.user_roles'))
                   ->onUpdate('cascade')
                   ->onDelete('cascade');
         });
@@ -44,6 +46,8 @@ class CreateRelUserRoleTable extends Migration
      */
     public function down()
     {
-        static::$schema->drop(static::$config->get('vi-kon.auth.table.rel__user__role'));
+        $schema = app()->make('db')->connection()->getSchemaBuilder();
+
+        $schema->drop(config('vi-kon.auth.table.rel__user__role'));
     }
 }
