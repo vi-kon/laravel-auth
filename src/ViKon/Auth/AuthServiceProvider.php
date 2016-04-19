@@ -2,10 +2,11 @@
 
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Foundation\Application;
-use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\AggregateServiceProvider;
 use ViKon\Auth\Middleware\HasAccessMiddleware;
 use ViKon\Auth\Middleware\LoginRedirectorMiddleware;
 use ViKon\Auth\Middleware\PermissionMiddleware;
+use ViKon\Support\SupportServiceProvider;
 
 /**
  * Class AuthServiceProvider
@@ -14,7 +15,7 @@ use ViKon\Auth\Middleware\PermissionMiddleware;
  *
  * @package ViKon\Auth
  */
-class AuthServiceProvider extends ServiceProvider
+class AuthServiceProvider extends AggregateServiceProvider
 {
     /**
      * {@inheritDoc}
@@ -22,6 +23,10 @@ class AuthServiceProvider extends ServiceProvider
     public function __construct($app)
     {
         $this->defer = false;
+
+        $this->providers = [
+            SupportServiceProvider::class,
+        ];
 
         parent::__construct($app);
     }
