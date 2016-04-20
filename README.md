@@ -1,4 +1,4 @@
-# Laravel 5.1 role-permission based authentication
+# Laravel 5.2 role-permission based authentication
 
 This is **Laravel 5** package for role-permission based authenticating.
 

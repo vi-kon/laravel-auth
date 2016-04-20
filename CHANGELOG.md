@@ -1,6 +1,11 @@
 **Note**: This file is up to date only on master branch.
 
-# Version 3.0-RC
+# Version 3.0.1
+
+- Add `Keeper` contract
+- Automatically load dependent service providers
+
+# Version 3.0.0
 
 - **Laravel 5.2** support
 - New `PermissionMiddleware` and `LoginRedirectorMiddleware` 

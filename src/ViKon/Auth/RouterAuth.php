@@ -3,6 +3,7 @@
 namespace ViKon\Auth;
 
 use Illuminate\Routing\Router;
+use ViKon\Auth\Contracts\Keeper;
 
 /**
  * Class RouterAuth
@@ -16,14 +17,14 @@ class RouterAuth
     /** @type \Illuminate\Routing\Router */
     protected $router;
 
-    /** @type \ViKon\Auth\Guard */
+    /** @type \ViKon\Auth\Contracts\Keeper */
     protected $guard;
 
     /**
-     * @param \Illuminate\Routing\Router $router
-     * @param \ViKon\Auth\Guard          $guard
+     * @param \Illuminate\Routing\Router   $router
+     * @param \ViKon\Auth\Contracts\Keeper $guard
      */
-    public function __construct(Router $router, Guard $guard)
+    public function __construct(Router $router, Keeper $guard)
     {
         $this->router = $router;
         $this->guard  = $guard;
