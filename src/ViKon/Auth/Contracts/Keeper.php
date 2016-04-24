@@ -3,6 +3,7 @@
 namespace ViKon\Auth\Contracts;
 
 use Illuminate\Contracts\Auth\Guard;
+use Illuminate\Contracts\Auth\StatefulGuard;
 
 /**
  * Interface Keeper
@@ -11,7 +12,7 @@ use Illuminate\Contracts\Auth\Guard;
  *
  * @author  Kovács Vince<vincekovacs@hotmail.com>
  */
-interface Keeper extends Guard
+interface Keeper extends Guard, StatefulGuard
 {
     /**
      * Check if authenticate user has group
