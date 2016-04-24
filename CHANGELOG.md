@@ -2,6 +2,7 @@
 
 # Version 3.0.1
 
+- Log when login redirect occurred
 - Add `Keeper` contract
 - Automatically load dependent service providers
 

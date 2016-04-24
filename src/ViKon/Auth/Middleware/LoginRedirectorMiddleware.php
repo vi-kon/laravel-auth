@@ -4,8 +4,8 @@ namespace ViKon\Auth\Middleware;
 
 use Closure;
 use Illuminate\Container\Container;
-use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\Request;
+use ViKon\Auth\Contracts\Keeper;
 
 /**
  * Class LoginRedirectorMiddleware
@@ -19,17 +19,17 @@ class LoginRedirectorMiddleware
     /** @var \Illuminate\Container\Container */
     protected $container;
 
-    /** @type \Illuminate\Contracts\Auth\Guard */
-    protected $guard;
+    /** @type \ViKon\Auth\Contracts\Keeper */
+    protected $keeper;
 
     /**
-     * @param \Illuminate\Container\Container  $container
-     * @param \Illuminate\Contracts\Auth\Guard $guard
+     * @param \Illuminate\Container\Container $container
+     * @param \ViKon\Auth\Contracts\Keeper    $keeper
      */
-    public function __construct(Container $container, Guard $guard)
+    public function __construct(Container $container, Keeper $keeper)
     {
         $this->container = $container;
-        $this->guard     = $guard;
+        $this->keeper    = $keeper;
     }
 
     /**
@@ -43,24 +43,31 @@ class LoginRedirectorMiddleware
      */
     public function handle(Request $request, Closure $next, $route)
     {
-        $action = $this->container->make('router')->current()->getAction();
+        $router = $this->container->make('router');
 
-        if (array_key_exists('role', $action)) {
+        $currentRoute = $router->current();
+        $action       = $currentRoute->getAction();
+
+        if (isset($action['role'])) {
             $action['roles'] = $action['role'];
         }
 
-        if (array_key_exists('permission', $action)) {
+        if (isset($action['permission'])) {
             $action['permissions'] = $action['permission'];
         }
 
-        if (array_key_exists('roles', $action) || array_key_exists('permissions', $action)) {
+        // Redirect guest to login screen if route has least one role or permission
+        if ((isset($action['roles']) || isset($action['permissions'])) && !$this->keeper->check()) {
             $url      = $this->container->make('url');
+            $log      = $this->container->make('log');
             $redirect = $this->container->make('redirect');
 
-            // If user is not authenticated redirect to login route
-            if (!$this->guard->check()) {
-                return $redirect->guest($url->route($route));
-            }
+            $log->notice('Guest redirected to login screen', [
+                'from' => $currentRoute->getName(),
+                'to'   => $route,
+            ]);
+
+            return $redirect->guest($url->route($route));
         }
 
         return $next($request);
