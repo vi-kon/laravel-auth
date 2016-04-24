@@ -2,10 +2,13 @@
 
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Foundation\Application;
-use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\AggregateServiceProvider;
+use ViKon\Auth\Contracts\Keeper;
+use ViKon\Auth\Exception\InvalidKeeperGuardException;
 use ViKon\Auth\Middleware\HasAccessMiddleware;
 use ViKon\Auth\Middleware\LoginRedirectorMiddleware;
 use ViKon\Auth\Middleware\PermissionMiddleware;
+use ViKon\Support\SupportServiceProvider;
 
 /**
  * Class AuthServiceProvider
@@ -14,7 +17,7 @@ use ViKon\Auth\Middleware\PermissionMiddleware;
  *
  * @package ViKon\Auth
  */
-class AuthServiceProvider extends ServiceProvider
+class AuthServiceProvider extends AggregateServiceProvider
 {
     /**
      * {@inheritDoc}
@@ -22,6 +25,10 @@ class AuthServiceProvider extends ServiceProvider
     public function __construct($app)
     {
         $this->defer = false;
+
+        $this->providers = [
+            SupportServiceProvider::class,
+        ];
 
         parent::__construct($app);
     }
@@ -44,6 +51,16 @@ class AuthServiceProvider extends ServiceProvider
             $provider = $app->make('auth')->createUserProvider($config['provider']);
 
             return new Guard($name, $provider, $app->make('session.store'), $app->make('request'));
+        });
+
+        $this->app->bind(Keeper::class, function (Container $app) {
+            $guard = $app->make('auth')->guard();
+
+            if (!$guard instanceof Keeper) {
+                throw new InvalidKeeperGuardException();
+            }
+
+            return $guard;
         });
     }
 
