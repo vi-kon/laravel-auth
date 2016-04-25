@@ -3,8 +3,8 @@
 namespace ViKon\Auth\Middleware;
 
 use Illuminate\Container\Container;
-use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\Request;
+use ViKon\Auth\Contracts\Keeper;
 
 /**
  * Class PermissionMiddleware
@@ -18,17 +18,17 @@ class PermissionMiddleware
     /** @var \Illuminate\Container\Container */
     protected $container;
 
-    /** @type \Illuminate\Contracts\Auth\Guard */
-    protected $guard;
+    /** @type \ViKon\Auth\Contracts\Keeper */
+    protected $keeper;
 
     /**
-     * @param \Illuminate\Container\Container  $container
-     * @param \Illuminate\Contracts\Auth\Guard $guard
+     * @param \Illuminate\Container\Container $container
+     * @param \ViKon\Auth\Contracts\Keeper    $keeper
      */
-    public function __construct(Container $container, Guard $guard)
+    public function __construct(Container $container, Keeper $keeper)
     {
         $this->container = $container;
-        $this->guard     = $guard;
+        $this->keeper    = $keeper;
     }
 
     /**
@@ -45,12 +45,12 @@ class PermissionMiddleware
         $redirect = $this->container->make('redirect');
 
         // If user is not authenticated redirect to login route
-        if (!$this->guard->check()) {
+        if (!$this->keeper->check()) {
             return $redirect->guest($url->route($config->get('vi-kon.auth.login.route')));
         }
 
         // If user is authenticated but has no permission to access given route then redirect to 403 route
-        if (!$this->guard->hasPermission($permission)) {
+        if (!$this->keeper->hasPermission($permission)) {
             return $redirect->route($config->get('vi-kon.auth.error-403.route'))
                             ->with('route-request-uri', $request->getRequestUri())
                             ->with('route-permissions', [$permission]);

@@ -4,10 +4,10 @@ namespace ViKon\Auth\Middleware;
 
 use Closure;
 use Illuminate\Container\Container;
-use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use ViKon\Auth\Contracts\Keeper;
 
 /**
  * Class HasAccessMiddleware
@@ -21,17 +21,17 @@ class HasAccessMiddleware
     /** @var \Illuminate\Container\Container */
     protected $container;
 
-    /** @type \Illuminate\Contracts\Auth\Guard */
-    protected $guard;
+    /** @type \ViKon\Auth\Contracts\Keeper */
+    protected $keeper;
 
     /**
-     * @param \Illuminate\Container\Container  $container
-     * @param \Illuminate\Contracts\Auth\Guard $guard
+     * @param \Illuminate\Container\Container $container
+     * @param \ViKon\Auth\Contracts\Keeper    $keeper
      */
-    public function __construct(Container $container, Guard $guard)
+    public function __construct(Container $container, Keeper $keeper)
     {
         $this->container = $container;
-        $this->guard     = $guard;
+        $this->keeper    = $keeper;
     }
 
     /**
@@ -63,7 +63,7 @@ class HasAccessMiddleware
             $redirect = $this->container->make('redirect');
 
             // If user is not authenticated redirect to login route
-            if (!$this->guard->check()) {
+            if (!$this->keeper->check()) {
                 return $redirect->guest($url->route($config->get('vi-kon.auth.login.route')));
             }
 
@@ -86,7 +86,7 @@ class HasAccessMiddleware
             }
 
             // If user is authenticated but has no permission to access given route then redirect to 403 route
-            if (!$this->guard->hasGroups($groups) || !$this->guard->hasRoles($roles) || !$this->guard->hasPermissions($permissions)) {
+            if (!$this->keeper->hasGroups($groups) || !$this->keeper->hasRoles($roles) || !$this->keeper->hasPermissions($permissions)) {
                 $router = $this->container->make('router');
 
                 // Check if config defined 403 error route exists or not
