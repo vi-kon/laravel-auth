@@ -10,19 +10,8 @@ return [
     | original route.
     |
     */
-    'login'     => [
+    'login'   => [
         'route' => 'login',
-    ],
-    /*
-    | --------------------------------------------------------------------------
-    | Error 403
-    | --------------------------------------------------------------------------
-    | If user is authenticated and no sufficient permissions to access route,
-    | then authenticated middlewares redirect to this route.
-    |
-    */
-    'error-403' => [
-        'route' => 'error-403',
     ],
     /*
     | --------------------------------------------------------------------------
@@ -35,7 +24,7 @@ return [
     | then migration down will fail.
     |
     */
-    'table'     => [
+    'table'   => [
         // User tables
         'users'                   => 'users',
         'user_roles'              => 'user_roles',
@@ -62,5 +51,5 @@ return [
     | connection.
     |
     */
-    'profile'   => 'App\Model\Profile',
+    'profile' => 'App\Model\Profile',
 ];

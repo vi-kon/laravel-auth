@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Container\Container;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
-use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use ViKon\Auth\Contracts\Keeper;
 
 /**
@@ -88,17 +88,19 @@ class HasAccessMiddleware
             // If user is authenticated but has no permission to access given route then redirect to 403 route
             if (!$this->keeper->hasGroups($groups) || !$this->keeper->hasRoles($roles) || !$this->keeper->hasPermissions($permissions)) {
                 $router = $this->container->make('router');
+                $log    = $this->container->make('log');
 
-                // Check if config defined 403 error route exists or not
-                if ($router->has($config->get('vi-kon.auth.error-403.route'))) {
-                    return $redirect->route($config->get('vi-kon.auth.error-403.route'))
-                                    ->with('route-request-uri', $request->getRequestUri())
-                                    ->with('route-groups', $groups)
-                                    ->with('route-roles', $roles)
-                                    ->with('route-permissions', $permissions);
-                }
+                $currentRoute = $router->current();
 
-                throw new HttpException(403);
+                $log->notice('User has no access to page', [
+                    'user'        => $this->keeper->user(),
+                    'permissions' => $permissions,
+                    'roles'       => $roles,
+                    'groups'      => $groups,
+                    'route'       => $currentRoute->getName(),
+                ]);
+
+                throw new AccessDeniedHttpException();
             }
         }
 
