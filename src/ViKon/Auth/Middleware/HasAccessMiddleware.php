@@ -86,7 +86,10 @@ class HasAccessMiddleware
             }
 
             // If user is authenticated but has no permission to access given route then redirect to 403 route
-            if (!$this->keeper->hasGroups($groups) || !$this->keeper->hasRoles($roles) || !$this->keeper->hasPermissions($permissions)) {
+            if ($this->keeper->hasGroups($groups) !== true ||
+                $this->keeper->hasRoles($roles) !== true ||
+                $this->keeper->hasPermissions($permissions) !== true
+            ) {
                 $router = $this->container->make('router');
                 $log    = $this->container->make('log');
 

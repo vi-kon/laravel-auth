@@ -46,7 +46,7 @@ class RouterAuth
             return null;
         }
 
-        return $this->keeper->hasPermissions($permissions) && $this->keeper->hasRoles($roles);
+        return $this->keeper->hasPermissions($permissions) === true && $this->keeper->hasRoles($roles) === true;
     }
 
     /**
