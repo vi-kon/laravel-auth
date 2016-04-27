@@ -3,8 +3,9 @@
 namespace ViKon\Auth\Middleware;
 
 use Illuminate\Container\Container;
-use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use ViKon\Auth\Contracts\Keeper;
 
 /**
  * Class PermissionMiddleware
@@ -18,17 +19,17 @@ class PermissionMiddleware
     /** @var \Illuminate\Container\Container */
     protected $container;
 
-    /** @type \Illuminate\Contracts\Auth\Guard */
-    protected $guard;
+    /** @type \ViKon\Auth\Contracts\Keeper */
+    protected $keeper;
 
     /**
-     * @param \Illuminate\Container\Container  $container
-     * @param \Illuminate\Contracts\Auth\Guard $guard
+     * @param \Illuminate\Container\Container $container
+     * @param \ViKon\Auth\Contracts\Keeper    $keeper
      */
-    public function __construct(Container $container, Guard $guard)
+    public function __construct(Container $container, Keeper $keeper)
     {
         $this->container = $container;
-        $this->guard     = $guard;
+        $this->keeper    = $keeper;
     }
 
     /**
@@ -40,20 +41,36 @@ class PermissionMiddleware
      */
     public function handle(Request $request, \Closure $next, $permission)
     {
-        $url      = $this->container->make('url');
-        $config   = $this->container->make('config');
-        $redirect = $this->container->make('redirect');
+        if (!$this->keeper->check() || !$this->keeper->hasPermission($permission)) {
+            $router = $this->container->make('router');
+            $log    = $this->container->make('log');
 
-        // If user is not authenticated redirect to login route
-        if (!$this->guard->check()) {
-            return $redirect->guest($url->route($config->get('vi-kon.auth.login.route')));
-        }
+            $currentRoute = $router->current();
 
-        // If user is authenticated but has no permission to access given route then redirect to 403 route
-        if (!$this->guard->hasPermission($permission)) {
-            return $redirect->route($config->get('vi-kon.auth.error-403.route'))
-                            ->with('route-request-uri', $request->getRequestUri())
-                            ->with('route-permissions', [$permission]);
+            // If user is not authenticated redirect to login route
+            if (!$this->keeper->check()) {
+                $config   = $this->container->make('config');
+                $redirect = $this->container->make('redirect');
+                $url      = $this->container->make('url');
+
+                $log->notice('Guest redirected to login screen', [
+                    'from' => $currentRoute->getName(),
+                    'to'   => $config->get('vi-kon.auth.login.route'),
+                ]);
+
+                return $redirect->guest($url->route($config->get('vi-kon.auth.login.route')));
+            }
+
+            // If user is authenticated but has no permission to access given route then redirect to 403 route
+            if (!$this->keeper->hasPermission($permission)) {
+                $log->notice('User has no permission to view page', [
+                    'user'       => $this->keeper->user()->toArray(),
+                    'permission' => $permission,
+                    'route'      => $currentRoute->getName(),
+                ]);
+
+                throw new AccessDeniedHttpException();
+            }
         }
 
         return $next($request);

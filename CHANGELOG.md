@@ -1,5 +1,10 @@
 **Note**: This file is up to date only on master branch.
 
+# Version 3.1.0
+
+- Removed `error-403` config
+- Throw `AccessDeniedHttpException` exception instead of redirect to 403 page
+
 # Version 3.0.1
 
 - Log when login redirect occurred

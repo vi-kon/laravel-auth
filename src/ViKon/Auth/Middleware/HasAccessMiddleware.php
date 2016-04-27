@@ -4,10 +4,10 @@ namespace ViKon\Auth\Middleware;
 
 use Closure;
 use Illuminate\Container\Container;
-use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
-use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use ViKon\Auth\Contracts\Keeper;
 
 /**
  * Class HasAccessMiddleware
@@ -21,17 +21,17 @@ class HasAccessMiddleware
     /** @var \Illuminate\Container\Container */
     protected $container;
 
-    /** @type \Illuminate\Contracts\Auth\Guard */
-    protected $guard;
+    /** @type \ViKon\Auth\Contracts\Keeper */
+    protected $keeper;
 
     /**
-     * @param \Illuminate\Container\Container  $container
-     * @param \Illuminate\Contracts\Auth\Guard $guard
+     * @param \Illuminate\Container\Container $container
+     * @param \ViKon\Auth\Contracts\Keeper    $keeper
      */
-    public function __construct(Container $container, Guard $guard)
+    public function __construct(Container $container, Keeper $keeper)
     {
         $this->container = $container;
-        $this->guard     = $guard;
+        $this->keeper    = $keeper;
     }
 
     /**
@@ -63,7 +63,7 @@ class HasAccessMiddleware
             $redirect = $this->container->make('redirect');
 
             // If user is not authenticated redirect to login route
-            if (!$this->guard->check()) {
+            if (!$this->keeper->check()) {
                 return $redirect->guest($url->route($config->get('vi-kon.auth.login.route')));
             }
 
@@ -86,19 +86,24 @@ class HasAccessMiddleware
             }
 
             // If user is authenticated but has no permission to access given route then redirect to 403 route
-            if (!$this->guard->hasGroups($groups) || !$this->guard->hasRoles($roles) || !$this->guard->hasPermissions($permissions)) {
+            if ($this->keeper->hasGroups($groups) !== true ||
+                $this->keeper->hasRoles($roles) !== true ||
+                $this->keeper->hasPermissions($permissions) !== true
+            ) {
                 $router = $this->container->make('router');
+                $log    = $this->container->make('log');
 
-                // Check if config defined 403 error route exists or not
-                if ($router->has($config->get('vi-kon.auth.error-403.route'))) {
-                    return $redirect->route($config->get('vi-kon.auth.error-403.route'))
-                                    ->with('route-request-uri', $request->getRequestUri())
-                                    ->with('route-groups', $groups)
-                                    ->with('route-roles', $roles)
-                                    ->with('route-permissions', $permissions);
-                }
+                $currentRoute = $router->current();
 
-                throw new HttpException(403);
+                $log->notice('User has no access to page', [
+                    'user'        => $this->keeper->user()->toArray(),
+                    'permissions' => $permissions,
+                    'roles'       => $roles,
+                    'groups'      => $groups,
+                    'route'       => $currentRoute->getName(),
+                ]);
+
+                throw new AccessDeniedHttpException();
             }
         }
 

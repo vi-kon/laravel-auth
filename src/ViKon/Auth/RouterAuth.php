@@ -18,16 +18,16 @@ class RouterAuth
     protected $router;
 
     /** @type \ViKon\Auth\Contracts\Keeper */
-    protected $guard;
+    protected $keeper;
 
     /**
      * @param \Illuminate\Routing\Router   $router
-     * @param \ViKon\Auth\Contracts\Keeper $guard
+     * @param \ViKon\Auth\Contracts\Keeper $keeper
      */
-    public function __construct(Router $router, Keeper $guard)
+    public function __construct(Router $router, Keeper $keeper)
     {
         $this->router = $router;
-        $this->guard  = $guard;
+        $this->keeper = $keeper;
     }
 
     /**
@@ -46,7 +46,7 @@ class RouterAuth
             return null;
         }
 
-        return $this->guard->hasPermissions($permissions) && $this->guard->hasRoles($roles);
+        return $this->keeper->hasPermissions($permissions) === true && $this->keeper->hasRoles($roles) === true;
     }
 
     /**
