@@ -64,7 +64,7 @@ class PermissionMiddleware
             // If user is authenticated but has no permission to access given route then redirect to 403 route
             if (!$this->keeper->hasPermission($permission)) {
                 $log->notice('User has no permission to view page', [
-                    'user'       => $this->keeper->user(),
+                    'user'       => $this->keeper->user()->toArray(),
                     'permission' => $permission,
                     'route'      => $currentRoute->getName(),
                 ]);

@@ -96,7 +96,7 @@ class HasAccessMiddleware
                 $currentRoute = $router->current();
 
                 $log->notice('User has no access to page', [
-                    'user'        => $this->keeper->user(),
+                    'user'        => $this->keeper->user()->toArray(),
                     'permissions' => $permissions,
                     'roles'       => $roles,
                     'groups'      => $groups,
